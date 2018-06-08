@@ -1,0 +1,485 @@
+{
+	"name": "iQmetrix DropShip Get Fulfillment Schema",
+	"schemaDef": {
+	  "$id": "http://example.com/example.json",
+	  "type": "object",
+	  "$schema": "http://json-schema.org/draft-07/schema#",
+	  "$ref": "#/definitions/fulfillment",
+	  "definitions": {
+	    "fulfillment": {
+	      "definition": {
+	        "$id": "/properties/definition",
+	        "type": "object",
+	        "properties": {
+	          "id": {
+	            "$id": "/properties/definition/properties/id",
+	            "type": "string",
+	            "title": "The Id Schema ",
+	            "default": "",
+	            "examples": [
+	              "OrderList"
+	            ]
+	          },
+	          "name": {
+	            "$id": "/properties/definition/properties/name",
+	            "type": "string",
+	            "title": "The Name Schema ",
+	            "default": "",
+	            "examples": [
+	              "Order List Report"
+	            ]
+	          },
+	          "ownEntityPermission": {
+	            "$id": "/properties/definition/properties/ownEntityPermission",
+	            "type": "string",
+	            "title": "The Ownentitypermission Schema ",
+	            "default": "",
+	            "examples": [
+	              "ViewOrderManagement"
+	            ]
+	          },
+	          "anyEntityPermission": {
+	            "$id": "/properties/definition/properties/anyEntityPermission",
+	            "type": "string",
+	            "title": "The Anyentitypermission Schema ",
+	            "default": "",
+	            "examples": [
+	              "ViewAllOrderManagement"
+	            ]
+	          },
+	          "collection": {
+	            "$id": "/properties/definition/properties/collection",
+	            "type": "string",
+	            "title": "The Collection Schema ",
+	            "default": "",
+	            "examples": [
+	              "Order"
+	            ]
+	          },
+	          "description": {
+	            "$id": "/properties/definition/properties/description",
+	            "type": "string",
+	            "title": "The Description Schema ",
+	            "default": "",
+	            "examples": [
+	              "View list of Platform orders."
+	            ]
+	          },
+	          "columns": {
+	            "$id": "/properties/definition/properties/columns",
+	            "type": "array",
+	            "items": {
+	              "$id": "/properties/definition/properties/columns/items",
+	              "type": "object",
+	              "properties": {
+	                "name": {
+	                  "$id": "/properties/definition/properties/columns/items/properties/name",
+	                  "type": "null",
+	                  "title": "The Name Schema ",
+	                  "default": null,
+	                  "examples": [
+	                    null
+	                  ]
+	                },
+	                "key": {
+	                  "$id": "/properties/definition/properties/columns/items/properties/key",
+	                  "type": "string",
+	                  "title": "The Key Schema ",
+	                  "default": "",
+	                  "examples": [
+	                    "_id"
+	                  ]
+	                },
+	                "type": {
+	                  "$id": "/properties/definition/properties/columns/items/properties/type",
+	                  "type": "integer",
+	                  "title": "The Type Schema ",
+	                  "default": 0,
+	                  "examples": [
+	                    7
+	                  ]
+	                },
+	                "formatType": {
+	                  "$id": "/properties/definition/properties/columns/items/properties/formatType",
+	                  "type": "string",
+	                  "title": "The Formattype Schema ",
+	                  "default": "",
+	                  "examples": [
+	                    "String"
+	                  ]
+	                },
+	                "isViewable": {
+	                  "$id": "/properties/definition/properties/columns/items/properties/isViewable",
+	                  "type": "boolean",
+	                  "title": "The Isviewable Schema ",
+	                  "default": false,
+	                  "examples": [
+	                    false
+	                  ]
+	                },
+	                "anyEntityOnly": {
+	                  "$id": "/properties/definition/properties/columns/items/properties/anyEntityOnly",
+	                  "type": "boolean",
+	                  "title": "The Anyentityonly Schema ",
+	                  "default": false,
+	                  "examples": [
+	                    false
+	                  ]
+	                }
+	              }
+	            }
+	          }
+	        }
+	      },
+	      "rows": {
+	        "$id": "/properties/rows",
+	        "type": "array",
+	        "items": {
+	          "$ref": "#/definitions/order"
+	        }
+	      },
+	      "totalRecords": {
+	        "$id": "/properties/totalRecords",
+	        "type": "integer",
+	        "title": "The Totalrecords Schema ",
+	        "default": 0,
+	        "examples": [
+	          0
+	        ]
+	      }
+	    },
+	    "order": {
+	      "type": "object",
+	      "properties": {
+	        "id": {
+	          "$id": "/properties/rows/items/properties/_id",
+	          "type": "string",
+	          "title": "The _id Schema ",
+	          "default": "",
+	          "examples": [
+	            "58cad41cdc0db43a61eec9e3"
+	          ]
+	        },
+	        "invoiceNumber": {
+	          "$id": "/properties/rows/items/properties/invoiceNumber",
+	          "type": "string",
+	          "title": "The Invoicenumber Schema ",
+	          "default": "",
+	          "examples": [
+	            "INKG5-2498"
+	          ]
+	        },
+	        "companyId": {
+	          "$id": "/properties/rows/items/properties/companyId",
+	          "type": "integer",
+	          "title": "The Companyid Schema ",
+	          "default": 0,
+	          "examples": [
+	            14146
+	          ]
+	        },
+	        "companyName": {
+	          "title": "companyName",
+	          "description": "Company Name",
+	          "type": "string"
+	        },
+	        "locationId": {
+	          "$id": "/properties/rows/items/properties/locationId",
+	          "type": "integer",
+	          "title": "The Locationid Schema ",
+	          "default": 0,
+	          "examples": [
+	            14202
+	          ]
+	        },
+	        "locationName": {
+	          "$id": "/properties/rows/items/properties/locationName",
+	          "type": "string",
+	          "title": "The Locationname Schema ",
+	          "default": "",
+	          "examples": [
+	            "Dufferin Mall"
+	          ]
+	        },
+	        "customerName": {
+	          "$id": "/properties/rows/items/properties/customerName",
+	          "type": "string",
+	          "title": "The Customername Schema ",
+	          "default": "",
+	          "examples": [
+	            "John Smith"
+	          ]
+	        },
+	        "shipToStore": {
+	          "$id": "/properties/rows/items/properties/shippingEntityId",
+	          "type": "string",
+	          "title": "The Shippingentityid Schema ",
+	          "default": "",
+	          "examples": [
+	            "0"
+	          ]
+	        },
+	        "shippingEntityId": {
+	          "title": "shippingEntityId",
+	          "description": "Identifier of a Location for Ship to Store Order, or 0 if Order ships directly to Customer",
+	          "type": [
+	            "string",
+	            "number"
+	          ]
+	        },
+	        "shippingEntityName": {
+	          "$id": "/properties/rows/items/properties/shippingEntityName",
+	          "type": "string",
+	          "title": "The Shippingentityname Schema ",
+	          "default": "",
+	          "examples": [
+	            "Customer"
+	          ]
+	        },
+	        "statusId": {
+	          "title": "statusId",
+	          "description": "Order Status, valid values are: 0 (Pending), 1 (Completed)",
+	          "type": [
+	            "string",
+	            "number"
+	          ],
+	          "enum": [
+	            "0",
+	            "1",
+	            0,
+	            1
+	          ]
+	        },
+	        "statusName": {
+	          "title": "statusName",
+	          "description": "Order Status, valid values are: Pending, Completed",
+	          "type": "string",
+	          "enum": [
+	            "Pending",
+	            "Completed"
+	          ]
+	        },
+	        "billToAddress": {
+	          "title": "billToAddress",
+	          "description": "Order Fulfillment Billing Address",
+	          "$ref": "#/definitions/address"
+	        },
+	        "shipToAddress": {
+	          "title": "shipToAddress",
+	          "description": "Order Fulfillment Shipping Address",
+	          "$ref": "#/definitions/address"
+	        },
+	        "dropshipOrderItems": {
+	          "title": "dropshipOrderItems",
+	          "description": "Dropship Line Items",
+	          "type": "array",
+	          "minItems": 1,
+	          "items": {
+	            "$ref": "#/definitions/dropshipOrderItem"
+	          }
+	        },
+	        "createdUtc": {
+	          "title": "createdUtc",
+	          "description": "Order created date, in UTC",
+	          "type": "string",
+	          "format": "date-time"
+	        },
+	        "updatedUtc": {
+	          "title": "updatedUtc",
+	          "description": "Date the Order was last updated, in UTC",
+	          "type": "string",
+	          "format": "date-time"
+	        }
+	      },
+	      "required": [
+	        "id",
+	        "invoiceNumber",
+	        "companyId",
+	        "companyName",
+	        "locationId",
+	        "locationName",
+	        "customerName",
+	        "shipToStore",
+	        "shippingEntityId",
+	        "shippingEntityName",
+	        "statusId",
+	        "statusName",
+	        "billToAddress",
+	        "shipToAddress",
+	        "dropshipOrderItems",
+	        "createdUtc",
+	        "updatedUtc"
+	      ],
+	      "additionalProperties": false
+	    },
+	    "dropshipOrderItem": {
+	      "type": "object",
+	      "properties": {
+	        "dropshipOrderId": {
+	          "title": "dropshipOrderId",
+	          "description": "Unique Identifier for the Line Item (GUID)",
+	          "type": "string"
+	        },
+	        "supplierId": {
+	          "title": "supplierId",
+	          "description": "Identifier for the Line Item Supplier",
+	          "type": "number"
+	        },
+	        "supplierName": {
+	          "title": "supplierName",
+	          "description": "Line Item Supplier Name",
+	          "type": "string"
+	        },
+	        "catalogItemId": {
+	          "title": "catalogItemId",
+	          "description": "Identifier for a Catalog Item",
+	          "type": "string"
+	        },
+	        "productName": {
+	          "title": "productName",
+	          "description": "Product Name of the Line Item",
+	          "type": "string"
+	        },
+	        "supplierSku": {
+	          "title": "supplierSku",
+	          "description": "Supplier's SKU for the Line Item",
+	          "type": "string"
+	        },
+	        "quantity": {
+	          "title": "quantity",
+	          "description": "Line Item Quantity",
+	          "type": "integer"
+	        },
+	        "sellingPrice": {
+	          "title": "sellingPrice",
+	          "description": "Selling Price of Line Item",
+	          "type": [
+	            "string",
+	            "number"
+	          ]
+	        },
+	        "statusId": {
+	          "title": "statusId",
+	          "description": "Line Item Status Id, valid values are: 0 (Pending Supplier), 1 (Ordered), 2 (Shipped), 3 (Back Ordered), 4 (Error), 5 (Not Available), 6 (Partially Shipped), 7 (Cancelled), 8 (Other).",
+	          "type": "string"
+	        },
+	        "statusName": {
+	          "title": "statusName",
+	          "description": "Line Item Status Value, valid values are: PendingSupplier (0), Ordered (1), Shipped (2), BackOrdered (3), Error (4), NotAvailable (5), PartiallyShipped (6), Cancelled (7), Other (8).",
+	          "type": "string"
+	        },
+	        "trackingNumber": {
+	          "title": "trackingNumber",
+	          "description": "Tracking Number, multiple Tracking Numbers are a single string separated by commas.",
+	          "type": "string"
+	        },
+	        "shippingProvider": {
+	          "title": "shippingProvider",
+	          "description": "Shipping Provider",
+	          "type": "string"
+	        },
+	        "supplierMessage": {
+	          "title": "supplierMessage",
+	          "description": "Message from the Supplier",
+	          "type": "string"
+	        },
+	        "updatedUtc": {
+	          "title": "updatedUtc",
+	          "description": "Date item was last updated in UTC",
+	          "type": "string",
+	          "format": "date-time"
+	        }
+	      },
+	      "additionalProperties": false
+	    },
+	    "address": {
+	      "type": "object",
+	      "properties": {
+	        "crmId": {
+	          "title": "crmId",
+	          "description": "Identifier for a Customer (GUID)",
+	          "type": "string"
+	        },
+	        "crmAddressId": {
+	          "title": "crmAddressId",
+	          "description": "Identifier for an Address (GUID)",
+	          "type": "string"
+	        },
+	        "customerName": {
+	          "title": "customerName",
+	          "description": "Customer First and Last Name",
+	          "type": "string"
+	        },
+	        "businessName": {
+	          "title": "businessName",
+	          "description": "Business's display name, if available.",
+	          "type": "string"
+	        },
+	        "streetAddress1": {
+	          "title": "streetAddress1",
+	          "description": "Address 1",
+	          "type": "string"
+	        },
+	        "streetAddress2": {
+	          "title": "streetAddress2",
+	          "description": "Address 2",
+	          "type": "string"
+	        },
+	        "city": {
+	          "title": "city",
+	          "description": "City",
+	          "type": "string"
+	        },
+	        "postalCode": {
+	          "title": "postalCode",
+	          "description": "Postal or Zip Code",
+	          "type": [
+	            "string",
+	            "number"
+	          ]
+	        },
+	        "region": {
+	          "title": "region",
+	          "description": "Province or State",
+	          "type": "string"
+	        },
+	        "regionCode": {
+	          "title": "provinceCode",
+	          "description": "Province or State Code",
+	          "type": "string"
+	        },
+	        "country": {
+	          "title": "country",
+	          "description": "Country",
+	          "type": "string"
+	        },
+	        "countryCode": {
+	          "title": "countryCode",
+	          "description": "Country Code",
+	          "type": "string"
+	        },
+	        "email": {
+	          "title": "email",
+	          "description": "Customer's Email associated with the Address",
+	          "type": "string"
+	        },
+	        "phone": {
+	          "title": "phone",
+	          "description": "Customer's Phone Number associated with the Address",
+	          "type": "string"
+	        }
+	      },
+	      "additionalProperties": false
+	    }
+	  },
+		"additionalProperties": false
+	},
+	"tags": [
+		"iQmetrix",
+		"Fulfillment",
+		"Get",
+		"OrderDetails",
+		"Dropship"
+	],
+	"audit": {}
+}

@@ -1,0 +1,112 @@
+{
+  "name": "iQmetrix DropShip Put Customer Address Schema",
+  "schemaDef": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "title": "Address (Object)",
+    "description": "The Address resource records information for a single customer address. You can define multiple addresses for a customer.",
+    "properties": {
+      "Id": {
+        "type": "string",
+        "title": "Id (GUID) Required on update only",
+        "description": "The address identifier.",
+        "pattern": "^[0-9-A-Fa-f]{32,36}$"
+      },
+      "CustomerId": {
+        "type": "string",
+        "title": "CustomerId (GUID) Required",
+        "description": "The identifier of the Customer associated with this address.",
+        "pattern": "^[0-9-A-Fa-f]{32,36}$"
+      },
+      "AddressTypeId": {
+        "type": "integer",
+        "title": "AddressTypeId (Integer) Required",
+        "description": "The code for the address type. For supported values, see AddressTypeId.",
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "CountryCode": {
+        "type": "string",
+        "title": "CountryCode (String) Required",
+        "description": "The ISO 3166-2 alpha-2 code for the country where this address is located. To see the list of these codes, see Getting All Countries."
+      },
+      "StateCode": {
+        "type": "string",
+        "title": "StateCode (String) Required",
+        "description": "The ISO 3166-2 alpha-2 Region code for the state or province where this address resides. To see a list of these codes, see Getting All Countries. The state code must actually belong to the specified country."
+      },
+      "AttentionTo": {
+        "type": "string",
+        "title": "AttentionTo (String) Optional",
+        "description": "The name of the person or department residing at this address."
+      },
+      "Default": {
+        "type": "boolean",
+        "title": "Default (Boolean) Optional",
+        "description": "A flag indicating whether this address is the default address for the customer."
+      },
+      "DoNotContact": {
+        "type": "boolean",
+        "title": "DoNotContact (Boolean) Optional",
+        "description": "A flag indicating whether this address is private and not to be used by any external systems (such as a marketing system). If not provided when the record is created, this field is set to true."
+      },
+      "Email": {
+        "type": "string",
+        "title": "Email (String) Optional",
+        "description": "The contact email for this address. If provided, the format of the address must be valid.",
+        "format": "email"
+      },
+      "Locality": {
+        "type": "string",
+        "title": "Locality (String) Optional",
+        "description": "The locality (for example, city, town, or hamlet) of this address."
+      },
+      "Notes": {
+        "type": "string",
+        "title": "Notes (String) Optional",
+        "description": "Any notes related to this address."
+      },
+      "Phone": {
+        "type": "string",
+        "title": "Phone (String) Optional",
+        "description": "The contact phone number for this address."
+      },
+      "PostalCode": {
+        "type": "string",
+        "title": "PostalCode (String) Optional",
+        "description": "The postal code/zip code for this address."
+      },
+      "PostOfficeBoxNumber": {
+        "type": "string",
+        "title": "PostOfficeBoxNumber (String) Optional",
+        "description": "The post office box number for this address."
+      },
+      "StreetAddress1": {
+        "type": "string",
+        "title": "StreetAddress1 (String) Optional",
+        "description": "Line 1 of the street address."
+      },
+      "StreetAddress2": {
+        "type": "string",
+        "title": "StreetAddress2 (String) Optional",
+        "description": "Line 2 of the street address."
+      }
+    },
+    "required": [
+      "CustomerId",
+      "AddressTypeId",
+      "CountryCode",
+      "StateCode"
+    ]
+  },
+  "tags": [
+    "Put",
+    "CustomerAddress"
+  ],
+  "audit": {}
+}
