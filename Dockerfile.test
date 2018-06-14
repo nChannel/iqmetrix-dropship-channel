@@ -1,0 +1,20 @@
+FROM node:9-slim
+LABEL maintainer="developers@nchannel.com"
+
+# Create app directory
+RUN mkdir -p /sdk
+WORKDIR /sdk
+
+# Create VOLUME for source
+COPY package.json /sdk
+
+COPY . /sdk
+
+RUN chown -R node:node /sdk
+
+RUN chmod +x ./hooks/*
+RUN chmod +x ./runTest.sh
+
+RUN npm install
+
+CMD [ "./runTest.sh" ]
