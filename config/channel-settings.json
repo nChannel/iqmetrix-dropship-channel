@@ -739,7 +739,7 @@
     "oauthAuthorizeUrl": "",
     "oauthTokenRequest": {
       "verb": "POST",
-      "url": "https://accountsdemo.iqmetrix.net/v1/oauth2/token",
+      "url": "https://accountsrc.iqmetrix.net/v1/oauth2/token",
       "headers": {
         "Content-Type": "application/x-www-form-urlencoded"
       },
@@ -765,7 +765,7 @@
     },
     "oauthRefreshTokenRequest": {
       "verb": "POST",
-      "url": "https://accountsdemo.iqmetrix.net/v1/oauth2/token",
+      "url": "https://accountsrc.iqmetrix.net/v1/oauth2/token",
       "headers": {
         "Content-Type": "application/x-www-form-urlencoded"
       },
