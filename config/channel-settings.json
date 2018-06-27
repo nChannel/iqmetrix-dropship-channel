@@ -290,6 +290,22 @@
         "referenceLocation": {
           "salesOrderBusinessReferences": [
             "DropshipOrder.TenderId"
+          ],
+          "customerBusinessReferences": [
+            "UniqueIdentifier"
+          ],
+          "customerAddressBusinessReferences": [
+            "StreetAddress1",
+            "StreetAddress2",
+            "Locality",
+            "StateCode",
+            "PostalCode",
+            "CountryCode"
+          ],
+          "customerContactBusinessReferences": [
+            "ContactMethodCategoryId",
+            "ContactMethodTypeId",
+            "Value"
           ]
         }
       }
@@ -439,6 +455,19 @@
         "referenceLocation": {
           "customerBusinessReferences": [
             "UniqueIdentifier"
+          ],
+          "customerAddressBusinessReferences": [
+            "StreetAddress1",
+            "StreetAddress2",
+            "Locality",
+            "StateCode",
+            "PostalCode",
+            "CountryCode"
+          ],
+          "customerContactBusinessReferences": [
+            "ContactMethodCategoryId",
+            "ContactMethodTypeId",
+            "Value"
           ]
         }
       }
