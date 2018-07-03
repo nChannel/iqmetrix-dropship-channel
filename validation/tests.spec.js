@@ -1,17 +1,17 @@
-"use strict";
+'use strict';
 
-let expect = require("chai").expect;
-let _ = require("lodash");
-let fs = require("fs");
-let nock = require("nock");
-let sinon = require("sinon");
-let proxyquire = require("proxyquire");
-let soapStub = require("soap/soap-stub");
-let functionCodes = require("./functions.json");
+let expect = require('chai').expect;
+let _ = require('lodash');
+let fs = require('fs');
+let nock = require('nock');
+let sinon = require('sinon');
+let proxyquire = require('proxyquire');
+let soapStub = require('soap/soap-stub');
+let functionCodes = require('./functions.json');
 
-if (fs.existsSync("config/channel-settings.json")) {
-  let channel_settings = require("../config/channel-settings.json");
-  let docsFile = require("../config/docs.json");
+if (fs.existsSync('config/channel-settings.json')) {
+  let channel_settings = require('../config/channel-settings.json');
+  let docsFile = require('../config/docs.json');
   let docs = docsFile.docs;
 
   let baseChannelProfile = {
@@ -21,17 +21,17 @@ if (fs.existsSync("config/channel-settings.json")) {
   let ncUtil = docs.ncUtil;
 
   // Check if functions exist
-  if (fs.existsSync("functions")) {
+  if (fs.existsSync('functions')) {
 
     // Get the functions for the current channel
     function getFunctions(path) {
       return fs.readdirSync(path).filter(function (file) {
-        return fs.statSync(path+"/"+file).isFile();
+        return fs.statSync(path+'/'+file).isFile();
       });
     }
 
     let untestedFunction = false;
-    let functions = getFunctions("functions");
+    let functions = getFunctions('functions');
 
     // Itereate through each function in the channel
     for (let j = 0; j < functions.length; j++) {
@@ -41,7 +41,7 @@ if (fs.existsSync("config/channel-settings.json")) {
       let stubFunction = functions[j].slice(0, -3);
 
       // Require function
-      let file = require("../functions/" + stubFunction);
+      let file = require('../functions/' + stubFunction);
 
       for (let i = 0; i < docs.length; i++) {
 
@@ -52,7 +52,7 @@ if (fs.existsSync("config/channel-settings.json")) {
           // Validate the function exists from the docs.json file. Error if it does not find the function.
           before((done) => {
             console.log(`Validating Function: ${functionName}`);
-            expect(file[functionName]).to.be.a("function");
+            expect(file[functionName]).to.be.a('function');
             done();
           })
 
@@ -89,16 +89,16 @@ if (fs.existsSync("config/channel-settings.json")) {
             describe(functionName, () => {
 
               afterEach((done) => {
-                if (docsFile.unitTestPackage === "nock") {
+                if (docsFile.unitTestPackage === 'nock') {
                   nock.cleanAll();
-                } else if (docsFile.unitTestPackage === "soap") {
+                } else if (docsFile.unitTestPackage === 'soap') {
                   soapStub.reset();
                 }
                 done();
               });
 
               if (docs[i].tests[t].ncStatusCode == 200) {
-                it("It should run a test successfully", (done) => {
+                it('It should run a test successfully', (done) => {
 
                   let scope = executeTest(docsFile.unitTestPackage, docs[i].tests[t]);
 
@@ -113,7 +113,7 @@ if (fs.existsSync("config/channel-settings.json")) {
               }
 
               if (docs[i].tests[t].ncStatusCode == 201) {
-                it("It should run a test successfully", (done) => {
+                it('It should run a test successfully', (done) => {
 
                   let scope = executeTest(docsFile.unitTestPackage, docs[i].tests[t]);
 
@@ -129,7 +129,7 @@ if (fs.existsSync("config/channel-settings.json")) {
 
               // 204 ncStatusCode test
               if (docs[i].tests[t].ncStatusCode == 204) {
-                it("It should run a test and return a 204 status code", (done) => {
+                it('It should run a test and return a 204 status code', (done) => {
 
                   let scope = executeTest(docsFile.unitTestPackage, docs[i].tests[t]);
 
@@ -145,7 +145,7 @@ if (fs.existsSync("config/channel-settings.json")) {
 
               // 409 ncStatusCode test
               if (docs[i].tests[t].ncStatusCode == 409) {
-                it("It should run a test and return a 409 status code", (done) => {
+                it('It should run a test and return a 409 status code', (done) => {
 
                   let scope = executeTest(docsFile.unitTestPackage, docs[i].tests[t]);
 
@@ -161,7 +161,7 @@ if (fs.existsSync("config/channel-settings.json")) {
 
               // 206 ncStatusCode test
               if (docs[i].tests[t].ncStatusCode == 206) {
-                it("It should run a test and return a 206 status code", (done) => {
+                it('It should run a test and return a 206 status code', (done) => {
 
                   let scope = executeTest(docsFile.unitTestPackage, docs[i].tests[t]);
 
@@ -176,7 +176,7 @@ if (fs.existsSync("config/channel-settings.json")) {
               }
 
               if (docs[i].tests[t].ncStatusCode == 400) {
-                it("It should fail with 400 when the endpoint returns a status code other than 200, 204, 400, 409, 429 or 500", (done) => {
+                it('It should fail with 400 when the endpoint returns a status code other than 200, 204, 400, 409, 429 or 500', (done) => {
 
                   let scope = executeTest(docsFile.unitTestPackage, docs[i].tests[t], 401);
 
@@ -191,7 +191,7 @@ if (fs.existsSync("config/channel-settings.json")) {
               }
 
               if (docs[i].tests[t].ncStatusCode == 429) {
-                it("It should return 429 our request is denied due to throttling", (done) => {
+                it('It should return 429 our request is denied due to throttling', (done) => {
                   let scope = executeTest(docsFile.unitTestPackage, docs[i].tests[t], 429);
 
                   file[functionName](docsFile.ncUtil, channelProfile, null, docs[i].tests[t].payload, (response) => {
@@ -205,7 +205,7 @@ if (fs.existsSync("config/channel-settings.json")) {
               }
 
               if (docs[i].tests[t].ncStatusCode == 500) {
-                it("It should return 500 when the test library returns and error", (done) => {
+                it('It should return 500 when the test library returns and error', (done) => {
                   let scope = executeTest(docsFile.unitTestPackage, docs[i].tests[t], 500, true);
 
                   file[functionName](docsFile.ncUtil, channelProfile, null, docs[i].tests[t].payload, (response) => {
@@ -219,7 +219,7 @@ if (fs.existsSync("config/channel-settings.json")) {
               }
 
               if (docs[i].tests[t].ncStatusCode == 500) {
-                it("It should return 500 when a server side error occurs", (done) => {
+                it('It should return 500 when a server side error occurs', (done) => {
                   let scope = executeTest(docsFile.unitTestPackage, docs[i].tests[t], 500);
 
                   file[functionName](docsFile.ncUtil, channelProfile, null, docs[i].tests[t].payload, (response) => {
@@ -232,38 +232,38 @@ if (fs.existsSync("config/channel-settings.json")) {
                 });
               }
 
-              it("It should fail with 400 when no docsFile.ncUtil is passed in", (done) => {
+              it('It should fail with 400 when no docsFile.ncUtil is passed in', (done) => {
                 file[functionName](null, channelProfile, null, docs[i].tests[t].payload, (response) => {
                   expect(response.ncStatusCode).to.be.equal(400);
-                  expect(response.payload).to.be.a("Object");
-                  expect(response.payload).to.have.property("error");
+                  expect(response.payload).to.be.a('Object');
+                  expect(response.payload).to.have.property('error');
                   done();
                 });
               });
 
-              it("It should fail with 400 when no channel profile is passed in", (done) => {
+              it('It should fail with 400 when no channel profile is passed in', (done) => {
                 file[functionName](docsFile.ncUtil, null, null, docs[i].tests[t].payload, (response) => {
                   expect(response.ncStatusCode).to.be.equal(400);
-                  expect(response.payload).to.be.a("Object");
-                  expect(response.payload).to.have.property("error");
+                  expect(response.payload).to.be.a('Object');
+                  expect(response.payload).to.have.property('error');
                   done();
                 });
               });
 
-              it("It should fail with 400 when no channel settings values are passed in", (done) => {
+              it('It should fail with 400 when no channel settings values are passed in', (done) => {
                 let errChannelProfile = {
                   channelAuthValues: channelProfile.channelAuthValues,
                   customerBusinessReferences: channelProfile.customerBusinessReferences
                 };
                 file[functionName](docsFile.ncUtil, errChannelProfile, null, docs[i].tests[t].payload, (response) => {
                   expect(response.ncStatusCode).to.be.equal(400);
-                  expect(response.payload).to.be.a("Object");
-                  expect(response.payload).to.have.property("error");
+                  expect(response.payload).to.be.a('Object');
+                  expect(response.payload).to.have.property('error');
                   done();
                 });
               });
 
-              it("It should fail with 400 when no channel settings protocol is passed in", (done) => {
+              it('It should fail with 400 when no channel settings protocol is passed in', (done) => {
                 let errChannelProfile = {
                   channelSettingsValues: {},
                   channelAuthValues: channelProfile.channelAuthValues,
@@ -271,39 +271,39 @@ if (fs.existsSync("config/channel-settings.json")) {
                 };
                 file[functionName](docsFile.ncUtil, errChannelProfile, null, docs[i].tests[t].payload, (response) => {
                   expect(response.ncStatusCode).to.be.equal(400);
-                  expect(response.payload).to.be.a("Object");
-                  expect(response.payload).to.have.property("error");
+                  expect(response.payload).to.be.a('Object');
+                  expect(response.payload).to.have.property('error');
                   done();
                 });
               });
 
-              it("It should fail with 400 when no channel auth values are passed in", (done) => {
+              it('It should fail with 400 when no channel auth values are passed in', (done) => {
                 let errChannelProfile = {
                   channelSettingsValues: channelProfile.channelSettingsValues,
                   customerBusinessReferences: channelProfile.customerBusinessReferences
                 };
                 file[functionName](docsFile.ncUtil, errChannelProfile, null, docs[i].tests[t].payload, (response) => {
                   expect(response.ncStatusCode).to.be.equal(400);
-                  expect(response.payload).to.be.a("Object");
-                  expect(response.payload).to.have.property("error");
+                  expect(response.payload).to.be.a('Object');
+                  expect(response.payload).to.have.property('error');
                   done();
                 });
               });
 
-              it("It should fail with 400 when no business reference is passed in", (done) => {
+              it('It should fail with 400 when no business reference is passed in', (done) => {
                 let errChannelProfile = {
                   channelSettingsValues: channelProfile.channelSettingsValues,
                   channelAuthValues: channelProfile.channelAuthValues
                 };
                 file[functionName](docsFile.ncUtil, errChannelProfile, null, docs[i].tests[t].payload, (response) => {
                   expect(response.ncStatusCode).to.be.equal(400);
-                  expect(response.payload).to.be.a("Object");
-                  expect(response.payload).to.have.property("error");
+                  expect(response.payload).to.be.a('Object');
+                  expect(response.payload).to.have.property('error');
                   done();
                 });
               });
 
-              it("It should fail with 400 when business references is not an array", (done) => {
+              it('It should fail with 400 when business references is not an array', (done) => {
                 let errChannelProfile = {
                   customerBusinessReferences: {},
                   channelSettingsValues: channelProfile.channelSettingsValues,
@@ -311,13 +311,13 @@ if (fs.existsSync("config/channel-settings.json")) {
                 };
                 file[functionName](docsFile.ncUtil, errChannelProfile, null, docs[i].tests[t].payload, (response) => {
                   expect(response.ncStatusCode).to.be.equal(400);
-                  expect(response.payload).to.be.a("Object");
-                  expect(response.payload).to.have.property("error");
+                  expect(response.payload).to.be.a('Object');
+                  expect(response.payload).to.have.property('error');
                   done();
                 });
               });
 
-              it("It should fail with 400 when business references is empty", (done) => {
+              it('It should fail with 400 when business references is empty', (done) => {
                 let errChannelProfile = {
                   customerBusinessReferences: [],
                   channelSettingsValues: channelProfile.channelSettingsValues,
@@ -325,69 +325,69 @@ if (fs.existsSync("config/channel-settings.json")) {
                 };
                 file[functionName](docsFile.ncUtil, errChannelProfile, null, docs[i].tests[t].payload, (response) => {
                   expect(response.ncStatusCode).to.be.equal(400);
-                  expect(response.payload).to.be.a("Object");
-                  expect(response.payload).to.have.property("error");
+                  expect(response.payload).to.be.a('Object');
+                  expect(response.payload).to.have.property('error');
                   done();
                 });
               });
 
-              it("It should fail with 400 when no payload is passed in", (done) => {
+              it('It should fail with 400 when no payload is passed in', (done) => {
                 file[functionName](docsFile.ncUtil, channelProfile, null, null, (response) => {
                   expect(response.ncStatusCode).to.be.equal(400);
-                  expect(response.payload).to.be.a("Object");
-                  expect(response.payload).to.have.property("error");
+                  expect(response.payload).to.be.a('Object');
+                  expect(response.payload).to.have.property('error');
                   done();
                 });
               });
 
-              it("It should fail with 400 because the payload does not contain a customer", (done) => {
+              it('It should fail with 400 because the payload does not contain a customer', (done) => {
                 let payload = {};
                 file[functionName](docsFile.ncUtil, channelProfile, null, payload, (response) => {
                   expect(response.ncStatusCode).to.be.equal(400);
-                  expect(response.payload).to.be.a("Object");
-                  expect(response.payload).to.have.property("error");
+                  expect(response.payload).to.be.a('Object');
+                  expect(response.payload).to.have.property('error');
                   done();
                 });
               });
 
-              it("It should throw an exception when no callback is provided", (done) => {
+              it('It should throw an exception when no callback is provided', (done) => {
                 expect(() => file[functionName](docsFile.ncUtil, channelProfile, null, docs[i].tests[t].payload, null))
-                  .to.throw(Error, "A callback function was not provided");
+                  .to.throw(Error, 'A callback function was not provided');
                 done();
               });
 
-              it("It should throw an exception when the callback is not a function", (done) => {
+              it('It should throw an exception when the callback is not a function', (done) => {
                 expect(() => file[functionName](docsFile.ncUtil, channelProfile, null, docs[i].tests[t].payload, {}))
-                  .to.throw(TypeError, "callback is not a function");
+                  .to.throw(TypeError, 'callback is not a function');
                 done();
               });
             });
           }
 
           function executeTest (unitTest, test, statusCode, errorTest = false) {
-            errorTest = (typeof errorTest === "boolean") ? errorTest : false;
-            if (unitTest === "nock") {
+            errorTest = (typeof errorTest === 'boolean') ? errorTest : false;
+            if (unitTest === 'nock') {
               let base = test.baseUri;
               let fake = nock(base);
               for (let i = 0; i < test.links.length; i++) {
                 base = test.links[i].baseUri ? test.links[i].baseUri : test.baseUri;
                 switch (test.links[i].method.toUpperCase()) {
-                  case "GET":
+                  case 'GET':
                     errorTest === false ?
                     nock(base).get(test.links[i].uri).reply(statusCode != null ? statusCode : test.links[i].statusCode, test.links[i].responsePayload) :
                     nock(base).get(test.links[i].uri).replyWithError({ message: "Internal Error" });
                     break;
-                  case "POST":
+                  case 'POST':
                     errorTest === false ?
                     nock(base).post(test.links[i].uri).reply(statusCode != null ? statusCode : test.links[i].statusCode, test.links[i].responsePayload) :
                     nock(base).post(test.links[i].uri).replyWithError({ message: "Internal Error" });
                     break;
-                  case "PUT":
+                  case 'PUT':
                     errorTest === false ?
                     nock(base).put(test.links[i].uri, test.payload.doc).reply(statusCode != null ? statusCode : test.links[i].statusCode, test.links[i].responsePayload) :
                     nock(base).put(test.links[i].uri, test.payload.doc).replyWithError({ message: "Internal Error" });
                     break;
-                  case "DELETE":
+                  case 'DELETE':
                     errorTest === false ?
                     nock(base).delete(test.links[i].uri).reply(statusCode != null ? statusCode : test.links[i].statusCode, test.links[i].responsePayload) :
                     nock(base).delete(test.links[i].uri).replyWithError({ message: "Internal Error" });
@@ -395,15 +395,15 @@ if (fs.existsSync("config/channel-settings.json")) {
                 }
               }
               return fake;
-            } else if (unitTest === "soap") {
-              let soap = require("soap");
+            } else if (unitTest === 'soap') {
+              let soap = require('soap');
               let wsdlUri = test.wsdlUri;
 
               let clientStub = {
                 wsdl: {
                   options: {
-                    attributesKey: "attributes",
-                    envelopeKey: "soap"
+                    attributesKey: 'attributes',
+                    envelopeKey: 'soap'
                   },
                   definitions: {
                     types: {},
@@ -470,12 +470,12 @@ if (fs.existsSync("config/channel-settings.json")) {
                 }
               }
 
-              soapStub.registerClient("fakeClient", wsdlUri, clientStub);
-              let fakeClient = soapStub.getStub("fakeClient");
+              soapStub.registerClient('fakeClient', wsdlUri, clientStub);
+              let fakeClient = soapStub.getStub('fakeClient');
 
               // Replace only the function in soap and any properties a stub
               soap.createClient = function(wsdl_uri, options, callback, endpoint) {
-                if (typeof options === "function") {
+                if (typeof options === 'function') {
                   endpoint = callback;
                   callback = options;
                   options = {};
@@ -487,7 +487,7 @@ if (fs.existsSync("config/channel-settings.json")) {
               let mod = {};
               mod[docsFile.packageName] = soap;
 
-              file = proxyquire("../functions/" + functionName, mod);
+              file = proxyquire('../functions/' + functionName, mod);
 
               return clientStub;
             } else {
@@ -497,7 +497,7 @@ if (fs.existsSync("config/channel-settings.json")) {
 
           function assertPackage(scope) {
             switch (docsFile.unitTestPackage.toLowerCase()) {
-              case "nock":
+              case 'nock':
                 expect(scope.isDone()).to.be.true;
                 break;
               default:
