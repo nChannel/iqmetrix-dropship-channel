@@ -1,6 +1,6 @@
 function GetProductMatrixFromQuery(ncUtil, channelProfile, flowContext, payload, callback) {
     const nc = require("./util/ncUtils");
-    const referenceLocations = ["productMatrixBusinessReferences"];
+    const referenceLocations = ["productBusinessReferences"];
     const stub = new nc.Stub("GetProductMatrixFromQuery", referenceLocations, ...arguments);
 
     validateFunction()

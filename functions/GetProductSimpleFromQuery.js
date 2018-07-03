@@ -1,6 +1,6 @@
 function GetProductSimpleFromQuery(ncUtil, channelProfile, flowContext, payload, callback) {
     const nc = require("./util/ncUtils");
-    const referenceLocations = ["productSimpleBusinessReferences"];
+    const referenceLocations = ["productBusinessReferences"];
     const stub = new nc.Stub("GetProductSimpleFromQuery", referenceLocations, ...arguments);
 
     validateFunction()

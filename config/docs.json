@@ -5501,7 +5501,7 @@
             }
           ],
           "channelProfile": {
-            "productSimpleBusinessReferences": ["VendorSku.Value"]
+            "productBusinessReferences": ["VendorSku.Value"]
           }
         },
         {
@@ -5601,7 +5601,7 @@
             }
           ],
           "channelProfile": {
-            "productSimpleBusinessReferences": ["VendorSku.Value"]
+            "productBusinessReferences": ["VendorSku.Value"]
           }
         },
         {
@@ -5628,7 +5628,7 @@
             }
           ],
           "channelProfile": {
-            "productSimpleBusinessReferences": ["VendorSku.Value"]
+            "productBusinessReferences": ["VendorSku.Value"]
           }
         },
         {
@@ -5660,7 +5660,7 @@
             }
           ],
           "channelProfile": {
-            "productSimpleBusinessReferences": ["VendorSku.Value"]
+            "productBusinessReferences": ["VendorSku.Value"]
           }
         },
         {
@@ -5692,7 +5692,7 @@
             }
           ],
           "channelProfile": {
-            "productSimpleBusinessReferences": ["VendorSku.Value"]
+            "productBusinessReferences": ["VendorSku.Value"]
           }
         }
       ]
@@ -5819,7 +5819,7 @@
             }
           ],
           "channelProfile": {
-            "productMatrixBusinessReferences": ["VendorSku.Value"]
+            "productBusinessReferences": ["VendorSku.Value"]
           }
         },
         {
@@ -5941,7 +5941,7 @@
             }
           ],
           "channelProfile": {
-            "productMatrixBusinessReferences": ["VendorSku.Value"]
+            "productBusinessReferences": ["VendorSku.Value"]
           }
         },
         {
@@ -5968,7 +5968,7 @@
             }
           ],
           "channelProfile": {
-            "productMatrixBusinessReferences": ["VendorSku.Value"]
+            "productBusinessReferences": ["VendorSku.Value"]
           }
         },
         {
@@ -6000,7 +6000,7 @@
             }
           ],
           "channelProfile": {
-            "productMatrixBusinessReferences": ["VendorSku.Value"]
+            "productBusinessReferences": ["VendorSku.Value"]
           }
         },
         {
@@ -6032,7 +6032,7 @@
             }
           ],
           "channelProfile": {
-            "productMatrixBusinessReferences": ["VendorSku.Value"]
+            "productBusinessReferences": ["VendorSku.Value"]
           }
         }
       ]
