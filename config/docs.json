@@ -6045,7 +6045,7 @@
           "payload": {
             "doc": {
               "modifiedDateRange": {
-                "startDateGMT": "2010-03-08T00:28:44.183Z",
+                "startDateGMT": "2010-03-06T00:28:44.183Z",
                 "endDateGMT": "2019-03-08T00:28:44.183Z"
               }
             }
