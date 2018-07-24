@@ -5816,6 +5816,366 @@
                   }
                 }
               }
+            },
+            {
+              "baseUri": "https://productlibrarydemo.iqmetrix.net",
+              "uri": "/v1/products/M5970",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": {
+                "Id": "M9411",
+                "Name": "iPhone 7 Adidas Dual Layer Hard Cover Case",
+                "MasterProductId": 9411,
+                "VariationId": null,
+                "Owner": null,
+                "CanonicalClassification": {
+                  "TreeId": 1,
+                  "Id": 40,
+                  "Name": "Cases",
+                  "ParentCategories": [
+                    {
+                      "Id": 12,
+                      "Name": "Accessories"
+                    },
+                    {
+                      "Id": 37,
+                      "Name": "Cases & Protection"
+                    }
+                  ]
+                },
+                "ShortDescription": "This impact-resistant Adidas Originals Dual Layer Hard Cover Case.",
+                "LongDescription": "<p>Safeguard your iPhone 7 in style. This Dual Layered Hard Case (Taupe) features the Adidas logo on a bold canvas.</p>\n<p>Designed to give you easy access to every button and port, this protective iPhone 7 case has a hard, impact-resistant TPU shell to keep you covered. Impact-resistant TPU helps protect your iPhone against drops while the raised edge helps keep your screen scratch free.</p>",
+                "Manufacturer": {
+                  "Id": 99773,
+                  "Name": "adidas"
+                },
+                "MSRP": null,
+                "ReleaseDate": "2017-04-18T00:00:00Z",
+                "VariationInfo": [
+                  {
+                    "VariationId": 1,
+                    "Slug": "M9411-V1",
+                    "Fields": []
+                  },
+                  {
+                    "VariationId": 2,
+                    "Slug": "M9411-V2",
+                    "Fields": []
+                  },
+                  {
+                    "VariationId": 3,
+                    "Slug": "M9411-V3",
+                    "Fields": []
+                  },
+                  {
+                    "VariationId": 4,
+                    "Slug": "M9411-V4",
+                    "Fields": []
+                  }
+                ],
+                "Specifications": [
+                  {
+                    "Id": "6e70f04e-d8f0-4c2c-bf09-a0367bc76412",
+                    "Name": "Dimensions",
+                    "Fields": [
+                      {
+                        "Id": 40,
+                        "StringId": "Height",
+                        "DisplayName": "Height",
+                        "Name": "Height",
+                        "Value": "5.44",
+                        "Type": "Float",
+                        "Unit": "inches"
+                      },
+                      {
+                        "Id": 41,
+                        "StringId": "Width",
+                        "DisplayName": "Width",
+                        "Name": "Width",
+                        "Value": "2.64",
+                        "Type": "Float",
+                        "Unit": "inches"
+                      },
+                      {
+                        "Id": 42,
+                        "StringId": "Depth",
+                        "DisplayName": "Depth",
+                        "Name": "Depth",
+                        "Value": "0.28",
+                        "Type": "Float",
+                        "Unit": "inches"
+                      }
+                    ]
+                  },
+                  {
+                    "Id": "144f294c-af12-46c4-912a-a0c796d22abc",
+                    "Name": "Features",
+                    "Fields": [
+                      {
+                        "Id": 10,
+                        "StringId": "Material",
+                        "DisplayName": "Material",
+                        "Name": "Material",
+                        "Value": "Polycarbonate / Polyurethane",
+                        "Type": "TextSingleLine",
+                        "Unit": ""
+                      },
+                      {
+                        "Id": 89,
+                        "StringId": "Screen Protector Included",
+                        "DisplayName": "Screen Protector Included",
+                        "Name": "Screen Protector Included",
+                        "Value": "No",
+                        "Type": "YesNo",
+                        "Unit": ""
+                      }
+                    ]
+                  },
+                  {
+                    "Id": "6ae2ca33-ea03-4c23-ab23-fe245c3635d8",
+                    "Name": "Packaging Dimensions",
+                    "Fields": [
+                      {
+                        "Id": 150,
+                        "StringId": "Packaging Width",
+                        "DisplayName": "Packaging Width",
+                        "Name": "Packaging Width",
+                        "Value": "4.13",
+                        "Type": "Float",
+                        "Unit": "inches"
+                      }
+                    ]
+                  }
+                ],
+                "Assets": [
+                  {
+                    "Id": "8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
+                    "Name": "tmp3E4D.png",
+                    "Uri": "https://amsrc.iqmetrix.net/images/8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
+                    "Type": "Image",
+                    "IsHidden": false,
+                    "IsRolledUp": true
+                  },
+                  {
+                    "Id": "f101dbf8-6bc5-4d1b-a430-a80a57b74210",
+                    "Name": "tmp208E.png",
+                    "Uri": "https://amsrc.iqmetrix.net/images/f101dbf8-6bc5-4d1b-a430-a80a57b74210",
+                    "Type": "Image",
+                    "IsHidden": false,
+                    "IsRolledUp": true
+                  },
+                  {
+                    "Id": "0cb5f9f7-2dea-4c34-9f62-1a0e3511b196",
+                    "Name": "tmp2C67.png",
+                    "Uri": "https://amsrc.iqmetrix.net/images/0cb5f9f7-2dea-4c34-9f62-1a0e3511b196",
+                    "Type": "Image",
+                    "IsHidden": false,
+                    "IsRolledUp": true
+                  },
+                  {
+                    "Id": "8e482267-f30c-47ec-b9e4-a4ecdc60c5d0",
+                    "Name": "tmp3552.png",
+                    "Uri": "https://amsrc.iqmetrix.net/images/8e482267-f30c-47ec-b9e4-a4ecdc60c5d0",
+                    "Type": "Image",
+                    "IsHidden": false,
+                    "IsRolledUp": true
+                  }
+                ],
+                "ColorDefinition": null,
+                "HeroShotUri": "https://amsrc.iqmetrix.net/images/8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
+                "HeroShotId": "8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
+                "ManufacturerSkus": [],
+                "VendorSkus": [],
+                "UpcCodes": [],
+                "Region": null,
+                "Entity": null,
+                "HasColor": true,
+                "IsLinkedToCuratedProduct": true,
+                "IsSaleable": false,
+                "IsArchived": false,
+                "Version": 14
+              }
+            },
+            {
+              "baseUri": "https://productlibrarydemo.iqmetrix.net",
+              "uri": "/v1/products/M6855",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": {
+                "Id": "M9411",
+                "Name": "iPhone 7 Adidas Dual Layer Hard Cover Case",
+                "MasterProductId": 9411,
+                "VariationId": null,
+                "Owner": null,
+                "CanonicalClassification": {
+                  "TreeId": 1,
+                  "Id": 40,
+                  "Name": "Cases",
+                  "ParentCategories": [
+                    {
+                      "Id": 12,
+                      "Name": "Accessories"
+                    },
+                    {
+                      "Id": 37,
+                      "Name": "Cases & Protection"
+                    }
+                  ]
+                },
+                "ShortDescription": "This impact-resistant Adidas Originals Dual Layer Hard Cover Case.",
+                "LongDescription": "<p>Safeguard your iPhone 7 in style. This Dual Layered Hard Case (Taupe) features the Adidas logo on a bold canvas.</p>\n<p>Designed to give you easy access to every button and port, this protective iPhone 7 case has a hard, impact-resistant TPU shell to keep you covered. Impact-resistant TPU helps protect your iPhone against drops while the raised edge helps keep your screen scratch free.</p>",
+                "Manufacturer": {
+                  "Id": 99773,
+                  "Name": "adidas"
+                },
+                "MSRP": null,
+                "ReleaseDate": "2017-04-18T00:00:00Z",
+                "VariationInfo": [
+                  {
+                    "VariationId": 1,
+                    "Slug": "M9411-V1",
+                    "Fields": []
+                  },
+                  {
+                    "VariationId": 2,
+                    "Slug": "M9411-V2",
+                    "Fields": []
+                  },
+                  {
+                    "VariationId": 3,
+                    "Slug": "M9411-V3",
+                    "Fields": []
+                  },
+                  {
+                    "VariationId": 4,
+                    "Slug": "M9411-V4",
+                    "Fields": []
+                  }
+                ],
+                "Specifications": [
+                  {
+                    "Id": "6e70f04e-d8f0-4c2c-bf09-a0367bc76412",
+                    "Name": "Dimensions",
+                    "Fields": [
+                      {
+                        "Id": 40,
+                        "StringId": "Height",
+                        "DisplayName": "Height",
+                        "Name": "Height",
+                        "Value": "5.44",
+                        "Type": "Float",
+                        "Unit": "inches"
+                      },
+                      {
+                        "Id": 41,
+                        "StringId": "Width",
+                        "DisplayName": "Width",
+                        "Name": "Width",
+                        "Value": "2.64",
+                        "Type": "Float",
+                        "Unit": "inches"
+                      },
+                      {
+                        "Id": 42,
+                        "StringId": "Depth",
+                        "DisplayName": "Depth",
+                        "Name": "Depth",
+                        "Value": "0.28",
+                        "Type": "Float",
+                        "Unit": "inches"
+                      }
+                    ]
+                  },
+                  {
+                    "Id": "144f294c-af12-46c4-912a-a0c796d22abc",
+                    "Name": "Features",
+                    "Fields": [
+                      {
+                        "Id": 10,
+                        "StringId": "Material",
+                        "DisplayName": "Material",
+                        "Name": "Material",
+                        "Value": "Polycarbonate / Polyurethane",
+                        "Type": "TextSingleLine",
+                        "Unit": ""
+                      },
+                      {
+                        "Id": 89,
+                        "StringId": "Screen Protector Included",
+                        "DisplayName": "Screen Protector Included",
+                        "Name": "Screen Protector Included",
+                        "Value": "No",
+                        "Type": "YesNo",
+                        "Unit": ""
+                      }
+                    ]
+                  },
+                  {
+                    "Id": "6ae2ca33-ea03-4c23-ab23-fe245c3635d8",
+                    "Name": "Packaging Dimensions",
+                    "Fields": [
+                      {
+                        "Id": 150,
+                        "StringId": "Packaging Width",
+                        "DisplayName": "Packaging Width",
+                        "Name": "Packaging Width",
+                        "Value": "4.13",
+                        "Type": "Float",
+                        "Unit": "inches"
+                      }
+                    ]
+                  }
+                ],
+                "Assets": [
+                  {
+                    "Id": "8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
+                    "Name": "tmp3E4D.png",
+                    "Uri": "https://amsrc.iqmetrix.net/images/8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
+                    "Type": "Image",
+                    "IsHidden": false,
+                    "IsRolledUp": true
+                  },
+                  {
+                    "Id": "f101dbf8-6bc5-4d1b-a430-a80a57b74210",
+                    "Name": "tmp208E.png",
+                    "Uri": "https://amsrc.iqmetrix.net/images/f101dbf8-6bc5-4d1b-a430-a80a57b74210",
+                    "Type": "Image",
+                    "IsHidden": false,
+                    "IsRolledUp": true
+                  },
+                  {
+                    "Id": "0cb5f9f7-2dea-4c34-9f62-1a0e3511b196",
+                    "Name": "tmp2C67.png",
+                    "Uri": "https://amsrc.iqmetrix.net/images/0cb5f9f7-2dea-4c34-9f62-1a0e3511b196",
+                    "Type": "Image",
+                    "IsHidden": false,
+                    "IsRolledUp": true
+                  },
+                  {
+                    "Id": "8e482267-f30c-47ec-b9e4-a4ecdc60c5d0",
+                    "Name": "tmp3552.png",
+                    "Uri": "https://amsrc.iqmetrix.net/images/8e482267-f30c-47ec-b9e4-a4ecdc60c5d0",
+                    "Type": "Image",
+                    "IsHidden": false,
+                    "IsRolledUp": true
+                  }
+                ],
+                "ColorDefinition": null,
+                "HeroShotUri": "https://amsrc.iqmetrix.net/images/8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
+                "HeroShotId": "8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
+                "ManufacturerSkus": [],
+                "VendorSkus": [],
+                "UpcCodes": [],
+                "Region": null,
+                "Entity": null,
+                "HasColor": true,
+                "IsLinkedToCuratedProduct": true,
+                "IsSaleable": false,
+                "IsArchived": false,
+                "Version": 14
+              }
             }
           ],
           "channelProfile": {
@@ -5937,6 +6297,366 @@
                     ]
                   }
                 }
+              }
+            },
+            {
+              "baseUri": "https://productlibrarydemo.iqmetrix.net",
+              "uri": "/v1/products/M5970",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": {
+                "Id": "M9411",
+                "Name": "iPhone 7 Adidas Dual Layer Hard Cover Case",
+                "MasterProductId": 9411,
+                "VariationId": null,
+                "Owner": null,
+                "CanonicalClassification": {
+                  "TreeId": 1,
+                  "Id": 40,
+                  "Name": "Cases",
+                  "ParentCategories": [
+                    {
+                      "Id": 12,
+                      "Name": "Accessories"
+                    },
+                    {
+                      "Id": 37,
+                      "Name": "Cases & Protection"
+                    }
+                  ]
+                },
+                "ShortDescription": "This impact-resistant Adidas Originals Dual Layer Hard Cover Case.",
+                "LongDescription": "<p>Safeguard your iPhone 7 in style. This Dual Layered Hard Case (Taupe) features the Adidas logo on a bold canvas.</p>\n<p>Designed to give you easy access to every button and port, this protective iPhone 7 case has a hard, impact-resistant TPU shell to keep you covered. Impact-resistant TPU helps protect your iPhone against drops while the raised edge helps keep your screen scratch free.</p>",
+                "Manufacturer": {
+                  "Id": 99773,
+                  "Name": "adidas"
+                },
+                "MSRP": null,
+                "ReleaseDate": "2017-04-18T00:00:00Z",
+                "VariationInfo": [
+                  {
+                    "VariationId": 1,
+                    "Slug": "M9411-V1",
+                    "Fields": []
+                  },
+                  {
+                    "VariationId": 2,
+                    "Slug": "M9411-V2",
+                    "Fields": []
+                  },
+                  {
+                    "VariationId": 3,
+                    "Slug": "M9411-V3",
+                    "Fields": []
+                  },
+                  {
+                    "VariationId": 4,
+                    "Slug": "M9411-V4",
+                    "Fields": []
+                  }
+                ],
+                "Specifications": [
+                  {
+                    "Id": "6e70f04e-d8f0-4c2c-bf09-a0367bc76412",
+                    "Name": "Dimensions",
+                    "Fields": [
+                      {
+                        "Id": 40,
+                        "StringId": "Height",
+                        "DisplayName": "Height",
+                        "Name": "Height",
+                        "Value": "5.44",
+                        "Type": "Float",
+                        "Unit": "inches"
+                      },
+                      {
+                        "Id": 41,
+                        "StringId": "Width",
+                        "DisplayName": "Width",
+                        "Name": "Width",
+                        "Value": "2.64",
+                        "Type": "Float",
+                        "Unit": "inches"
+                      },
+                      {
+                        "Id": 42,
+                        "StringId": "Depth",
+                        "DisplayName": "Depth",
+                        "Name": "Depth",
+                        "Value": "0.28",
+                        "Type": "Float",
+                        "Unit": "inches"
+                      }
+                    ]
+                  },
+                  {
+                    "Id": "144f294c-af12-46c4-912a-a0c796d22abc",
+                    "Name": "Features",
+                    "Fields": [
+                      {
+                        "Id": 10,
+                        "StringId": "Material",
+                        "DisplayName": "Material",
+                        "Name": "Material",
+                        "Value": "Polycarbonate / Polyurethane",
+                        "Type": "TextSingleLine",
+                        "Unit": ""
+                      },
+                      {
+                        "Id": 89,
+                        "StringId": "Screen Protector Included",
+                        "DisplayName": "Screen Protector Included",
+                        "Name": "Screen Protector Included",
+                        "Value": "No",
+                        "Type": "YesNo",
+                        "Unit": ""
+                      }
+                    ]
+                  },
+                  {
+                    "Id": "6ae2ca33-ea03-4c23-ab23-fe245c3635d8",
+                    "Name": "Packaging Dimensions",
+                    "Fields": [
+                      {
+                        "Id": 150,
+                        "StringId": "Packaging Width",
+                        "DisplayName": "Packaging Width",
+                        "Name": "Packaging Width",
+                        "Value": "4.13",
+                        "Type": "Float",
+                        "Unit": "inches"
+                      }
+                    ]
+                  }
+                ],
+                "Assets": [
+                  {
+                    "Id": "8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
+                    "Name": "tmp3E4D.png",
+                    "Uri": "https://amsrc.iqmetrix.net/images/8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
+                    "Type": "Image",
+                    "IsHidden": false,
+                    "IsRolledUp": true
+                  },
+                  {
+                    "Id": "f101dbf8-6bc5-4d1b-a430-a80a57b74210",
+                    "Name": "tmp208E.png",
+                    "Uri": "https://amsrc.iqmetrix.net/images/f101dbf8-6bc5-4d1b-a430-a80a57b74210",
+                    "Type": "Image",
+                    "IsHidden": false,
+                    "IsRolledUp": true
+                  },
+                  {
+                    "Id": "0cb5f9f7-2dea-4c34-9f62-1a0e3511b196",
+                    "Name": "tmp2C67.png",
+                    "Uri": "https://amsrc.iqmetrix.net/images/0cb5f9f7-2dea-4c34-9f62-1a0e3511b196",
+                    "Type": "Image",
+                    "IsHidden": false,
+                    "IsRolledUp": true
+                  },
+                  {
+                    "Id": "8e482267-f30c-47ec-b9e4-a4ecdc60c5d0",
+                    "Name": "tmp3552.png",
+                    "Uri": "https://amsrc.iqmetrix.net/images/8e482267-f30c-47ec-b9e4-a4ecdc60c5d0",
+                    "Type": "Image",
+                    "IsHidden": false,
+                    "IsRolledUp": true
+                  }
+                ],
+                "ColorDefinition": null,
+                "HeroShotUri": "https://amsrc.iqmetrix.net/images/8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
+                "HeroShotId": "8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
+                "ManufacturerSkus": [],
+                "VendorSkus": [],
+                "UpcCodes": [],
+                "Region": null,
+                "Entity": null,
+                "HasColor": true,
+                "IsLinkedToCuratedProduct": true,
+                "IsSaleable": false,
+                "IsArchived": false,
+                "Version": 14
+              }
+            },
+            {
+              "baseUri": "https://productlibrarydemo.iqmetrix.net",
+              "uri": "/v1/products/M6855",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": {
+                "Id": "M9411",
+                "Name": "iPhone 7 Adidas Dual Layer Hard Cover Case",
+                "MasterProductId": 9411,
+                "VariationId": null,
+                "Owner": null,
+                "CanonicalClassification": {
+                  "TreeId": 1,
+                  "Id": 40,
+                  "Name": "Cases",
+                  "ParentCategories": [
+                    {
+                      "Id": 12,
+                      "Name": "Accessories"
+                    },
+                    {
+                      "Id": 37,
+                      "Name": "Cases & Protection"
+                    }
+                  ]
+                },
+                "ShortDescription": "This impact-resistant Adidas Originals Dual Layer Hard Cover Case.",
+                "LongDescription": "<p>Safeguard your iPhone 7 in style. This Dual Layered Hard Case (Taupe) features the Adidas logo on a bold canvas.</p>\n<p>Designed to give you easy access to every button and port, this protective iPhone 7 case has a hard, impact-resistant TPU shell to keep you covered. Impact-resistant TPU helps protect your iPhone against drops while the raised edge helps keep your screen scratch free.</p>",
+                "Manufacturer": {
+                  "Id": 99773,
+                  "Name": "adidas"
+                },
+                "MSRP": null,
+                "ReleaseDate": "2017-04-18T00:00:00Z",
+                "VariationInfo": [
+                  {
+                    "VariationId": 1,
+                    "Slug": "M9411-V1",
+                    "Fields": []
+                  },
+                  {
+                    "VariationId": 2,
+                    "Slug": "M9411-V2",
+                    "Fields": []
+                  },
+                  {
+                    "VariationId": 3,
+                    "Slug": "M9411-V3",
+                    "Fields": []
+                  },
+                  {
+                    "VariationId": 4,
+                    "Slug": "M9411-V4",
+                    "Fields": []
+                  }
+                ],
+                "Specifications": [
+                  {
+                    "Id": "6e70f04e-d8f0-4c2c-bf09-a0367bc76412",
+                    "Name": "Dimensions",
+                    "Fields": [
+                      {
+                        "Id": 40,
+                        "StringId": "Height",
+                        "DisplayName": "Height",
+                        "Name": "Height",
+                        "Value": "5.44",
+                        "Type": "Float",
+                        "Unit": "inches"
+                      },
+                      {
+                        "Id": 41,
+                        "StringId": "Width",
+                        "DisplayName": "Width",
+                        "Name": "Width",
+                        "Value": "2.64",
+                        "Type": "Float",
+                        "Unit": "inches"
+                      },
+                      {
+                        "Id": 42,
+                        "StringId": "Depth",
+                        "DisplayName": "Depth",
+                        "Name": "Depth",
+                        "Value": "0.28",
+                        "Type": "Float",
+                        "Unit": "inches"
+                      }
+                    ]
+                  },
+                  {
+                    "Id": "144f294c-af12-46c4-912a-a0c796d22abc",
+                    "Name": "Features",
+                    "Fields": [
+                      {
+                        "Id": 10,
+                        "StringId": "Material",
+                        "DisplayName": "Material",
+                        "Name": "Material",
+                        "Value": "Polycarbonate / Polyurethane",
+                        "Type": "TextSingleLine",
+                        "Unit": ""
+                      },
+                      {
+                        "Id": 89,
+                        "StringId": "Screen Protector Included",
+                        "DisplayName": "Screen Protector Included",
+                        "Name": "Screen Protector Included",
+                        "Value": "No",
+                        "Type": "YesNo",
+                        "Unit": ""
+                      }
+                    ]
+                  },
+                  {
+                    "Id": "6ae2ca33-ea03-4c23-ab23-fe245c3635d8",
+                    "Name": "Packaging Dimensions",
+                    "Fields": [
+                      {
+                        "Id": 150,
+                        "StringId": "Packaging Width",
+                        "DisplayName": "Packaging Width",
+                        "Name": "Packaging Width",
+                        "Value": "4.13",
+                        "Type": "Float",
+                        "Unit": "inches"
+                      }
+                    ]
+                  }
+                ],
+                "Assets": [
+                  {
+                    "Id": "8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
+                    "Name": "tmp3E4D.png",
+                    "Uri": "https://amsrc.iqmetrix.net/images/8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
+                    "Type": "Image",
+                    "IsHidden": false,
+                    "IsRolledUp": true
+                  },
+                  {
+                    "Id": "f101dbf8-6bc5-4d1b-a430-a80a57b74210",
+                    "Name": "tmp208E.png",
+                    "Uri": "https://amsrc.iqmetrix.net/images/f101dbf8-6bc5-4d1b-a430-a80a57b74210",
+                    "Type": "Image",
+                    "IsHidden": false,
+                    "IsRolledUp": true
+                  },
+                  {
+                    "Id": "0cb5f9f7-2dea-4c34-9f62-1a0e3511b196",
+                    "Name": "tmp2C67.png",
+                    "Uri": "https://amsrc.iqmetrix.net/images/0cb5f9f7-2dea-4c34-9f62-1a0e3511b196",
+                    "Type": "Image",
+                    "IsHidden": false,
+                    "IsRolledUp": true
+                  },
+                  {
+                    "Id": "8e482267-f30c-47ec-b9e4-a4ecdc60c5d0",
+                    "Name": "tmp3552.png",
+                    "Uri": "https://amsrc.iqmetrix.net/images/8e482267-f30c-47ec-b9e4-a4ecdc60c5d0",
+                    "Type": "Image",
+                    "IsHidden": false,
+                    "IsRolledUp": true
+                  }
+                ],
+                "ColorDefinition": null,
+                "HeroShotUri": "https://amsrc.iqmetrix.net/images/8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
+                "HeroShotId": "8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
+                "ManufacturerSkus": [],
+                "VendorSkus": [],
+                "UpcCodes": [],
+                "Region": null,
+                "Entity": null,
+                "HasColor": true,
+                "IsLinkedToCuratedProduct": true,
+                "IsSaleable": false,
+                "IsArchived": false,
+                "Version": 14
               }
             }
           ],

@@ -94,11 +94,17 @@
           "ProductDetails": {
             "$ref": "#/definitions/ProductDetails"
           },
+          "VendorSku": {
+            "$ref": "#/definitions/VendorSku"
+          },
           "Pricing": {
             "$ref": "#/definitions/Pricing"
           },
           "SupplierSku": {
             "$ref": "#/definitions/SupplierSku"
+          },
+          "MatrixChildren": {
+            "$ref": "#/definitions/MatrixChildren"
           }
         }
       },
@@ -582,37 +588,7 @@
             "title": "VendorSkus (Array[Sku])",
             "description": "Vendor SKUs",
             "items": {
-              "type": "object",
-              "properties": {
-                "Value": {
-                  "type": "string",
-                  "title": "Value (String)",
-                  "description": "Value"
-                },
-                "Description": {
-                  "type": "string",
-                  "title": "Description (String)",
-                  "description": "Description"
-                },
-                "Entity": {
-                  "type": "object",
-                  "title": "Entity (object)",
-                  "description": "Identifier for an Entity this SKU is associated with",
-                  "properties": {
-                    "Id": {
-                      "type": "integer",
-                      "title": "Id (Integer)",
-                      "description":
-                        "Identifier of an Entity used for Entity Revisions. See Revisions for more information"
-                    },
-                    "Name": {
-                      "type": "string",
-                      "title": "Name (String)",
-                      "description": "Entity name"
-                    }
-                  }
-                }
-              }
+              "$ref": "#/definitions/VendorSku"
             }
           },
           "UpcCodes": {
@@ -710,6 +686,38 @@
             "type": "integer",
             "title": "Version (Integer)",
             "description": "Latest revision number"
+          }
+        }
+      },
+      "VendorSku": {
+        "type": "object",
+        "properties": {
+          "Value": {
+            "type": "string",
+            "title": "Value (String)",
+            "description": "Value"
+          },
+          "Description": {
+            "type": "string",
+            "title": "Description (String)",
+            "description": "Description"
+          },
+          "Entity": {
+            "type": "object",
+            "title": "Entity (object)",
+            "description": "Identifier for an Entity this SKU is associated with",
+            "properties": {
+              "Id": {
+                "type": "integer",
+                "title": "Id (Integer)",
+                "description": "Identifier of an Entity used for Entity Revisions. See Revisions for more information"
+              },
+              "Name": {
+                "type": "string",
+                "title": "Name (String)",
+                "description": "Entity name"
+              }
+            }
           }
         }
       },
@@ -835,6 +843,12 @@
             "type": "string",
             "title": "LastModifiedDateUtc (DateTime)"
           }
+        }
+      },
+      "MatrixChildren": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/CatalogItem"
         }
       }
     }
