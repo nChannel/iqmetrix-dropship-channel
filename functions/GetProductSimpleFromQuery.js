@@ -188,9 +188,9 @@ function GetProductSimpleFromQuery(ncUtil, channelProfile, flowContext, payload,
             products.forEach(product => {
                 stub.out.payload.push({
                     doc: product,
-                    productSimpleRemoteID: product.CatalogItemId,
-                    productSimpleBusinessReference: nc.extractBusinessReferences(
-                        stub.channelProfile.productSimpleBusinessReferences,
+                    productRemoteID: product.CatalogItemId,
+                    productBusinessReference: nc.extractBusinessReferences(
+                        stub.channelProfile.productBusinessReferences,
                         product
                     )
                 });

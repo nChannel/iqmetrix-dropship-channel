@@ -222,7 +222,7 @@ function GetProductPricingFromQuery(ncUtil, channelProfile, flowContext, payload
                     doc: product,
                     productPricingRemoteID: product.CatalogItemId,
                     productPricingBusinessReference: nc.extractBusinessReferences(
-                        stub.channelProfileproductPricingBusinessReferences,
+                        stub.channelProfile.productPricingBusinessReferences,
                         product
                     )
                 });
