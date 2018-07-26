@@ -233,7 +233,7 @@ function GetProductMatrixFromQuery(ncUtil, channelProfile, flowContext, payload,
       });
 
       matrixProducts.forEach(matrixProduct => {
-        matrixProduct.MatrixChildren = products.filter(
+        matrixProduct.matrixChildren = products.filter(
           p => p.Slug.split("-")[0] === matrixProduct.Slug && p.Slug.split("-")[1] != null
         );
       });

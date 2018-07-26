@@ -103,8 +103,8 @@
           "SupplierSku": {
             "$ref": "#/definitions/SupplierSku"
           },
-          "MatrixChildren": {
-            "$ref": "#/definitions/MatrixChildren"
+          "matrixChildren": {
+            "$ref": "#/definitions/matrixChildren"
           }
         }
       },
@@ -845,7 +845,7 @@
           }
         }
       },
-      "MatrixChildren": {
+      "matrixChildren": {
         "type": "array",
         "items": {
           "$ref": "#/definitions/CatalogItem"
