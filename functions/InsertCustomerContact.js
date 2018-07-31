@@ -39,6 +39,8 @@ function InsertCustomerContact(ncUtil, channelProfile, flowContext, payload, cal
     async function insertCustomerContact() {
         logInfo("Inserting new customer contact method...");
 
+        stub.payload.doc.CustomerId = stub.payload.customerRemoteID;
+
         return await stub.request.post({
             url: `${stub.channelProfile.channelSettingsValues.protocol}://crm${
                 stub.channelProfile.channelSettingsValues.environment
