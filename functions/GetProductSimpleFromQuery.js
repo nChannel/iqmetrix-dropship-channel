@@ -173,7 +173,7 @@ function GetProductSimpleFromQuery(ncUtil, channelProfile, flowContext, payload,
         productList.forEach(product => {
             const supplierId = product.subscriptionList.supplierId;
             const VendorSkus = product.ProductDetails.VendorSkus.filter(vendor => {
-                return vendor.Entity && vendor.Entity.Id === supplierId;
+                return vendor.Entity && vendor.Entity.Id == supplierId;
             });
             product.VendorSku = VendorSkus[0];
         });
