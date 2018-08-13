@@ -157,54 +157,50 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
   }
 
   async function getFilteredMatrixItems(items, subscriptionList) {
-    return await Promise.all(
-      items.map(async item => {
-        item.ncSubscriptionList = subscriptionList;
-        item.ncVendorSku = item.Identifiers.find(
-          i => i.SkuType === "VendorSKU" && i.Entity.Id == subscriptionList.supplierId
-        );
+    return await Promise.all(items
+        .map(async item => {
+          item.ncSubscriptionList = subscriptionList;
+          item.ncVendorSku = item.Identifiers.find(i => i.SkuType === "VendorSKU" && i.Entity.Id == subscriptionList.supplierId);
 
-        item.Products = await getFilteredVariants(item.Products, subscriptionList);
+          item.Products = await getFilteredVariants(item.Products, subscriptionList);
 
-        let isMatrixItem = false;
-        if (singleVariantIsSimple) {
-          if (nc.isArray(item.Products) && item.Products.length > 1) {
+          let isMatrixItem = false;
+          if (singleVariantIsSimple) {
+            if (nc.isArray(item.Products) && item.Products.length > 1) {
+              isMatrixItem = true;
+            }
+          } else if (nc.isNonEmptyArray(item.Products)) {
             isMatrixItem = true;
           }
-        } else if (nc.isNonEmptyArray(item.Products)) {
-          isMatrixItem = true;
-        }
 
-        if (isMatrixItem) {
-          if (item.ncVendorSku && item.ncVendorSku.Sku) {
-            let vendorSkuDetail = await getVendorSkuDetail(item, subscriptionList);
-            if (vendorSkuDetail != null) {
-              Object.assign(item, vendorSkuDetail);
+          if (isMatrixItem) {
+            if (item.ncVendorSku && item.ncVendorSku.Sku) {
+              let vendorSkuDetail = await getVendorSkuDetail(item, subscriptionList);
+              if (vendorSkuDetail != null) {
+                Object.assign(item, vendorSkuDetail);
+              }
             }
+            return item;
           }
-          return item;
-        }
-      })
-    ).filter(i => i != null);
+        })
+        .filter(i => i != null));
   }
 
   async function getFilteredVariants(products, subscriptionList) {
-    return await Promise.all(
-      products.map(async product => {
-        product.ncSubscriptionList = subscriptionList;
-        product.ncVendorSku = product.Identifiers.find(
-          p => p.SkuType === "VendorSKU" && p.Entity.Id == subscriptionList.supplierId
-        );
+    return await Promise.all(products
+        .map(async product => {
+          product.ncSubscriptionList = subscriptionList;
+          product.ncVendorSku = product.Identifiers.find(p => p.SkuType === "VendorSKU" && p.Entity.Id == subscriptionList.supplierId);
 
-        if (product.ncVendorSku && product.ncVendorSku.Sku) {
-          let vendorSkuDetail = await getVendorSkuDetail(product, subscriptionList);
-          if (vendorSkuDetail != null) {
-            Object.assign(product, vendorSkuDetail);
-            return product;
+          if (product.ncVendorSku && product.ncVendorSku.Sku) {
+            let vendorSkuDetail = await getVendorSkuDetail(product, subscriptionList);
+            if (vendorSkuDetail != null) {
+              Object.assign(product, vendorSkuDetail);
+              return product;
+            }
           }
-        }
-      })
-    ).filter(p => p != null);
+        })
+        .filter(p => p != null));
   }
 
   async function getProductDetails(matrixItems) {
