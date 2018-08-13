@@ -355,7 +355,7 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
               baseUrl: stub.getBaseUrl("productlibrary"),
               url: "/v1/Products/GetBulk",
               qs: {
-                Slugs: chunk.join();
+                Slugs: chunk.join()
               }
             })
           );
