@@ -286,88 +286,98 @@ module.exports.GetProductSimpleFromQuery = (ncUtil, channelProfile, flowContext,
     }
 
     async function getCatalogItemDetails(catalogItemIds) {
-        logInfo("Getting bulk catalog item details by CatalogItemIds.");
         let catalogItems = {};
 
-        let chunks = [];
-        while (catalogItemIds.length > 0) {
-            chunks.push(catalogItemIds.splice(0, 500));
-        }
-
-        for (const chunk of chunks) {
-            if (chunk.length > 0) {
-                const req = stub.requestPromise.post(
-                    Object.assign({}, stub.requestDefaults, {
-                        method: "POST",
-                        baseUrl: stub.getBaseUrl("catalogs"),
-                        url: `/v1/Companies(${companyId})/Catalog/Items/ProductDetails/Bulk`,
-                        body: {
-                            CatalogItemIds: chunk
-                        }
-                    })
-                );
-                logInfo(`Calling: ${req.method} ${req.uri.href}`);
-
-                const resp = await req;
-                stub.out.response.endpointStatusCode = resp.statusCode;
-                stub.out.response.endpointStatusMessage = resp.statusMessage;
-
-                if (resp.timingPhases) {
-                    logInfo(
-                        `Bulk catalog item details request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`
-                    );
-                }
-
-                if (!resp.body || !resp.body.CatalogItems) {
-                    throw new TypeError("Response is not in expected format, expected CatalogItems property.");
-                }
-
-                Object.assign(catalogItems, resp.body.CatalogItems);
+        if (nc.isNonEmptyArray(catalogItemIds)) {
+            logInfo(`Getting bulk catalog item details by CatalogItemIds for ${catalogItemIds.length} total items.`);
+            let chunks = [];
+            while (catalogItemIds.length > 0) {
+                chunks.push(catalogItemIds.splice(0, 500));
             }
+
+            for (const chunk of chunks) {
+                if (chunk.length > 0) {
+                    logInfo(`Requesting ${chunk.length} catalog item details.`);
+                    const req = stub.requestPromise.post(
+                        Object.assign({}, stub.requestDefaults, {
+                            method: "POST",
+                            baseUrl: stub.getBaseUrl("catalogs"),
+                            url: `/v1/Companies(${companyId})/Catalog/Items/ProductDetails/Bulk`,
+                            body: {
+                                CatalogItemIds: chunk
+                            }
+                        })
+                    );
+                    logInfo(`Calling: ${req.method} ${req.uri.href}`);
+
+                    const resp = await req;
+                    stub.out.response.endpointStatusCode = resp.statusCode;
+                    stub.out.response.endpointStatusMessage = resp.statusMessage;
+
+                    if (resp.timingPhases) {
+                        logInfo(
+                            `Bulk catalog item details request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`
+                        );
+                    }
+
+                    if (!resp.body || !resp.body.CatalogItems) {
+                        throw new TypeError("Response is not in expected format, expected CatalogItems property.");
+                    }
+
+                    Object.assign(catalogItems, resp.body.CatalogItems);
+                }
+            }
+        } else {
+            logInfo("No products to get catalog item details for.");
         }
 
         return catalogItems;
     }
 
     async function getSlugDetails(slugs) {
-        logInfo("Getting bulk product details by Slug.");
         let catalogItems = {};
 
-        let chunks = [];
-        while (slugs.length > 0) {
-            chunks.push(slugs.splice(0, 100));
-        }
-
-        for (const chunk of chunks) {
-            if (chunk.length > 0) {
-                const req = stub.requestPromise.get(
-                    Object.assign({}, stub.requestDefaults, {
-                        method: "GET",
-                        baseUrl: stub.getBaseUrl("productlibrary"),
-                        url: "/v1/Products/GetBulk",
-                        body: {
-                            CatalogItemIds: chunk
-                        }
-                    })
-                );
-                logInfo(`Calling: ${req.method} ${req.uri.href}`);
-
-                const resp = await req;
-                stub.out.response.endpointStatusCode = resp.statusCode;
-                stub.out.response.endpointStatusMessage = resp.statusMessage;
-
-                if (resp.timingPhases) {
-                    logInfo(
-                        `Bulk catalog item details request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`
-                    );
-                }
-
-                if (!resp.body || !resp.body.CatalogItems) {
-                    throw new TypeError("Response is not in expected format, expected CatalogItems property.");
-                }
-
-                Object.assign(catalogItems, resp.body.CatalogItems);
+        if (nc.isNonEmptyArray(slugs)) {
+            logInfo(`Getting bulk product details by Slug for ${slugs.length} total items.`);
+            let chunks = [];
+            while (slugs.length > 0) {
+                chunks.push(slugs.splice(0, 100));
             }
+
+            for (const chunk of chunks) {
+                if (chunk.length > 0) {
+                    logInfo(`Requesting ${chunk.length} slug details.`);
+                    const req = stub.requestPromise.get(
+                        Object.assign({}, stub.requestDefaults, {
+                            method: "GET",
+                            baseUrl: stub.getBaseUrl("productlibrary"),
+                            url: "/v1/Products/GetBulk",
+                            qs: {
+                                Slugs: chunk.join()
+                            }
+                        })
+                    );
+                    logInfo(`Calling: ${req.method} ${req.uri.href}`);
+
+                    const resp = await req;
+                    stub.out.response.endpointStatusCode = resp.statusCode;
+                    stub.out.response.endpointStatusMessage = resp.statusMessage;
+
+                    if (resp.timingPhases) {
+                        logInfo(
+                            `Bulk catalog item details request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`
+                        );
+                    }
+
+                    if (!resp.body || !resp.body.CatalogItems) {
+                        throw new TypeError("Response is not in expected format, expected CatalogItems property.");
+                    }
+
+                    Object.assign(catalogItems, resp.body.CatalogItems);
+                }
+            }
+        } else {
+            logInfo("No products to get slug details for.");
         }
 
         return catalogItems;

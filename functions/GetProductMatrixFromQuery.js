@@ -292,7 +292,7 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
     let catalogItems = {};
 
     if (nc.isNonEmptyArray(catalogItemIds)) {
-      logInfo(`Getting bulk catalog item details by CatalogItemIds for ${catalogItemIds.length} items.`);
+      logInfo(`Getting bulk catalog item details by CatalogItemIds for ${catalogItemIds.length} total items.`);
       let chunks = [];
       while (catalogItemIds.length > 0) {
         chunks.push(catalogItemIds.splice(0, 500));
@@ -341,7 +341,7 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
     let catalogItems = {};
 
     if (nc.isNonEmptyArray(slugs)) {
-      logInfo(`Getting bulk product details by Slug for ${slugs} items.`);
+      logInfo(`Getting bulk product details by Slug for ${slugs.length} total items.`);
       let chunks = [];
       while (slugs.length > 0) {
         chunks.push(slugs.splice(0, 100));
@@ -349,6 +349,7 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
 
       for (const chunk of chunks) {
         if (chunk.length > 0) {
+          logInfo(`Requesting ${chunk.length} slug details.`);
           const req = stub.requestPromise.get(
             Object.assign({}, stub.requestDefaults, {
               method: "GET",
