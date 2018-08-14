@@ -51,7 +51,7 @@ module.exports.GetProductSimpleFromQuery = (ncUtil, channelProfile, flowContext,
         page = stub.payload.doc.page;
         pageSize = stub.payload.doc.pageSize;
 
-        return stub.payload.doc;
+        return JSON.parse(JSON.stringify(stub.payload.doc));
     }
 
     async function searchForProducts(queryDoc) {
@@ -167,8 +167,8 @@ module.exports.GetProductSimpleFromQuery = (ncUtil, channelProfile, flowContext,
                   return item;
                 }
               }
-            })
-            .filter(i => i != null));
+            }));
+        subscribedItems = subscribedItems.filter(i => i != null);
 
         return subscribedItems.map(item => {
             if (nc.isNonEmptyArray(item.Products)) {
@@ -184,7 +184,7 @@ module.exports.GetProductSimpleFromQuery = (ncUtil, channelProfile, flowContext,
     }
 
     async function getFilteredVariants(products, subscriptionList) {
-        return await Promise.all(products
+        const filteredVariants = await Promise.all(products
             .map(async product => {
               product.ncSubscriptionList = subscriptionList;
               product.ncVendorSku = product.Identifiers.find(p => p.SkuType === "VendorSKU" && p.Entity.Id == subscriptionList.supplierId);
@@ -196,8 +196,8 @@ module.exports.GetProductSimpleFromQuery = (ncUtil, channelProfile, flowContext,
                   return product;
                 }
               }
-            })
-            .filter(p => p != null));
+            }));
+        return filteredVariants.filter(v => v != null);
     }
 
     async function getProductDetails(simpleItems) {

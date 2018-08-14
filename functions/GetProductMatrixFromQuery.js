@@ -51,7 +51,7 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
     page = stub.payload.doc.page;
     pageSize = stub.payload.doc.pageSize;
 
-    return stub.payload.doc;
+    return JSON.parse(JSON.stringify(stub.payload.doc));
   }
 
   async function searchForProducts(queryDoc) {
@@ -157,7 +157,7 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
   }
 
   async function getFilteredMatrixItems(items, subscriptionList) {
-    return await Promise.all(items
+    const filteredMatrixItems = await Promise.all(items
         .map(async item => {
           item.ncSubscriptionList = subscriptionList;
           item.ncVendorSku = item.Identifiers.find(i => i.SkuType === "VendorSKU" && i.Entity.Id == subscriptionList.supplierId);
@@ -182,12 +182,12 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
             }
             return item;
           }
-        })
-        .filter(i => i != null));
+        }));
+    return filteredMatrixItems.filter(i => i != null);
   }
 
   async function getFilteredVariants(products, subscriptionList) {
-    return await Promise.all(products
+    const filteredVariants = await Promise.all(products
         .map(async product => {
           product.ncSubscriptionList = subscriptionList;
           product.ncVendorSku = product.Identifiers.find(p => p.SkuType === "VendorSKU" && p.Entity.Id == subscriptionList.supplierId);
@@ -199,8 +199,8 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
               return product;
             }
           }
-        })
-        .filter(p => p != null));
+        }));
+    return filteredVariants.filter(v => v != null);
   }
 
   async function getProductDetails(matrixItems) {
