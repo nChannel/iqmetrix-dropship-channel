@@ -2,853 +2,521 @@
   "name": "iQmetrix DropShip Get Product Schema",
   "schemaDef": {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "iQmetrix Get Product Schema",
     "type": "object",
-    "$ref": "#/definitions/CatalogItem",
-    "definitions": {
-      "CatalogItem": {
-        "type": "object",
-        "title": "CatalogItem",
-        "description":
-          "Archived CatalogItem resources can still be updated and retrieved individually, but are excluded from search results",
-        "properties": {
-          "RmsId": {
-            "type": "string",
-            "title": "RmsId (String)",
-            "description": "Identifier for the CatalogItem in an external inventory system"
-          },
-          "Slug": {
-            "type": "string",
-            "title": "Slug (String)",
-            "description": "Unique identifier for a Product"
-          },
-          "CatalogItemId": {
-            "type": "string",
-            "title": "CatalogItemId (GUID)",
-            "description": "Unique identifier"
-          },
-          "CatalogSku": {
-            "type": "string",
-            "title": "CatalogSku (String)",
-            "description": "SKU"
-          },
-          "MeasurementType": {
-            "type": "string",
-            "title": "MeasurementType (String)",
-            "description": "Reserved for future use"
-          },
-          "BatchTracking": {
-            "type": "boolean",
-            "title": "BatchTracking (Boolean)",
-            "description": "Reserved for future use"
-          },
-          "NonStock": {
-            "type": "boolean",
-            "title": "NonStock (String)",
-            "description": "Reserved for future use"
-          },
-          "LifeCycle": {
-            "type": "string",
-            "title": "LifeCycle (String)",
-            "description": "Reserved for future use"
-          },
-          "IsArchived": {
-            "type": "boolean",
-            "title": "IsArchived (Boolean)",
-            "description":
-              "A flag to indicate if this CatalogItem is Archived. When archived, this CatalogItem is excluded from search results"
-          },
-          "SourceIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "title": "SubscribableListId (GUID)",
-              "description": "Subscribable List identifier"
-            }
-          },
-          "DateAddedUtc": {
-            "type": "string",
-            "title": "DateAddedUtc (DateTime)",
-            "description": "Date this Product was added to the catalog, in UTC"
-          },
-          "DateUpdatedUtc": {
-            "type": "string",
-            "title": "DateUpdatedUtc (DateTime)",
-            "description": "Date this Product was last updated, in UTC"
-          },
-          "subscriptionList": {
-            "type": "object",
-            "title": "Subscription List (Object)",
-            "description": "The subscription list id and supplier id for this item as specified in channel settings",
-            "properties": {
-              "listId": {
-                "type": "string",
-                "title": "Subscription List Id (GUID)"
-              },
-              "entityId": {
-                "type": "integer",
-                "title": "Entity Id (Integer)"
-              }
-            }
-          },
-          "ProductDetails": {
-            "$ref": "#/definitions/ProductDetails"
-          },
-          "VendorSku": {
-            "$ref": "#/definitions/VendorSku"
-          },
-          "Pricing": {
-            "$ref": "#/definitions/Pricing"
-          },
-          "SupplierSku": {
-            "$ref": "#/definitions/SupplierSku"
-          },
-          "matrixChildren": {
-            "$ref": "#/definitions/matrixChildren"
-          }
-        }
-      },
-      "ProductDetails": {
-        "type": "object",
-        "title": "Product (Object)",
-        "description": "Product details",
-        "properties": {
-          "ExtendedAttributes": {
-            "type": "array",
-            "title": "ExtendedAttributes (Array[Attribute])",
-            "description": "Extended attributes are unvalidated extra properties that can be put on a CatalogItem",
-            "items": {
-              "type": "object",
-              "title": "Attribute",
-              "description": "Attribute",
-              "properties": {
-                "Id": {
-                  "type": "string",
-                  "title": "Name (String(250))",
-                  "description": "Attribute name"
-                },
-                "Name": {
-                  "type": "string",
-                  "title": "Value (String(250))",
-                  "description": "Attribute value"
-                }
-              }
-            }
-          },
-          "DateAddedUtc": {
-            "type": "string",
-            "title": "DateAddedUtc (DateTime)",
-            "description": "Date this Product was added to the catalog, in UTC"
-          },
-          "DateUpdatedUtc": {
-            "type": "string",
-            "title": "DateUpdatedUtc (DateTime)",
-            "description": "Date this Product was last updated, in UTC"
-          },
-          "RmsId": {
-            "type": "string",
-            "title": "RmsId (String)",
-            "description": "Identifier for the CatalogItem in an external inventory system"
-          },
-          "MeasurementType": {
-            "type": "string",
-            "title": "MeasurementType (String)",
-            "description": "Reserved for future use"
-          },
-          "BatchTracking": {
-            "type": "boolean",
-            "title": "BatchTracking (Boolean)",
-            "description": "Reserved for future use"
-          },
-          "NonStock": {
-            "type": "boolean",
-            "title": "NonStock (String)",
-            "description": "Reserved for future use"
-          },
-          "LifeCycle": {
-            "type": "string",
-            "title": "LifeCycle (String)",
-            "description": "Reserved for future use"
-          },
-          "Id": {
-            "type": "string",
-            "title": "Id (String)",
-            "description": "Identifier"
-          },
-          "Name": {
-            "type": "string",
-            "title": "Name (String)",
-            "description": "Name"
-          },
-          "MasterProductId": {
-            "type": "integer",
-            "title": "MasterProductId (Integer)",
-            "description": "Internal identifier in RQ"
-          },
-          "VariationId": {
-            "type": "integer",
-            "title": "VariationId (Integer)",
-            "description": "Identifier for the Variation"
-          },
-          "Owner": {
-            "type": "object",
-            "title": "Owner (object)",
-            "description":
-              "Owner information used to designate if this is a public product (null) or private (not-null)",
-            "properties": {
-              "Id": {
-                "type": "integer",
-                "title": "Id (Integer)",
-                "description": "For private products, Identifier of the Company that owns this Product"
-              },
-              "Name": {
-                "type": "string",
-                "title": "Name (String)",
-                "description": "For private products, Name of the Company that owns this Product"
-              }
-            }
-          },
-          "CanonicalClassification": {
-            "type": "object",
-            "title": "CanonicalClassification (CanonicalClassification)",
-            "description": "ClassificationTree details",
-            "properties": {
-              "TreeId": {
-                "type": "integer",
-                "title": "TreeId (Integer)",
-                "description": "Identifier for the ClassificationTree"
-              },
-              "Id": {
-                "type": "integer",
-                "title": "Id (Integer)",
-                "description": "Identifier for the Classification or Category"
-              },
-              "Name": {
-                "type": "string",
-                "title": "Name (String)",
-                "description": "Name of the Classification/Category"
-              },
-              "ParentCategories": {
-                "type": "array",
-                "title": "ParentCategories (Array[object])",
-                "description": "List of Parent Categories",
-                "items": {
-                  "type": "object",
-                  "title": "ParentCategory",
-                  "properties": {
-                    "Id": {
-                      "type": "integer",
-                      "title": "Id (Integer)",
-                      "description": "Identifier"
-                    },
-                    "Name": {
-                      "type": "string",
-                      "title": "Name (String)",
-                      "description": "Name"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "ShortDescription": {
-            "type": "string",
-            "title": "ShortDescription (String)",
-            "description": "Short Description"
-          },
-          "LongDescription": {
-            "type": "string",
-            "title": "LongDescription (String)",
-            "description": "Long Description"
-          },
-          "Manufacturer": {
-            "type": "object",
-            "title": "Manufacturer (object)",
-            "description": "Manufacturer information for the Product",
-            "properties": {
-              "Id": {
-                "type": "integer",
-                "title": "Id (Integer)",
-                "description": "Identifier for the Manufacturer"
-              },
-              "Name": {
-                "type": "string",
-                "title": "Name (String)",
-                "description": "Name of the Manufacturer"
-              }
-            }
-          },
-          "MSRP": {
-            "type": "object",
-            "title": "MSRP (object)",
-            "description": "Manufacturers suggested retail price information",
-            "properties": {
-              "Amount": {
-                "type": "number",
-                "title": "Amount (Decimal)",
-                "description": "Manufacturers suggested retail price"
-              },
-              "CurrencyCode": {
-                "type": "string",
-                "title": "CurrencyCode (String)",
-                "description": "Currency. For a list of acceptable values, see Getting All Currencies"
-              }
-            }
-          },
-          "ReleaseDate": {
-            "type": "string",
-            "title": "ReleaseDate (DateTime)",
-            "description": "Release Date, in UTC"
-          },
-          "VariationInfo": {
-            "type": "array",
-            "title": "VariationInfo (Array[VariationInformation])",
-            "description": "Variation information for the Product",
-            "items": {
-              "type": "object",
-              "title": "VariationInformation",
-              "properties": {
-                "VariationId": {
-                  "type": "integer",
-                  "title": "VariationId (Integer)",
-                  "description": "Identifier for a Variation"
-                },
-                "Slug": {
-                  "type": "string",
-                  "title": "Slug (String)",
-                  "description": "Identifier for the Variation"
-                },
-                "Fields": {
-                  "type": "array",
-                  "title": "Fields (Array[object])",
-                  "description": "Fields which describe how the Variation differs from its parent",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "FieldId": {
-                        "type": "integer",
-                        "title": "FieldId (Integer)",
-                        "description": "Internal identifier for a Field"
-                      },
-                      "Name": {
-                        "type": "string",
-                        "title": "Name (String)",
-                        "description": "Field Name"
-                      },
-                      "Value": {
-                        "type": "string",
-                        "title": "Value (String)",
-                        "description": "Value to be used for this Field"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "Specifications": {
-            "type": "array",
-            "title": "Specifications (Array[object])",
-            "description": "Details such as color, dimension, etc",
-            "items": {
-              "type": "object",
-              "properties": {
-                "Id": {
-                  "type": "string",
-                  "title": "Id (GUID)",
-                  "description": "Identifier"
-                },
-                "Name": {
-                  "type": "string",
-                  "title": "Name (String)",
-                  "description": "Name"
-                },
-                "Fields": {
-                  "type": "array",
-                  "title": "Fields (array)",
-                  "description": "Group of ProductFields",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "Id": {
-                        "type": "integer",
-                        "title": "Id (Integer)",
-                        "description": "Identifier"
-                      },
-                      "StringId": {
-                        "type": "string",
-                        "title": "StringId (String)",
-                        "description": "Consistent identifier across all Environments"
-                      },
-                      "DisplayName": {
-                        "type": "string",
-                        "title": "DisplayName (String)",
-                        "description": "Value to be displayed in the UI"
-                      },
-                      "Name": {
-                        "type": "string",
-                        "title": "Name (String)",
-                        "description": "Name"
-                      },
-                      "Value": {
-                        "type": "string",
-                        "title": "Value (String)",
-                        "description": "Value to be used for this Field"
-                      },
-                      "Type": {
-                        "type": "string",
-                        "title": "Type (String)",
-                        "description": "Data type"
-                      },
-                      "Unit": {
-                        "type": "string",
-                        "title": "Unit (String)",
-                        "description": "Unit this Field uses"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "Assets": {
-            "type": "array",
-            "title": "Assets (Array[Asset])",
-            "description": "Asset information",
-            "items": {
-              "type": "object",
-              "title": "Asset (Object)",
-              "properties": {
-                "Id": {
-                  "type": "string",
-                  "title": "Id (GUID)",
-                  "description": "Unique identifier"
-                },
-                "Name": {
-                  "type": "string",
-                  "title": "Name (String)",
-                  "description": "File name"
-                },
-                "Uri": {
-                  "type": "string",
-                  "title": "Uri (String)",
-                  "description": "URL that points to an actual file where the digital asset is stored"
-                },
-                "Type": {
-                  "type": "string",
-                  "title": "Type (String)",
-                  "description": "Type of asset",
-                  "enum": ["Unknown", "Image", "Video", "Document"]
-                },
-                "IsHidden": {
-                  "type": "boolean",
-                  "title": "IsHidden (Boolean)",
-                  "description":
-                    "A flag to indicate that this Asset exists on the product but should not be seen on a UI"
-                },
-                "IsRolledUp": {
-                  "type": "boolean",
-                  "title": "IsRolledUp (Boolean)",
-                  "description": "Reserved for future use"
-                }
-              }
-            }
-          },
-          "ColorDefinition": {
-            "type": "object",
-            "title": "ColorDefinition (ColorDefinition)",
-            "description": "Information about the color of the Product",
-            "properties": {
-              "Id": {
-                "type": "string",
-                "title": "Id (GUID)",
-                "description": "Unique identifier"
-              },
-              "Name": {
-                "type": "string",
-                "title": "Name (String)",
-                "description": "Name"
-              },
-              "ColorTagIds": {
-                "type": "array",
-                "title": "ColorTagIds (Array)",
-                "description": "List of identifiers for ColorTags",
-                "items": {
-                  "type": "integer",
-                  "title": "Id (Integer)",
-                  "description": "Identifier"
-                }
-              },
-              "ColorTags": {
-                "type": "array",
-                "title": "ColorTags (Array[object])",
-                "description": "Color information",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "Id": {
-                      "type": "integer",
-                      "title": "Id (Integer)",
-                      "description": "Identifier"
-                    },
-                    "Name": {
-                      "type": "string",
-                      "title": "Name (String)",
-                      "description": "Name"
-                    },
-                    "ColorCode": {
-                      "type": "string",
-                      "title": "ColorCode (String)",
-                      "description": "A valid Hex code representing this color"
-                    }
-                  }
-                }
-              },
-              "Swatch": {
-                "type": "object",
-                "title": "Swatch (Swatch)",
-                "description":
-                  "An icon to display on a screen next to a color showing the actual color of the product. Can be provided as an image Asset or hex code",
-                "properties": {
-                  "Type": {
-                    "type": "string",
-                    "title": "Type (String)",
-                    "description": "Acceptable values are Asset, ColorCodes or Empty"
-                  },
-                  "AssetId": {
-                    "type": "string",
-                    "title": "AssetId (GUID)",
-                    "description": "If Type is Asset, an identifier for an Asset. Otherwise, this property is ignored"
-                  },
-                  "ColorCode": {
-                    "type": "string",
-                    "title": "ColorCode (String)",
-                    "description":
-                      "If Type is ColorCode, a valid hex code for a color. Otherwise, this property is ignored"
-                  }
-                }
-              },
-              "IsUsed": {
-                "type": "boolean",
-                "title": "IsUsed (Boolean)",
-                "description": "Reserved for future use"
-              }
-            }
-          },
-          "HeroShotUri": {
-            "type": "string",
-            "title": "HeroShotUri (String)",
-            "description": "URI to a Hero Shot Asset"
-          },
-          "HeroShotId": {
-            "type": "string",
-            "title": "HeroShotId (GUID)",
-            "description": "Hero Shot identifier"
-          },
-          "ManufacturerSkus": {
-            "type": "array",
-            "title": "ManufacturerSkus (Array[Sku])",
-            "description": "Manufacturer SKUs",
-            "items": {
-              "type": "object",
-              "properties": {
-                "Value": {
-                  "type": "string",
-                  "title": "Value (String)",
-                  "description": "Value"
-                },
-                "Description": {
-                  "type": "string",
-                  "title": "Description (String)",
-                  "description": "Description"
-                },
-                "Entity": {
-                  "type": "object",
-                  "title": "Entity (object)",
-                  "description": "Identifier for an Entity this SKU is associated with",
-                  "properties": {
-                    "Id": {
-                      "type": "integer",
-                      "title": "Id (Integer)",
-                      "description":
-                        "Identifier of an Entity used for Entity Revisions. See Revisions for more information"
-                    },
-                    "Name": {
-                      "type": "string",
-                      "title": "Name (String)",
-                      "description": "Entity name"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "VendorSkus": {
-            "type": "array",
-            "title": "VendorSkus (Array[Sku])",
-            "description": "Vendor SKUs",
-            "items": {
-              "$ref": "#/definitions/VendorSku"
-            }
-          },
-          "UpcCodes": {
-            "type": "array",
-            "title": "UpcCodes (Array[object])",
-            "description": "UPC codes",
-            "items": {
-              "type": "object",
-              "properties": {
-                "Value": {
-                  "type": "string",
-                  "title": "Value (String)",
-                  "description": "Name"
-                },
-                "Description": {
-                  "type": "string",
-                  "title": "Description (String)",
-                  "description": "Description"
-                },
-                "Entity": {
-                  "type": "integer",
-                  "title": "Entity (Integer)",
-                  "description": "Identifier of an Entity associated with this UPC code"
-                }
-              }
-            }
-          },
-          "Region": {
-            "type": "object",
-            "title": "Region (Region)",
-            "description": "Region information, for Regional Revisions",
-            "properties": {
-              "CountryCode": {
-                "type": "string",
-                "title": "CountryCode (String)",
-                "description":
-                  "Country in which this address resides. Uses the ISO 3166-1 alpha-2 standard. For a list of acceptable codes, see Getting All Countries"
-              },
-              "CountryName": {
-                "type": "string",
-                "title": "CountryName (String)",
-                "description": "Country name"
-              },
-              "StateCode": {
-                "type": "string",
-                "title": "StateCode (String)",
-                "description":
-                  "Code for the State in which this address resides. Based off the ISO 3166-2 standard. For a list of acceptable codes, see Getting All Countries"
-              },
-              "StateName": {
-                "type": "string",
-                "title": "StateName (String)",
-                "description": "State name"
-              }
-            }
-          },
-          "Entity": {
-            "type": "object",
-            "title": "Entity (object)",
-            "description": "Entity information, used for Entity revisions",
-            "properties": {
-              "Id": {
-                "type": "integer",
-                "title": "Id (Integer)",
-                "description": "Identifier of an Entity used for Entity Revisions. See Revisions for more information"
-              },
-              "Name": {
-                "type": "string",
-                "title": "Name (String)",
-                "description": "Entity name"
-              }
-            }
-          },
-          "HasColor": {
-            "type": "boolean",
-            "title": "HasColor (Boolean)"
-          },
-          "IsLinkedToCuratedProduct": {
-            "type": "boolean",
-            "title": "IsLinkedToCuratedProduct (Boolean)",
-            "description":
-              "A flag to indicate if this version of this Product is publicly accessible (true), or private (false)"
-          },
-          "IsSaleable": {
-            "type": "boolean",
-            "title": "IsSaleable (Boolean)",
-            "description": "A flag to indicate if this product can be sold"
-          },
-          "IsArchived": {
-            "type": "boolean",
-            "title": "IsArchived (Boolean)",
-            "description": "A flag to indicate if this Product is archived"
-          },
-          "Version": {
-            "type": "integer",
-            "title": "Version (Integer)",
-            "description": "Latest revision number"
-          }
-        }
-      },
-      "VendorSku": {
-        "type": "object",
-        "properties": {
-          "Value": {
-            "type": "string",
-            "title": "Value (String)",
-            "description": "Value"
-          },
-          "Description": {
-            "type": "string",
-            "title": "Description (String)",
-            "description": "Description"
-          },
-          "Entity": {
-            "type": "object",
-            "title": "Entity (object)",
-            "description": "Identifier for an Entity this SKU is associated with",
-            "properties": {
-              "Id": {
-                "type": "integer",
-                "title": "Id (Integer)",
-                "description": "Identifier of an Entity used for Entity Revisions. See Revisions for more information"
-              },
-              "Name": {
-                "type": "string",
-                "title": "Name (String)",
-                "description": "Entity name"
-              }
-            }
-          }
-        }
-      },
-      "Pricing": {
-        "type": "object",
-        "title": "Pricing (Object)",
-        "description":
-          "RQ Connection The following fields are not currently synced to RQ: IsDiscountable and FloorPrice",
-        "properties": {
-          "Id": {
-            "type": "integer",
-            "title": "Id (Integer)",
-            "description": "Identifier"
-          },
-          "CompanyId": {
-            "type": "integer",
-            "title": "CompanyId (Integer)",
-            "description": "Identifier for the Company associated with this Pricing"
-          },
-          "EntityId": {
-            "type": "integer",
-            "title": "EntityId (Integer)",
-            "description": "CompanyTreeNode identifier at which the price is set"
-          },
-          "CatalogItemId": {
-            "type": "string",
-            "title": "CatalogItemId (GUID)",
-            "description": "CatalogItem identifier"
-          },
-          "PricingTermId": {
-            "type": "integer",
-            "title": "PricingTermId (Integer)",
-            "description": "PricingTerm identifier"
-          },
-          "RegularPrice": {
-            "type": "number",
-            "title": "RegularPrice (Decimal)",
-            "description": "The regular price, must be greater than or equal to 0"
-          },
-          "IsDiscountable": {
-            "type": "boolean",
-            "title": "IsDiscountable (Boolean)",
-            "description": "A flag to indicate if this Pricing allows discounting. This is not enforced by the API"
-          },
-          "FloorPrice": {
-            "type": "number",
-            "title": "FloorPrice (Decimal)",
-            "description": "The minimum amount the CatalogItem should be sold for"
-          },
-          "OriginalPrice": {
-            "type": "number",
-            "title": "OriginalPrice (Decimal)",
-            "description":
-              "Value used to explicitly show the original price of an item, should it need to be displayed with the regular and sale/override prices"
-          },
-          "PricingTierId": {
-            "type": "string",
-            "title": "PricingTierId (String)",
-            "description": "Reserved for internal use"
-          },
-          "PricingGroupId": {
-            "type": "integer",
-            "title": "PricingGroupId (Integer)",
-            "description": "Reserved for internal use"
-          },
-          "PricingShelfId": {
-            "title": "PricingShelfId",
-            "description": "Reserved for internal use"
-          },
-          "OverridePriceId": {
-            "type": "integer",
-            "title": "OverridePriceId (Integer)",
-            "description": "Identifier for a SaleOverridePrice"
-          },
-          "OverridePrice": {
-            "type": "number",
-            "title": "OverridePrice (Decimal)",
-            "description": "This value is retrieved from the SalePrice of the current or default SaleOverridePrice"
-          },
-          "OverrideStartDateUtc": {
-            "type": "string",
-            "title": "OverrideStartDateUtc (DateTime)",
-            "description": "Reserved for internal use"
-          },
-          "OverrideStopDateUtc": {
-            "type": "string",
-            "title": "OverrideStopDateUtc (DateTime)",
-            "description": "Reserved for internal use"
-          }
-        }
-      },
-      "SupplierSku": {
-        "type": "object",
-        "title": "SupplierSKU (Object)",
-        "description": "Supplier availability information",
-        "properties": {
-          "Id": {
-            "type": "string",
-            "title": "Id (String)",
-            "description": "Unique identifier"
-          },
-          "SupplierSku": {
-            "type": "string",
-            "title": "SupplierSku (String)",
-            "description": "Supplier SKU"
-          },
-          "SupplierEntityId": {
-            "type": "integer",
-            "title": "SupplierEntityId (Integer)",
-            "description": "Identifier for a Supplier"
-          },
-          "IsAvailable": {
-            "type": "boolean",
-            "title": "IsAvailable (Boolean)",
-            "description": "A flag to indicate supplier availability"
-          },
-          "Quantity": {
-            "type": "integer",
-            "title": "Quantity (Integer)",
-            "description": "Quantity"
-          },
-          "LastModifiedDateUtc": {
-            "type": "string",
-            "title": "LastModifiedDateUtc (DateTime)"
-          }
-        }
-      },
-      "matrixChildren": {
+    "properties": {
+      "Assets": {
         "type": "array",
         "items": {
-          "$ref": "#/definitions/CatalogItem"
+          "type": "object",
+          "properties": {
+            "Id": {
+              "type": "string"
+            },
+            "Name": {
+              "type": "string"
+            },
+            "Uri": {
+              "type": "string"
+            },
+            "Type": {
+              "type": "string"
+            },
+            "IsHidden": {
+              "type": "boolean"
+            },
+            "IsRolledUp": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "BatchTracking": {
+        "type": "boolean"
+      },
+      "CanonicalClassification": {
+        "type": "object",
+        "properties": {
+          "TreeId": {
+            "type": "number"
+          },
+          "Id": {
+            "type": "number"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "ParentCategories": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Id": {
+                  "type": "number"
+                },
+                "Name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "CatalogItemId": {
+        "type": "string"
+      },
+      "CatalogSku": {
+        "type": "string"
+      },
+      "ClassificationTreeId": {
+        "type": "number"
+      },
+      "ColorDefinition": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "ColorTagIds": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "ColorTags": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Id": {
+                  "type": "number"
+                },
+                "Name": {
+                  "type": "string"
+                },
+                "ColorCode": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "Swatch": {
+            "type": "object",
+            "properties": {
+              "Type": {
+                "type": "string"
+              },
+              "AssetId": {
+                "type": "string"
+              },
+              "ColorCode": {
+                "type": "string"
+              }
+            }
+          },
+          "IsUsed": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CompanyId": {
+        "type": "number"
+      },
+      "DateAddedUtc": {
+        "type": "string"
+      },
+      "DateUpdatedUtc": {
+        "type": "string"
+      },
+      "Entity": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "number"
+          },
+          "Name": {
+            "type": "string"
+          }
+        }
+      },
+      "ExtendedAttributes": {
+        "type": "array"
+      },
+      "HasColor": {
+        "type": "boolean"
+      },
+      "HeroShotId": {
+        "type": "string"
+      },
+      "HeroShotUri": {
+        "type": "string"
+      },
+      "Id": {
+        "type": "string"
+      },
+      "Identifiers": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "Sku": {
+              "type": "string"
+            },
+            "SkuType": {
+              "type": "string"
+            },
+            "Entity": {
+              "type": "object",
+              "properties": {
+                "Id": {
+                  "type": "number"
+                },
+                "Name": {
+                  "type": "string"
+                }
+              }
+            },
+            "Description": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "IsArchived": {
+        "type": "boolean"
+      },
+      "IsDropShippable": {
+        "type": "boolean"
+      },
+      "IsLinkedToCuratedProduct": {
+        "type": "boolean"
+      },
+      "IsListSourced": {
+        "type": "boolean"
+      },
+      "IsMasterProduct": {
+        "type": "boolean"
+      },
+      "IsSaleable": {
+        "type": "boolean"
+      },
+      "LifeCycle": {
+        "type": "string"
+      },
+      "LongDescription": {
+        "type": "string"
+      },
+      "MSRP": {
+        "type": "object",
+        "properties": {
+          "Amount": {
+            "type": "number"
+          },
+          "CurrencyCode": {
+            "type": "string"
+          }
+        }
+      },
+      "Manufacturer": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "number"
+          },
+          "Name": {
+            "type": "string"
+          }
+        }
+      },
+      "ManufacturerSkus": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "Value": {
+              "type": "string"
+            },
+            "Description": {
+              "type": "string"
+            },
+            "Entity": {
+              "type": "object",
+              "properties": {
+                "Id": {
+                  "type": "number"
+                },
+                "Name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "MasterProductId": {
+        "type": "number"
+      },
+      "MeasurementType": {
+        "type": "string"
+      },
+      "MostRecentDateAdded": {
+        "type": "string"
+      },
+      "Msrp": {
+        "type": "object",
+        "properties": {
+          "Amount": {
+            "type": "number"
+          },
+          "CurrencyCode": {
+            "type": "string"
+          }
+        }
+      },
+      "Name": {
+        "type": "string"
+      },
+      "NonStock": {
+        "type": "boolean"
+      },
+      "Owner": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "number"
+          },
+          "Name": {
+            "type": "string"
+          }
+        }
+      },
+      "ProductVersion": {
+        "type": "number"
+      },
+      "Products": {
+        "type": "array",
+        "items": {
+          "$href": "#"
+        }
+      },
+      "Region": {
+        "type": "object",
+        "properties": {
+          "CountryCode": {
+            "type": "string"
+          },
+          "CountryName": {
+            "type": "string"
+          },
+          "StateCode": {
+            "type": "string"
+          },
+          "StateName": {
+            "type": "string"
+          }
+        }
+      },
+      "ReleaseDate": {
+        "type": "string"
+      },
+      "RmsId": {
+        "type": "string"
+      },
+      "SerialNumbers": {
+        "type": "array"
+      },
+      "ShortDescription": {
+        "type": "string"
+      },
+      "Slug": {
+        "type": "string"
+      },
+      "SourceIds": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "Specifications": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "Id": {
+              "type": "string"
+            },
+            "Name": {
+              "type": "string"
+            },
+            "Fields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "Id": {
+                    "type": "number"
+                  },
+                  "StringId": {
+                    "type": "string"
+                  },
+                  "DisplayName": {
+                    "type": "string"
+                  },
+                  "Name": {
+                    "type": "string"
+                  },
+                  "Value": {
+                    "type": "string"
+                  },
+                  "Type": {
+                    "type": "string"
+                  },
+                  "Unit": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "UpcCodes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "Value": {
+              "type": "string"
+            },
+            "Description": {
+              "type": "string"
+            },
+            "Entity": {
+              "type": "object",
+              "properties": {
+                "Id": {
+                  "type": "number"
+                },
+                "Name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "VariationId": {
+        "type": "number"
+      },
+      "VariationInfo": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "VariationId": {
+              "type": "number"
+            },
+            "Slug": {
+              "type": "string"
+            },
+            "Fields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "FieldId": {
+                    "type": "integer"
+                  },
+                  "Name": {
+                    "type": "string"
+                  },
+                  "Value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "VendorSkus": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "Value": {
+              "type": "string"
+            },
+            "Description": {
+              "type": "string"
+            },
+            "Entity": {
+              "type": "object",
+              "properties": {
+                "Id": {
+                  "type": "number"
+                },
+                "Name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Vendors": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "Id": {
+              "type": "number"
+            },
+            "Name": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Version": {
+        "type": "number"
+      },
+      "ncSubscriptionList": {
+        "type": "object",
+        "properties": {
+          "listId": {
+            "type": "string"
+          },
+          "supplierId": {
+            "type": "number"
+          }
+        }
+      },
+      "ncVendorSku": {
+        "type": "object",
+        "properties": {
+          "Sku": {
+            "type": "string"
+          },
+          "SkuType": {
+            "type": "string"
+          },
+          "Entity": {
+            "type": "object",
+            "properties": {
+              "Id": {
+                "type": "number"
+              },
+              "Name": {
+                "type": "string"
+              }
+            }
+          },
+          "Description": {
+            "type": "string"
+          }
         }
       }
     }
