@@ -5497,8 +5497,8 @@
           "payload": {
             "doc": {
               "modifiedDateRange": {
-                "startDateGMT": "2019-03-08T00:28:44.183Z",
-                "endDateGMT": "2019-03-08T00:28:44.183Z"
+                "startDateGMT": "2010-03-08T00:28:44.183Z",
+                "endDateGMT": "2019-03-08T00:28:45.183Z"
               },
               "page": 1,
               "pageSize": 25
@@ -5508,12 +5508,15 @@
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/v1/Companies(23813)/Catalog/GroupedSearch?VendorIds=7190%2C13939&CreatedFromUtc=2010-03-08T00%3A28%3A44.183Z&CreatedToUtc=2019-03-08T00%3A28%3A44.183Z&Page=1&PageSize=25&OrderBy=dateAdded",
+              "uri": "/v1/Companies(23813)/Catalog/GroupedSearch?VendorIds=7190%2C13939&CreatedFromUtc=2010-03-08T00%3A28%3A44.183Z&CreatedToUtc=2019-03-08T00%3A28%3A45.183Z&Page=1&PageSize=25&OrderBy=dateAdded",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
               "responsePayload": {
-                "Items": []
+                "Items": [],
+                "MetaData": {
+                  "TotalResults": 0
+                }
               }
             }
           ],
