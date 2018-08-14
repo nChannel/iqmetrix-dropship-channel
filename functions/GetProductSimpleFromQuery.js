@@ -151,7 +151,7 @@ module.exports.GetProductSimpleFromQuery = (ncUtil, channelProfile, flowContext,
         let subscribedItems = await Promise.all(items
             .map(async item => {
               item.ncSubscriptionList = subscriptionList;
-              item.ncVendorSku = item.Identifiers.find(i => i.SkuType === "VendorSKU" && i.Entity.Id == subscriptionList.supplierId);
+              item.ncVendorSku = item.Identifiers.find(i => i.SkuType === "VendorSKU" && i.Entity && i.Entity.Id == subscriptionList.supplierId);
               if (item.ncVendorSku && item.ncVendorSku.Sku) {
                 let vendorSkuDetail = await getVendorSkuDetail(item, subscriptionList);
                 if (vendorSkuDetail != null) {

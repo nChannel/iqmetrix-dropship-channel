@@ -160,7 +160,7 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
     const filteredMatrixItems = await Promise.all(items
         .map(async item => {
           item.ncSubscriptionList = subscriptionList;
-          item.ncVendorSku = item.Identifiers.find(i => i.SkuType === "VendorSKU" && i.Entity.Id == subscriptionList.supplierId);
+          item.ncVendorSku = item.Identifiers.find(i => i.SkuType === "VendorSKU" && i.Entity && i.Entity.Id == subscriptionList.supplierId);
 
           item.Products = await getFilteredVariants(item.Products, subscriptionList);
 
