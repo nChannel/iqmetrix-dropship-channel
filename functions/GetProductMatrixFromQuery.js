@@ -338,7 +338,7 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
   }
 
   async function getSlugDetails(slugs) {
-    let catalogItems = {};
+    let products = {};
 
     if (nc.isNonEmptyArray(slugs)) {
       logInfo(`Getting bulk product details by Slug for ${slugs.length} total items.`);
@@ -372,18 +372,18 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
             );
           }
 
-          if (!resp.body || !resp.body.CatalogItems) {
-            throw new TypeError("Response is not in expected format, expected CatalogItems property.");
+          if (!resp.body || !resp.body.Products) {
+            throw new TypeError("Response is not in expected format, expected Products property.");
           }
 
-          Object.assign(catalogItems, resp.body.CatalogItems);
+          Object.assign(products, resp.body.Products);
         }
       }
     } else {
       logInfo("No products to get slug details for.");
     }
 
-    return catalogItems;
+    return products;
   }
 
   async function buildResponseObject(matrixItems) {
