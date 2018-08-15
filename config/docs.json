@@ -5406,51 +5406,153 @@
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/v1/Companies(23813)/Catalog/Items(SourceId=419faf6c-3906-47d8-a855-f3883d58902d)",
+              "uri": "/v1/Companies(23813)/Catalog/GroupedSearch?VendorIds=7190%2C13939&CreatedFromUtc=2010-03-08T00%3A28%3A44.183Z&CreatedToUtc=2019-03-08T00%3A28%3A44.183Z&Page=1&PageSize=25&OrderBy=dateAdded",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
               "responsePayload": {
                 "Items": [
                   {
-                    "Slug": "M5970-V3",
-                    "CatalogItemId": "749447b5-5969-42af-8f9f-a8a712626732",
-                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z"
-                  },
-                  {
-                    "Slug": "M8170",
-                    "CatalogItemId": "144859f4-e8a0-4367-afcb-a9d39c94fa8f",
-                    "DateUpdatedUtc": "2018-03-08T00:28:43.647Z"
-                  },
-                  {
-                    "Slug": "M5970-V2",
-                    "CatalogItemId": "4773c97f-bbb8-4063-8de4-d7242a6a5933",
-                    "DateUpdatedUtc": "2018-03-08T00:28:43.803Z"
+                    "CanonicalClassification": {
+                      "Id": 42,
+                      "Name": "Screen Protectors",
+                      "ParentCategories": [
+                        {
+                          "Id": 12,
+                          "Name": "Accessories"
+                        },
+                        {
+                          "Id": 37,
+                          "Name": "Cases & Protection"
+                        }
+                      ]
+                    },
+                    "ClassificationTreeId": 1,
+                    "IsLinkedToCuratedProduct": true,
+                    "Products": [],
+                    "MostRecentDateAdded": "2018-08-13T13:51:33.297Z",
+                    "VariationInfo": [],
+                    "Name": "iPhone 6/6s Plus Reusable On The Go Shadow Edition Privacy Screen Protector",
+                    "ColorDefinition": {
+                      "Id": "8f624c67-3171-49e9-b118-781625c67b60",
+                      "Name": "Translucent",
+                      "ColorTags": [],
+                      "Swatch": null
+                    },
+                    "HeroShotId": "9f0f9829-57eb-4a06-b96b-2a39eab7781a",
+                    "Msrp": {
+                      "Amount": 25,
+                      "CurrencyCode": "USD"
+                    },
+                    "Manufacturer": {
+                      "Name": "Gadgetguard",
+                      "Id": 13139
+                    },
+                    "Vendors": [
+                      {
+                        "Name": "Brightstar",
+                        "Id": 1216
+                      },
+                      {
+                        "Name": "VoiceComm",
+                        "Id": 18744
+                      },
+                      {
+                        "Name": "TESSCO",
+                        "Id": 7190
+                      }
+                    ],
+                    "Slug": "M491149",
+                    "ProductVersion": 7,
+                    "IsDropShippable": true,
+                    "ShortDescription": "Have you ever wanted a privacy screen but only for a short period of time?",
+                    "IsMasterProduct": true,
+                    "DateAddedUtc": "2018-08-13T13:51:33.297Z",
+                    "Identifiers": [
+                      {
+                        "Sku": "600241",
+                        "SkuType": "VendorSKU",
+                        "Entity": {
+                          "Id": 1216,
+                          "Name": "Brightstar"
+                        },
+                        "Description": ""
+                      },
+                      {
+                        "Sku": "SESPSA000010",
+                        "SkuType": "VendorSKU",
+                        "Entity": {
+                          "Id": 18744,
+                          "Name": "VoiceComm"
+                        },
+                        "Description": "Sku"
+                      },
+                      {
+                        "Sku": "596504",
+                        "SkuType": "VendorSKU",
+                        "Entity": {
+                          "Id": 7190,
+                          "Name": "TESSCO"
+                        },
+                        "Description": "Distributer"
+                      },
+                      {
+                        "Sku": "SESPSA000010",
+                        "SkuType": "ManufacturerSKU",
+                        "Entity": {
+                          "Id": 13139,
+                          "Name": "Gadgetguard"
+                        },
+                        "Description": ""
+                      },
+                      {
+                        "Sku": "813394022097",
+                        "SkuType": "UPC",
+                        "Entity": null,
+                        "Description": ""
+                      }
+                    ],
+                    "Entity": null,
+                    "Region": null,
+                    "CatalogItemId": "03e3cfb3-934b-4bad-ad35-40dbe4300da7",
+                    "CatalogSku": "T6TXRX2B",
+                    "RmsId": "",
+                    "CompanyId": 131523,
+                    "MeasurementType": "SingleUnit",
+                    "BatchTracking": false,
+                    "NonStock": false,
+                    "LifeCycle": "Active",
+                    "IsListSourced": true,
+                    "SerialNumbers": []
                   }
-                ]
+                ],
+                "MetaData": {
+                  "TotalResults": 1
+                }
               }
             },
             {
-              "uri": "/v1/Companies(23813)/Catalog/Items(SourceId=e7a9e7b1-4708-460c-ae34-37c30e64f14a)",
+              "uri": "/v1/Companies(23813)/Catalog/Items/ByVendorSku?vendorId=7190&vendorSku=596504",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
               "responsePayload": {
+                "VendorId": 7190,
+                "Sku": "596504",
                 "Items": [
                   {
-                    "Slug": "M5902-V1",
-                    "CatalogItemId": "a61887ce-db07-4c1d-a24e-d23fddae65c6",
-                    "DateUpdatedUtc": "2018-03-08T00:33:05.83Z"
-                  },
-                  {
-                    "Slug": "M6855-V1",
-                    "CatalogItemId": "a8c1c049-5dce-453f-b0cb-aacb14ada7b4",
-                    "DateUpdatedUtc": "2018-03-08T00:33:06.427Z"
-                  },
-                  {
-                    "Slug": "M6855-V2",
-                    "CatalogItemId": "49f57d8e-a170-458a-91f6-e9ee06c28b37",
-                    "DateUpdatedUtc": "2018-03-08T00:33:06.52Z"
+                    "RmsId": "",
+                    "Slug": "M491149",
+                    "CatalogItemId": "03e3cfb3-934b-4bad-ad35-40dbe4300da7",
+                    "CatalogSku": "T6TXRX2B",
+                    "MeasurementType": "SingleUnit",
+                    "BatchTracking": false,
+                    "NonStock": false,
+                    "LifeCycle": "Active",
+                    "IsArchived": false,
+                    "SourceIds": ["419faf6c-3906-47d8-a855-f3883d58902d"],
+                    "DateAddedUtc": "2018-08-13T13:51:33.297Z",
+                    "DateUpdatedUtc": "2018-08-13T13:51:33.297Z"
                   }
                 ]
               }
@@ -5462,27 +5564,185 @@
               "statusCode": 200,
               "responsePayload": {
                 "CatalogItems": {
-                  "144859f4-e8a0-4367-afcb-a9d39c94fa8f": {
-                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z",
-                    "VendorSkus": [
+                  "03e3cfb3-934b-4bad-ad35-40dbe4300da7": {
+                    "ExtendedAttributes": [],
+                    "DateAddedUtc": "2018-08-13T13:51:33.297Z",
+                    "DateUpdatedUtc": "2018-08-13T13:51:33.297Z",
+                    "RmsId": "",
+                    "MeasurementType": "SingleUnit",
+                    "BatchTracking": false,
+                    "NonStock": false,
+                    "LifeCycle": "Active",
+                    "Id": "M491149",
+                    "Name": "iPhone 6/6s Plus Reusable On The Go Shadow Edition Privacy Screen Protector",
+                    "MasterProductId": 491149,
+                    "VariationId": null,
+                    "Owner": null,
+                    "CanonicalClassification": {
+                      "TreeId": 1,
+                      "Id": 42,
+                      "Name": "Screen Protectors",
+                      "ParentCategories": [
+                        {
+                          "Id": 12,
+                          "Name": "Accessories"
+                        },
+                        {
+                          "Id": 37,
+                          "Name": "Cases & Protection"
+                        }
+                      ]
+                    },
+                    "ShortDescription": "Have you ever wanted a privacy screen but only for a short period of time?",
+                    "LongDescription": "<p>Have you ever wanted a privacy screen but only for a short period of time? Yes! Everyone's answer is YES! Gadget Guard has found and created the solution! This item is reusable and easily stored when not in use. This item is used as an add to to other forms of screen protection, used in addition to the other products such as the Original, Shadow Edition, or Black Ice. When you are not concerned about wandering eyes this privacy protector is easily stored in the plastic plate storage that is included in your purchase.</p>\n<p>Features</p>\n\n<ul><li>Secondary back up privacy screen</li>\n<li>Two Way(Side View) Privacy </li>\n<li>Reusable, store when not in use</li>\n<li>Long Lasting Adhesive, easily cleaned</li></ul>",
+                    "Manufacturer": {
+                      "Id": 13139,
+                      "Name": "Gadgetguard"
+                    },
+                    "MSRP": {
+                      "Amount": 25,
+                      "CurrencyCode": "USD"
+                    },
+                    "ReleaseDate": "2016-06-15T00:00:00Z",
+                    "VariationInfo": [],
+                    "Specifications": [
                       {
-                        "Value": "NCKH-0004",
+                        "Id": "8eb70163-d9eb-4762-8a63-0061916ae6c1",
+                        "Name": "Dimensions",
+                        "Fields": [
+                          {
+                            "Id": 49,
+                            "StringId": "Height",
+                            "DisplayName": "Height",
+                            "Name": "Height",
+                            "Value": "5.44",
+                            "Type": "Float",
+                            "Unit": "inches"
+                          },
+                          {
+                            "Id": 50,
+                            "StringId": "Width",
+                            "DisplayName": "Width",
+                            "Name": "Width",
+                            "Value": "2.64",
+                            "Type": "Float",
+                            "Unit": "inches"
+                          },
+                          {
+                            "Id": 52,
+                            "StringId": "Weight",
+                            "DisplayName": "Weight",
+                            "Name": "Weight",
+                            "Value": "2.24",
+                            "Type": "Float",
+                            "Unit": "ounces"
+                          }
+                        ]
+                      },
+                      {
+                        "Id": "37ffb847-2e63-4ff6-8529-12978368799f",
+                        "Name": "Packaging Dimensions",
+                        "Fields": [
+                          {
+                            "Id": 141,
+                            "StringId": "Packaging Height",
+                            "DisplayName": "Packaging Height",
+                            "Name": "Packaging Height",
+                            "Value": "8.75",
+                            "Type": "Float",
+                            "Unit": "inches"
+                          },
+                          {
+                            "Id": 142,
+                            "StringId": "Packaging Width",
+                            "DisplayName": "Packaging Width",
+                            "Name": "Packaging Width",
+                            "Value": "4.63",
+                            "Type": "Float",
+                            "Unit": "inches"
+                          },
+                          {
+                            "Id": 143,
+                            "StringId": "Packaging Depth",
+                            "DisplayName": "Packaging Depth",
+                            "Name": "Packaging Depth",
+                            "Value": "0.25",
+                            "Type": "Float",
+                            "Unit": "inches"
+                          }
+                        ]
+                      }
+                    ],
+                    "Assets": [
+                      {
+                        "Id": "9f0f9829-57eb-4a06-b96b-2a39eab7781a",
+                        "Name": "f54f259a-d089-4fed-b2b2-e5518360aa59.png",
+                        "Uri": "https://ams.iqmetrix.net/images/9f0f9829-57eb-4a06-b96b-2a39eab7781a",
+                        "Type": "Image",
+                        "IsHidden": false,
+                        "IsRolledUp": false
+                      }
+                    ],
+                    "ColorDefinition": {
+                      "Id": "8f624c67-3171-49e9-b118-781625c67b60",
+                      "Name": "Translucent",
+                      "ColorTagIds": [],
+                      "ColorTags": [],
+                      "Swatch": null,
+                      "IsUsed": true
+                    },
+                    "HeroShotUri": "https://ams.iqmetrix.net/images/9f0f9829-57eb-4a06-b96b-2a39eab7781a",
+                    "HeroShotId": "9f0f9829-57eb-4a06-b96b-2a39eab7781a",
+                    "ManufacturerSkus": [
+                      {
+                        "Value": "SESPSA000010",
+                        "Description": "",
                         "Entity": {
-                          "Id": 7190
+                          "Id": 13139,
+                          "Name": "Gadgetguard"
                         }
                       }
-                    ]
-                  },
-                  "a61887ce-db07-4c1d-a24e-d23fddae65c6": {
-                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z",
+                    ],
                     "VendorSkus": [
                       {
-                        "Value": "NCDM-0002",
+                        "Value": "600241",
+                        "Description": "",
                         "Entity": {
-                          "Id": 13939
+                          "Id": 1216,
+                          "Name": "Brightstar"
+                        }
+                      },
+                      {
+                        "Value": "SESPSA000010",
+                        "Description": "Sku",
+                        "Entity": {
+                          "Id": 18744,
+                          "Name": "VoiceComm"
+                        }
+                      },
+                      {
+                        "Value": "596504",
+                        "Description": "Distributer",
+                        "Entity": {
+                          "Id": 7190,
+                          "Name": "TESSCO"
                         }
                       }
-                    ]
+                    ],
+                    "UpcCodes": [
+                      {
+                        "Value": "813394022097",
+                        "Description": "",
+                        "Entity": null
+                      }
+                    ],
+                    "Region": null,
+                    "Entity": null,
+                    "HasColor": true,
+                    "IsLinkedToCuratedProduct": true,
+                    "IsSaleable": true,
+                    "IsArchived": false,
+                    "Version": 7
                   }
                 }
               }
@@ -5626,53 +5886,628 @@
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/v1/Companies(23813)/Catalog/Items(SourceId=419faf6c-3906-47d8-a855-f3883d58902d)",
+              "uri": "/v1/Companies(23813)/Catalog/GroupedSearch?VendorIds=7190%2C13939&CreatedFromUtc=2010-03-08T00%3A28%3A44.183Z&CreatedToUtc=2019-03-08T00%3A28%3A44.183Z&HasChildProducts=true&Page=1&PageSize=25&OrderBy=dateAdded",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
               "responsePayload": {
                 "Items": [
                   {
-                    "Slug": "M5970-V3",
-                    "CatalogItemId": "749447b5-5969-42af-8f9f-a8a712626732",
-                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z"
-                  },
+                    "CanonicalClassification": {
+                      "Id": 40,
+                      "Name": "Cases",
+                      "ParentCategories": [
+                        {
+                          "Id": 12,
+                          "Name": "Accessories"
+                        },
+                        {
+                          "Id": 37,
+                          "Name": "Cases & Protection"
+                        }
+                      ]
+                    },
+                    "ClassificationTreeId": 1,
+                    "IsLinkedToCuratedProduct": true,
+                    "Products": [
+                      {
+                        "Name": "  iPhone 7 Plus Performance Ultra Case - Turquoise/Grape",
+                        "ColorDefinition": {
+                          "Id": "d1035e64-3fb6-438a-b837-cd8e586ab008",
+                          "Name": "Turquoise/Grape",
+                          "ColorTags": [
+                            {
+                              "Id": 2,
+                              "Name": "Blue",
+                              "ColorCode": "#3180BA"
+                            }
+                          ],
+                          "Swatch": {
+                            "Type": "ColorCode",
+                            "AssetId": null,
+                            "ColorCode": "#54EBE2"
+                          }
+                        },
+                        "HeroShotId": "d52a9798-8c42-4eba-831f-f5cac95a7c23",
+                        "Msrp": {
+                          "Amount": 39.99,
+                          "CurrencyCode": "USD"
+                        },
+                        "Manufacturer": {
+                          "Name": "Incipio",
+                          "Id": 13151
+                        },
+                        "Vendors": [
+                          {
+                            "Name": "Brightstar",
+                            "Id": 1216
+                          },
+                          {
+                            "Name": "TESSCO",
+                            "Id": 7190
+                          }
+                        ],
+                        "Slug": "M632536-V4",
+                        "ProductVersion": 54,
+                        "IsDropShippable": true,
+                        "ShortDescription": "Quad-layer defense technology.",
+                        "IsMasterProduct": false,
+                        "DateAddedUtc": "2018-08-13T13:49:13.083Z",
+                        "Identifiers": [
+                          {
+                            "Sku": "416675",
+                            "SkuType": "VendorSKU",
+                            "Entity": {
+                              "Id": 1216,
+                              "Name": "Brightstar"
+                            },
+                            "Description": ""
+                          },
+                          {
+                            "Sku": "548784",
+                            "SkuType": "VendorSKU",
+                            "Entity": {
+                              "Id": 7190,
+                              "Name": "TESSCO"
+                            },
+                            "Description": "Distributer"
+                          },
+                          {
+                            "Sku": "IPH-1515-TDG",
+                            "SkuType": "ManufacturerSKU",
+                            "Entity": {
+                              "Id": 13151,
+                              "Name": "Incipio"
+                            },
+                            "Description": ""
+                          },
+                          {
+                            "Sku": "840076187393",
+                            "SkuType": "UPC",
+                            "Entity": null,
+                            "Description": ""
+                          }
+                        ],
+                        "Entity": null,
+                        "Region": null,
+                        "CatalogItemId": "a8207eb0-6743-4150-9c59-2780984cb240",
+                        "CatalogSku": "44G12T1V",
+                        "RmsId": "",
+                        "CompanyId": 131523,
+                        "MeasurementType": "SingleUnit",
+                        "BatchTracking": false,
+                        "NonStock": false,
+                        "LifeCycle": "Active",
+                        "IsListSourced": true,
+                        "SerialNumbers": []
+                      },
+                      {
+                        "Name": "  iPhone 7 Plus Performance Ultra Case - Berry Pink/Rose",
+                        "ColorDefinition": {
+                          "Id": "6c951eb5-7de8-4cd3-9a9e-f39353dee9b9",
+                          "Name": "Berry Pink/Rose",
+                          "ColorTags": [
+                            {
+                              "Id": 7,
+                              "Name": "Pink",
+                              "ColorCode": "#F57EBE"
+                            }
+                          ],
+                          "Swatch": {
+                            "Type": "ColorCode",
+                            "AssetId": null,
+                            "ColorCode": "#DE317B"
+                          }
+                        },
+                        "HeroShotId": "5c9819a5-8801-452c-baf2-5d697ca38410",
+                        "Msrp": {
+                          "Amount": 39.99,
+                          "CurrencyCode": "USD"
+                        },
+                        "Manufacturer": {
+                          "Name": "Incipio",
+                          "Id": 13151
+                        },
+                        "Vendors": [
+                          {
+                            "Name": "Brightstar",
+                            "Id": 1216
+                          },
+                          {
+                            "Name": "TESSCO",
+                            "Id": 7190
+                          }
+                        ],
+                        "Slug": "M632536-V2",
+                        "ProductVersion": 54,
+                        "IsDropShippable": true,
+                        "ShortDescription": "Quad-layer defense technology.",
+                        "IsMasterProduct": false,
+                        "DateAddedUtc": "2018-08-13T13:50:48.943Z",
+                        "Identifiers": [
+                          {
+                            "Sku": "416673",
+                            "SkuType": "VendorSKU",
+                            "Entity": {
+                              "Id": 1216,
+                              "Name": "Brightstar"
+                            },
+                            "Description": ""
+                          },
+                          {
+                            "Sku": "586215",
+                            "SkuType": "VendorSKU",
+                            "Entity": {
+                              "Id": 7190,
+                              "Name": "TESSCO"
+                            },
+                            "Description": "Distributer"
+                          },
+                          {
+                            "Sku": "IPH-1515-BPR",
+                            "SkuType": "ManufacturerSKU",
+                            "Entity": {
+                              "Id": 13151,
+                              "Name": "Incipio"
+                            },
+                            "Description": ""
+                          },
+                          {
+                            "Sku": "840076187409",
+                            "SkuType": "UPC",
+                            "Entity": null,
+                            "Description": ""
+                          }
+                        ],
+                        "Entity": null,
+                        "Region": null,
+                        "CatalogItemId": "bcd36c32-72e6-49d6-bfc8-8a4826b15b46",
+                        "CatalogSku": "XQWFWHAF",
+                        "RmsId": "",
+                        "CompanyId": 131523,
+                        "MeasurementType": "SingleUnit",
+                        "BatchTracking": false,
+                        "NonStock": false,
+                        "LifeCycle": "Active",
+                        "IsListSourced": true,
+                        "SerialNumbers": []
+                      },
+                      {
+                        "Name": "  iPhone 7 Plus Performance Ultra Case - Black/Gray",
+                        "ColorDefinition": {
+                          "Id": "cb3949d6-e770-461b-923a-27a2263e41c6",
+                          "Name": "Black/Gray",
+                          "ColorTags": [
+                            {
+                              "Id": 1,
+                              "Name": "Black",
+                              "ColorCode": "#303232"
+                            },
+                            {
+                              "Id": 4,
+                              "Name": "Gray",
+                              "ColorCode": "#7D7D7D"
+                            }
+                          ],
+                          "Swatch": {
+                            "Type": "ColorCode",
+                            "AssetId": null,
+                            "ColorCode": "#303232"
+                          }
+                        },
+                        "HeroShotId": "d9257f0d-0cdd-4ae6-adc2-c20af997cded",
+                        "Msrp": {
+                          "Amount": 39.99,
+                          "CurrencyCode": "USD"
+                        },
+                        "Manufacturer": {
+                          "Name": "Incipio",
+                          "Id": 13151
+                        },
+                        "Vendors": [
+                          {
+                            "Name": "Brightstar",
+                            "Id": 1216
+                          },
+                          {
+                            "Name": "TESSCO",
+                            "Id": 7190
+                          }
+                        ],
+                        "Slug": "M632536-V1",
+                        "ProductVersion": 54,
+                        "IsDropShippable": true,
+                        "ShortDescription": "Quad-layer defense technology.",
+                        "IsMasterProduct": false,
+                        "DateAddedUtc": "2018-08-13T13:51:31.907Z",
+                        "Identifiers": [
+                          {
+                            "Sku": "416672",
+                            "SkuType": "VendorSKU",
+                            "Entity": {
+                              "Id": 1216,
+                              "Name": "Brightstar"
+                            },
+                            "Description": ""
+                          },
+                          {
+                            "Sku": "596215",
+                            "SkuType": "VendorSKU",
+                            "Entity": {
+                              "Id": 7190,
+                              "Name": "TESSCO"
+                            },
+                            "Description": "Distributer"
+                          },
+                          {
+                            "Sku": "IPH-1515-BKG",
+                            "SkuType": "ManufacturerSKU",
+                            "Entity": {
+                              "Id": 13151,
+                              "Name": "Incipio"
+                            },
+                            "Description": ""
+                          },
+                          {
+                            "Sku": "840076187379",
+                            "SkuType": "UPC",
+                            "Entity": null,
+                            "Description": ""
+                          }
+                        ],
+                        "Entity": null,
+                        "Region": null,
+                        "CatalogItemId": "9d6a1444-9f91-4f2d-afb2-db704b7f977d",
+                        "CatalogSku": "YVG0GB1B",
+                        "RmsId": "",
+                        "CompanyId": 131523,
+                        "MeasurementType": "SingleUnit",
+                        "BatchTracking": false,
+                        "NonStock": false,
+                        "LifeCycle": "Active",
+                        "IsListSourced": false,
+                        "SerialNumbers": []
+                      }
+                    ],
+                    "MostRecentDateAdded": "2018-08-13T13:49:13.083Z",
+                    "VariationInfo": [
+                      {
+                        "VariationId": 1,
+                        "Slug": "M632536-V1",
+                        "Fields": []
+                      },
+                      {
+                        "VariationId": 2,
+                        "Slug": "M632536-V2",
+                        "Fields": []
+                      },
+                      {
+                        "VariationId": 4,
+                        "Slug": "M632536-V4",
+                        "Fields": []
+                      }
+                    ],
+                    "Name": "  iPhone 7 Plus Performance Ultra Case",
+                    "ColorDefinition": null,
+                    "HeroShotId": "6746d87c-797f-4e51-a03a-693d091ca095",
+                    "Msrp": null,
+                    "Manufacturer": {
+                      "Name": "Incipio",
+                      "Id": 13151
+                    },
+                    "Vendors": [],
+                    "Slug": "M632536",
+                    "ProductVersion": 54,
+                    "IsDropShippable": null,
+                    "ShortDescription": "Quad-layer defense technology.",
+                    "IsMasterProduct": true,
+                    "DateAddedUtc": "2018-08-13T13:49:13.083Z",
+                    "Identifiers": [],
+                    "Entity": null,
+                    "Region": null,
+                    "CatalogItemId": "00000000-0000-0000-0000-000000000000",
+                    "CatalogSku": null,
+                    "RmsId": null,
+                    "CompanyId": 131523,
+                    "MeasurementType": null,
+                    "BatchTracking": null,
+                    "NonStock": null,
+                    "LifeCycle": null,
+                    "IsListSourced": false,
+                    "SerialNumbers": []
+                  }
+                ],
+                "MetaData": {
+                  "TotalResults": 1
+                }
+              }
+            },
+            {
+              "uri": "/v1/Companies(23813)/Catalog/Items/ByVendorSku?vendorId=7190&vendorSku=548784",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": {
+                "VendorId": 7190,
+                "Sku": "548784",
+                "Items": [
                   {
-                    "Slug": "M8170",
-                    "CatalogItemId": "144859f4-e8a0-4367-afcb-a9d39c94fa8f",
-                    "DateUpdatedUtc": "2018-03-08T00:28:43.647Z"
-                  },
-                  {
-                    "Slug": "M5970-V2",
-                    "CatalogItemId": "4773c97f-bbb8-4063-8de4-d7242a6a5933",
-                    "DateUpdatedUtc": "2018-03-08T00:28:43.803Z"
+                    "RmsId": "",
+                    "Slug": "M632536-V4",
+                    "CatalogItemId": "a8207eb0-6743-4150-9c59-2780984cb240",
+                    "CatalogSku": "44G12T1V",
+                    "MeasurementType": "SingleUnit",
+                    "BatchTracking": false,
+                    "NonStock": false,
+                    "LifeCycle": "Active",
+                    "IsArchived": false,
+                    "SourceIds": ["419faf6c-3906-47d8-a855-f3883d58902d"],
+                    "DateAddedUtc": "2018-08-13T13:49:13.083Z",
+                    "DateUpdatedUtc": "2018-08-13T13:49:13.083Z"
                   }
                 ]
               }
             },
             {
-              "uri": "/v1/Companies(23813)/Catalog/Items(SourceId=e7a9e7b1-4708-460c-ae34-37c30e64f14a)",
+              "uri": "/v1/Companies(23813)/Catalog/Items/ByVendorSku?vendorId=7190&vendorSku=586215",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
               "responsePayload": {
+                "VendorId": 7190,
+                "Sku": "586215",
                 "Items": [
                   {
-                    "Slug": "M5902-V1",
-                    "CatalogItemId": "a61887ce-db07-4c1d-a24e-d23fddae65c6",
-                    "DateUpdatedUtc": "2018-03-08T00:33:05.83Z"
-                  },
-                  {
-                    "Slug": "M6855-V1",
-                    "CatalogItemId": "a8c1c049-5dce-453f-b0cb-aacb14ada7b4",
-                    "DateUpdatedUtc": "2018-03-08T00:33:06.427Z"
-                  },
-                  {
-                    "Slug": "M6855-V2",
-                    "CatalogItemId": "49f57d8e-a170-458a-91f6-e9ee06c28b37",
-                    "DateUpdatedUtc": "2018-03-08T00:33:06.52Z"
+                    "RmsId": "",
+                    "Slug": "M632536-V2",
+                    "CatalogItemId": "bcd36c32-72e6-49d6-bfc8-8a4826b15b46",
+                    "CatalogSku": "XQWFWHAF",
+                    "MeasurementType": "SingleUnit",
+                    "BatchTracking": false,
+                    "NonStock": false,
+                    "LifeCycle": "Active",
+                    "IsArchived": false,
+                    "SourceIds": ["419faf6c-3906-47d8-a855-f3883d58902d"],
+                    "DateAddedUtc": "2018-08-13T13:50:48.943Z",
+                    "DateUpdatedUtc": "2018-08-13T13:50:48.943Z"
                   }
                 ]
+              }
+            },
+            {
+              "baseUri": "https://productlibrarydemo.iqmetrix.net",
+              "uri": "/v1/Products/GetBulk?Slugs=M632536",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": {
+                "Products": {
+                  "M632536": {
+                    "Id": "M632536",
+                    "Name": "  iPhone 7 Plus Performance Ultra Case",
+                    "MasterProductId": 632536,
+                    "VariationId": null,
+                    "Owner": null,
+                    "CanonicalClassification": {
+                      "TreeId": 1,
+                      "Id": 40,
+                      "Name": "Cases",
+                      "ParentCategories": [
+                        {
+                          "Id": 12,
+                          "Name": "Accessories"
+                        },
+                        {
+                          "Id": 37,
+                          "Name": "Cases & Protection"
+                        }
+                      ]
+                    },
+                    "ShortDescription": "Quad-layer defense technology.",
+                    "LongDescription": "<p>Offering premium protection for your new iPhone, the Performance Series Ultra Protection Case is composed of quad-layer defense technology. The dual infused scratch-resistant outer shell is tough against harmful drops and dents, while the interior impact ridge delivers military grade shock absorption. The Ultra Protection Case delivers outstanding drop protection while maintaining a sleek profile.</p><p>Features</p>\n<ul>\n<li>Two-piece design</li>\n<li>Impact ridge provides military grade drop protection</li>\n<li>Integrated buttons</li>\n<li>Shock absorbing honeycomb texture</li></ul>",
+                    "Manufacturer": {
+                      "Id": 13151,
+                      "Name": "Incipio"
+                    },
+                    "MSRP": null,
+                    "ReleaseDate": "2016-10-18T00:00:00Z",
+                    "VariationInfo": [
+                      {
+                        "VariationId": 1,
+                        "Slug": "M632536-V1",
+                        "Fields": []
+                      },
+                      {
+                        "VariationId": 2,
+                        "Slug": "M632536-V2",
+                        "Fields": []
+                      },
+                      {
+                        "VariationId": 3,
+                        "Slug": "M632536-V3",
+                        "Fields": []
+                      },
+                      {
+                        "VariationId": 4,
+                        "Slug": "M632536-V4",
+                        "Fields": []
+                      }
+                    ],
+                    "Specifications": [
+                      {
+                        "Id": "055f28a6-bb83-4926-aae6-2ebb2c27ffd0",
+                        "Name": "Dimensions",
+                        "Fields": [
+                          {
+                            "Id": 49,
+                            "StringId": "Height",
+                            "DisplayName": "Height",
+                            "Name": "Height",
+                            "Value": "6.23",
+                            "Type": "Float",
+                            "Unit": "inches"
+                          },
+                          {
+                            "Id": 50,
+                            "StringId": "Width",
+                            "DisplayName": "Width",
+                            "Name": "Width",
+                            "Value": "3.07",
+                            "Type": "Float",
+                            "Unit": "inches"
+                          },
+                          {
+                            "Id": 51,
+                            "StringId": "Depth",
+                            "DisplayName": "Depth",
+                            "Name": "Depth",
+                            "Value": "0.29",
+                            "Type": "Float",
+                            "Unit": "inches"
+                          }
+                        ]
+                      },
+                      {
+                        "Id": "27492fae-0f45-423b-9d99-e46d88d7fb0a",
+                        "Name": "Features",
+                        "Fields": [
+                          {
+                            "Id": 100,
+                            "StringId": "Screen Protector Included",
+                            "DisplayName": "Screen Protector Included",
+                            "Name": "Screen Protector Included",
+                            "Value": "No",
+                            "Type": "YesNo",
+                            "Unit": ""
+                          }
+                        ]
+                      }
+                    ],
+                    "Assets": [
+                      {
+                        "Id": "6746d87c-797f-4e51-a03a-693d091ca095",
+                        "Name": "tmp26E4.png",
+                        "Uri": "https://ams.iqmetrix.net/images/6746d87c-797f-4e51-a03a-693d091ca095",
+                        "Type": "Image",
+                        "IsHidden": false,
+                        "IsRolledUp": false
+                      },
+                      {
+                        "Id": "a1389f50-6cc0-4932-a007-62d89863794f",
+                        "Name": "tmp2B6B.png",
+                        "Uri": "https://ams.iqmetrix.net/images/a1389f50-6cc0-4932-a007-62d89863794f",
+                        "Type": "Image",
+                        "IsHidden": false,
+                        "IsRolledUp": false
+                      },
+                      {
+                        "Id": "f0a38503-1a4d-48f6-aedd-f7c841c05674",
+                        "Name": "tmp2FD2.png",
+                        "Uri": "https://ams.iqmetrix.net/images/f0a38503-1a4d-48f6-aedd-f7c841c05674",
+                        "Type": "Image",
+                        "IsHidden": false,
+                        "IsRolledUp": true
+                      },
+                      {
+                        "Id": "900a5c2b-2a6f-477b-8bf0-babcffcd04ad",
+                        "Name": "tmp3487.png",
+                        "Uri": "https://ams.iqmetrix.net/images/900a5c2b-2a6f-477b-8bf0-babcffcd04ad",
+                        "Type": "Image",
+                        "IsHidden": false,
+                        "IsRolledUp": false
+                      },
+                      {
+                        "Id": "d9257f0d-0cdd-4ae6-adc2-c20af997cded",
+                        "Name": "1492.png",
+                        "Uri": "https://ams.iqmetrix.net/images/d9257f0d-0cdd-4ae6-adc2-c20af997cded",
+                        "Type": "Image",
+                        "IsHidden": false,
+                        "IsRolledUp": true
+                      },
+                      {
+                        "Id": "0028dc13-ff01-4f57-b4c2-acadcb98a861",
+                        "Name": "tmp1B15.png",
+                        "Uri": "https://ams.iqmetrix.net/images/0028dc13-ff01-4f57-b4c2-acadcb98a861",
+                        "Type": "Image",
+                        "IsHidden": false,
+                        "IsRolledUp": true
+                      },
+                      {
+                        "Id": "5c9819a5-8801-452c-baf2-5d697ca38410",
+                        "Name": "1493.png",
+                        "Uri": "https://ams.iqmetrix.net/images/5c9819a5-8801-452c-baf2-5d697ca38410",
+                        "Type": "Image",
+                        "IsHidden": false,
+                        "IsRolledUp": true
+                      },
+                      {
+                        "Id": "4b1aa66d-9041-4bf8-8115-9a2e4dbb1c26",
+                        "Name": "tmp2652.png",
+                        "Uri": "https://ams.iqmetrix.net/images/4b1aa66d-9041-4bf8-8115-9a2e4dbb1c26",
+                        "Type": "Image",
+                        "IsHidden": false,
+                        "IsRolledUp": true
+                      },
+                      {
+                        "Id": "d71f4daf-aa2a-4fbe-b101-97bf7a83b867",
+                        "Name": "1494.png",
+                        "Uri": "https://ams.iqmetrix.net/images/d71f4daf-aa2a-4fbe-b101-97bf7a83b867",
+                        "Type": "Image",
+                        "IsHidden": false,
+                        "IsRolledUp": true
+                      },
+                      {
+                        "Id": "d52a9798-8c42-4eba-831f-f5cac95a7c23",
+                        "Name": "1495.png",
+                        "Uri": "https://ams.iqmetrix.net/images/d52a9798-8c42-4eba-831f-f5cac95a7c23",
+                        "Type": "Image",
+                        "IsHidden": false,
+                        "IsRolledUp": true
+                      },
+                      {
+                        "Id": "8a5a0ad1-c3b2-4730-bdeb-a310498f8442",
+                        "Name": "tmpEEE.png",
+                        "Uri": "https://ams.iqmetrix.net/images/8a5a0ad1-c3b2-4730-bdeb-a310498f8442",
+                        "Type": "Image",
+                        "IsHidden": false,
+                        "IsRolledUp": true
+                      }
+                    ],
+                    "ColorDefinition": null,
+                    "HeroShotUri": "https://ams.iqmetrix.net/images/6746d87c-797f-4e51-a03a-693d091ca095",
+                    "HeroShotId": "6746d87c-797f-4e51-a03a-693d091ca095",
+                    "ManufacturerSkus": [],
+                    "VendorSkus": [],
+                    "UpcCodes": [],
+                    "Region": null,
+                    "Entity": null,
+                    "HasColor": true,
+                    "IsLinkedToCuratedProduct": true,
+                    "IsSaleable": false,
+                    "IsArchived": false,
+                    "Version": 54
+                  }
+                }
               }
             },
             {
@@ -5682,411 +6517,355 @@
               "statusCode": 200,
               "responsePayload": {
                 "CatalogItems": {
-                  "749447b5-5969-42af-8f9f-a8a712626732": {
-                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z",
-                    "VendorSkus": [
+                  "a8207eb0-6743-4150-9c59-2780984cb240": {
+                    "ExtendedAttributes": [],
+                    "DateAddedUtc": "2018-08-13T13:49:13.083Z",
+                    "DateUpdatedUtc": "2018-08-13T13:49:13.083Z",
+                    "RmsId": "",
+                    "MeasurementType": "SingleUnit",
+                    "BatchTracking": false,
+                    "NonStock": false,
+                    "LifeCycle": "Active",
+                    "Id": "M632536-V4",
+                    "Name": "  iPhone 7 Plus Performance Ultra Case - Turquoise/Grape",
+                    "MasterProductId": 632536,
+                    "VariationId": 4,
+                    "Owner": null,
+                    "CanonicalClassification": {
+                      "TreeId": 1,
+                      "Id": 40,
+                      "Name": "Cases",
+                      "ParentCategories": [
+                        {
+                          "Id": 12,
+                          "Name": "Accessories"
+                        },
+                        {
+                          "Id": 37,
+                          "Name": "Cases & Protection"
+                        }
+                      ]
+                    },
+                    "ShortDescription": "Quad-layer defense technology.",
+                    "LongDescription": "<p>Offering premium protection for your new iPhone, the Performance Series Ultra Protection Case is composed of quad-layer defense technology. The dual infused scratch-resistant outer shell is tough against harmful drops and dents, while the interior impact ridge delivers military grade shock absorption. The Ultra Protection Case delivers outstanding drop protection while maintaining a sleek profile.</p><p>Features</p>\n<ul>\n<li>Two-piece design</li>\n<li>Impact ridge provides military grade drop protection</li>\n<li>Integrated buttons</li>\n<li>Shock absorbing honeycomb texture</li></ul>",
+                    "Manufacturer": {
+                      "Id": 13151,
+                      "Name": "Incipio"
+                    },
+                    "MSRP": {
+                      "Amount": 39.99,
+                      "CurrencyCode": "USD"
+                    },
+                    "ReleaseDate": "2016-10-18T00:00:00Z",
+                    "VariationInfo": [],
+                    "Specifications": [
                       {
-                        "Value": "NCKH-0008",
+                        "Id": "055f28a6-bb83-4926-aae6-2ebb2c27ffd0",
+                        "Name": "Dimensions",
+                        "Fields": [
+                          {
+                            "Id": 49,
+                            "StringId": "Height",
+                            "DisplayName": "Height",
+                            "Name": "Height",
+                            "Value": "6.23",
+                            "Type": "Float",
+                            "Unit": "inches"
+                          },
+                          {
+                            "Id": 50,
+                            "StringId": "Width",
+                            "DisplayName": "Width",
+                            "Name": "Width",
+                            "Value": "3.07",
+                            "Type": "Float",
+                            "Unit": "inches"
+                          },
+                          {
+                            "Id": 51,
+                            "StringId": "Depth",
+                            "DisplayName": "Depth",
+                            "Name": "Depth",
+                            "Value": "0.29",
+                            "Type": "Float",
+                            "Unit": "inches"
+                          }
+                        ]
+                      },
+                      {
+                        "Id": "27492fae-0f45-423b-9d99-e46d88d7fb0a",
+                        "Name": "Features",
+                        "Fields": [
+                          {
+                            "Id": 100,
+                            "StringId": "Screen Protector Included",
+                            "DisplayName": "Screen Protector Included",
+                            "Name": "Screen Protector Included",
+                            "Value": "No",
+                            "Type": "YesNo",
+                            "Unit": ""
+                          }
+                        ]
+                      }
+                    ],
+                    "Assets": [
+                      {
+                        "Id": "d52a9798-8c42-4eba-831f-f5cac95a7c23",
+                        "Name": "1495.png",
+                        "Uri": "https://ams.iqmetrix.net/images/d52a9798-8c42-4eba-831f-f5cac95a7c23",
+                        "Type": "Image",
+                        "IsHidden": false,
+                        "IsRolledUp": false
+                      },
+                      {
+                        "Id": "8a5a0ad1-c3b2-4730-bdeb-a310498f8442",
+                        "Name": "tmpEEE.png",
+                        "Uri": "https://ams.iqmetrix.net/images/8a5a0ad1-c3b2-4730-bdeb-a310498f8442",
+                        "Type": "Image",
+                        "IsHidden": false,
+                        "IsRolledUp": false
+                      }
+                    ],
+                    "ColorDefinition": {
+                      "Id": "d1035e64-3fb6-438a-b837-cd8e586ab008",
+                      "Name": "Turquoise/Grape",
+                      "ColorTagIds": [
+                        2
+                      ],
+                      "ColorTags": [
+                        {
+                          "Id": 2,
+                          "Name": "Blue",
+                          "ColorCode": "#3180BA"
+                        }
+                      ],
+                      "Swatch": {
+                        "Type": "ColorCode",
+                        "AssetId": null,
+                        "ColorCode": "#54EBE2"
+                      },
+                      "IsUsed": true
+                    },
+                    "HeroShotUri": "https://ams.iqmetrix.net/images/d52a9798-8c42-4eba-831f-f5cac95a7c23",
+                    "HeroShotId": "d52a9798-8c42-4eba-831f-f5cac95a7c23",
+                    "ManufacturerSkus": [
+                      {
+                        "Value": "IPH-1515-TDG",
+                        "Description": "",
                         "Entity": {
-                          "Id": 7190
+                          "Id": 13151,
+                          "Name": "Incipio"
                         }
                       }
-                    ]
+                    ],
+                    "VendorSkus": [
+                      {
+                        "Value": "416675",
+                        "Description": "",
+                        "Entity": {
+                          "Id": 1216,
+                          "Name": "Brightstar"
+                        }
+                      },
+                      {
+                        "Value": "548784",
+                        "Description": "Distributer",
+                        "Entity": {
+                          "Id": 7190,
+                          "Name": "TESSCO"
+                        }
+                      }
+                    ],
+                    "UpcCodes": [
+                      {
+                        "Value": "840076187393",
+                        "Description": "",
+                        "Entity": null
+                      }
+                    ],
+                    "Region": null,
+                    "Entity": null,
+                    "HasColor": true,
+                    "IsLinkedToCuratedProduct": true,
+                    "IsSaleable": true,
+                    "IsArchived": false,
+                    "Version": 54
                   },
-                  "a8c1c049-5dce-453f-b0cb-aacb14ada7b4": {
-                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z",
-                    "VendorSkus": [
+                  "bcd36c32-72e6-49d6-bfc8-8a4826b15b46": {
+                    "ExtendedAttributes": [],
+                    "DateAddedUtc": "2018-08-13T13:50:48.943Z",
+                    "DateUpdatedUtc": "2018-08-13T13:50:48.943Z",
+                    "RmsId": "",
+                    "MeasurementType": "SingleUnit",
+                    "BatchTracking": false,
+                    "NonStock": false,
+                    "LifeCycle": "Active",
+                    "Id": "M632536-V2",
+                    "Name": "  iPhone 7 Plus Performance Ultra Case - Berry Pink/Rose",
+                    "MasterProductId": 632536,
+                    "VariationId": 2,
+                    "Owner": null,
+                    "CanonicalClassification": {
+                      "TreeId": 1,
+                      "Id": 40,
+                      "Name": "Cases",
+                      "ParentCategories": [
+                        {
+                          "Id": 12,
+                          "Name": "Accessories"
+                        },
+                        {
+                          "Id": 37,
+                          "Name": "Cases & Protection"
+                        }
+                      ]
+                    },
+                    "ShortDescription": "Quad-layer defense technology.",
+                    "LongDescription": "<p>Offering premium protection for your new iPhone, the Performance Series Ultra Protection Case is composed of quad-layer defense technology. The dual infused scratch-resistant outer shell is tough against harmful drops and dents, while the interior impact ridge delivers military grade shock absorption. The Ultra Protection Case delivers outstanding drop protection while maintaining a sleek profile.</p><p>Features</p>\n<ul>\n<li>Two-piece design</li>\n<li>Impact ridge provides military grade drop protection</li>\n<li>Integrated buttons</li>\n<li>Shock absorbing honeycomb texture</li></ul>",
+                    "Manufacturer": {
+                      "Id": 13151,
+                      "Name": "Incipio"
+                    },
+                    "MSRP": {
+                      "Amount": 39.99,
+                      "CurrencyCode": "USD"
+                    },
+                    "ReleaseDate": "2016-10-18T00:00:00Z",
+                    "VariationInfo": [],
+                    "Specifications": [
                       {
-                        "Value": "NCDM-0009",
+                        "Id": "055f28a6-bb83-4926-aae6-2ebb2c27ffd0",
+                        "Name": "Dimensions",
+                        "Fields": [
+                          {
+                            "Id": 49,
+                            "StringId": "Height",
+                            "DisplayName": "Height",
+                            "Name": "Height",
+                            "Value": "6.23",
+                            "Type": "Float",
+                            "Unit": "inches"
+                          },
+                          {
+                            "Id": 50,
+                            "StringId": "Width",
+                            "DisplayName": "Width",
+                            "Name": "Width",
+                            "Value": "3.07",
+                            "Type": "Float",
+                            "Unit": "inches"
+                          },
+                          {
+                            "Id": 51,
+                            "StringId": "Depth",
+                            "DisplayName": "Depth",
+                            "Name": "Depth",
+                            "Value": "0.29",
+                            "Type": "Float",
+                            "Unit": "inches"
+                          }
+                        ]
+                      },
+                      {
+                        "Id": "27492fae-0f45-423b-9d99-e46d88d7fb0a",
+                        "Name": "Features",
+                        "Fields": [
+                          {
+                            "Id": 100,
+                            "StringId": "Screen Protector Included",
+                            "DisplayName": "Screen Protector Included",
+                            "Name": "Screen Protector Included",
+                            "Value": "No",
+                            "Type": "YesNo",
+                            "Unit": ""
+                          }
+                        ]
+                      }
+                    ],
+                    "Assets": [
+                      {
+                        "Id": "5c9819a5-8801-452c-baf2-5d697ca38410",
+                        "Name": "1493.png",
+                        "Uri": "https://ams.iqmetrix.net/images/5c9819a5-8801-452c-baf2-5d697ca38410",
+                        "Type": "Image",
+                        "IsHidden": false,
+                        "IsRolledUp": false
+                      },
+                      {
+                        "Id": "4b1aa66d-9041-4bf8-8115-9a2e4dbb1c26",
+                        "Name": "tmp2652.png",
+                        "Uri": "https://ams.iqmetrix.net/images/4b1aa66d-9041-4bf8-8115-9a2e4dbb1c26",
+                        "Type": "Image",
+                        "IsHidden": false,
+                        "IsRolledUp": false
+                      }
+                    ],
+                    "ColorDefinition": {
+                      "Id": "6c951eb5-7de8-4cd3-9a9e-f39353dee9b9",
+                      "Name": "Berry Pink/Rose",
+                      "ColorTagIds": [
+                        7
+                      ],
+                      "ColorTags": [
+                        {
+                          "Id": 7,
+                          "Name": "Pink",
+                          "ColorCode": "#F57EBE"
+                        }
+                      ],
+                      "Swatch": {
+                        "Type": "ColorCode",
+                        "AssetId": null,
+                        "ColorCode": "#DE317B"
+                      },
+                      "IsUsed": true
+                    },
+                    "HeroShotUri": "https://ams.iqmetrix.net/images/5c9819a5-8801-452c-baf2-5d697ca38410",
+                    "HeroShotId": "5c9819a5-8801-452c-baf2-5d697ca38410",
+                    "ManufacturerSkus": [
+                      {
+                        "Value": "IPH-1515-BPR",
+                        "Description": "",
                         "Entity": {
-                          "Id": 13939
+                          "Id": 13151,
+                          "Name": "Incipio"
                         }
                       }
-                    ]
-                  },
-                  "4773c97f-bbb8-4063-8de4-d7242a6a5933": {
-                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z",
+                    ],
                     "VendorSkus": [
                       {
-                        "Value": "NCKH-0007",
+                        "Value": "416673",
+                        "Description": "",
                         "Entity": {
-                          "Id": 7190
+                          "Id": 1216,
+                          "Name": "Brightstar"
                         }
-                      }
-                    ]
-                  },
-                  "49f57d8e-a170-458a-91f6-e9ee06c28b37": {
-                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z",
-                    "VendorSkus": [
+                      },
                       {
-                        "Value": "NCDM-0010",
+                        "Value": "586215",
+                        "Description": "Distributer",
                         "Entity": {
-                          "Id": 13939
+                          "Id": 7190,
+                          "Name": "TESSCO"
                         }
                       }
-                    ]
+                    ],
+                    "UpcCodes": [
+                      {
+                        "Value": "840076187409",
+                        "Description": "",
+                        "Entity": null
+                      }
+                    ],
+                    "Region": null,
+                    "Entity": null,
+                    "HasColor": true,
+                    "IsLinkedToCuratedProduct": true,
+                    "IsSaleable": true,
+                    "IsArchived": false,
+                    "Version": 54
                   }
                 }
-              }
-            },
-            {
-              "baseUri": "https://productlibrarydemo.iqmetrix.net",
-              "uri": "/v1/products/M5970",
-              "method": "GET",
-              "replyHeaders": {},
-              "statusCode": 200,
-              "responsePayload": {
-                "Id": "M9411",
-                "Name": "iPhone 7 Adidas Dual Layer Hard Cover Case",
-                "MasterProductId": 9411,
-                "VariationId": null,
-                "Owner": null,
-                "CanonicalClassification": {
-                  "TreeId": 1,
-                  "Id": 40,
-                  "Name": "Cases",
-                  "ParentCategories": [
-                    {
-                      "Id": 12,
-                      "Name": "Accessories"
-                    },
-                    {
-                      "Id": 37,
-                      "Name": "Cases & Protection"
-                    }
-                  ]
-                },
-                "ShortDescription": "This impact-resistant Adidas Originals Dual Layer Hard Cover Case.",
-                "LongDescription": "<p>Safeguard your iPhone 7 in style. This Dual Layered Hard Case (Taupe) features the Adidas logo on a bold canvas.</p>\n<p>Designed to give you easy access to every button and port, this protective iPhone 7 case has a hard, impact-resistant TPU shell to keep you covered. Impact-resistant TPU helps protect your iPhone against drops while the raised edge helps keep your screen scratch free.</p>",
-                "Manufacturer": {
-                  "Id": 99773,
-                  "Name": "adidas"
-                },
-                "MSRP": null,
-                "ReleaseDate": "2017-04-18T00:00:00Z",
-                "VariationInfo": [
-                  {
-                    "VariationId": 1,
-                    "Slug": "M9411-V1",
-                    "Fields": []
-                  },
-                  {
-                    "VariationId": 2,
-                    "Slug": "M9411-V2",
-                    "Fields": []
-                  },
-                  {
-                    "VariationId": 3,
-                    "Slug": "M9411-V3",
-                    "Fields": []
-                  },
-                  {
-                    "VariationId": 4,
-                    "Slug": "M9411-V4",
-                    "Fields": []
-                  }
-                ],
-                "Specifications": [
-                  {
-                    "Id": "6e70f04e-d8f0-4c2c-bf09-a0367bc76412",
-                    "Name": "Dimensions",
-                    "Fields": [
-                      {
-                        "Id": 40,
-                        "StringId": "Height",
-                        "DisplayName": "Height",
-                        "Name": "Height",
-                        "Value": "5.44",
-                        "Type": "Float",
-                        "Unit": "inches"
-                      },
-                      {
-                        "Id": 41,
-                        "StringId": "Width",
-                        "DisplayName": "Width",
-                        "Name": "Width",
-                        "Value": "2.64",
-                        "Type": "Float",
-                        "Unit": "inches"
-                      },
-                      {
-                        "Id": 42,
-                        "StringId": "Depth",
-                        "DisplayName": "Depth",
-                        "Name": "Depth",
-                        "Value": "0.28",
-                        "Type": "Float",
-                        "Unit": "inches"
-                      }
-                    ]
-                  },
-                  {
-                    "Id": "144f294c-af12-46c4-912a-a0c796d22abc",
-                    "Name": "Features",
-                    "Fields": [
-                      {
-                        "Id": 10,
-                        "StringId": "Material",
-                        "DisplayName": "Material",
-                        "Name": "Material",
-                        "Value": "Polycarbonate / Polyurethane",
-                        "Type": "TextSingleLine",
-                        "Unit": ""
-                      },
-                      {
-                        "Id": 89,
-                        "StringId": "Screen Protector Included",
-                        "DisplayName": "Screen Protector Included",
-                        "Name": "Screen Protector Included",
-                        "Value": "No",
-                        "Type": "YesNo",
-                        "Unit": ""
-                      }
-                    ]
-                  },
-                  {
-                    "Id": "6ae2ca33-ea03-4c23-ab23-fe245c3635d8",
-                    "Name": "Packaging Dimensions",
-                    "Fields": [
-                      {
-                        "Id": 150,
-                        "StringId": "Packaging Width",
-                        "DisplayName": "Packaging Width",
-                        "Name": "Packaging Width",
-                        "Value": "4.13",
-                        "Type": "Float",
-                        "Unit": "inches"
-                      }
-                    ]
-                  }
-                ],
-                "Assets": [
-                  {
-                    "Id": "8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
-                    "Name": "tmp3E4D.png",
-                    "Uri": "https://amsrc.iqmetrix.net/images/8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
-                    "Type": "Image",
-                    "IsHidden": false,
-                    "IsRolledUp": true
-                  },
-                  {
-                    "Id": "f101dbf8-6bc5-4d1b-a430-a80a57b74210",
-                    "Name": "tmp208E.png",
-                    "Uri": "https://amsrc.iqmetrix.net/images/f101dbf8-6bc5-4d1b-a430-a80a57b74210",
-                    "Type": "Image",
-                    "IsHidden": false,
-                    "IsRolledUp": true
-                  },
-                  {
-                    "Id": "0cb5f9f7-2dea-4c34-9f62-1a0e3511b196",
-                    "Name": "tmp2C67.png",
-                    "Uri": "https://amsrc.iqmetrix.net/images/0cb5f9f7-2dea-4c34-9f62-1a0e3511b196",
-                    "Type": "Image",
-                    "IsHidden": false,
-                    "IsRolledUp": true
-                  },
-                  {
-                    "Id": "8e482267-f30c-47ec-b9e4-a4ecdc60c5d0",
-                    "Name": "tmp3552.png",
-                    "Uri": "https://amsrc.iqmetrix.net/images/8e482267-f30c-47ec-b9e4-a4ecdc60c5d0",
-                    "Type": "Image",
-                    "IsHidden": false,
-                    "IsRolledUp": true
-                  }
-                ],
-                "ColorDefinition": null,
-                "HeroShotUri": "https://amsrc.iqmetrix.net/images/8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
-                "HeroShotId": "8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
-                "ManufacturerSkus": [],
-                "VendorSkus": [],
-                "UpcCodes": [],
-                "Region": null,
-                "Entity": null,
-                "HasColor": true,
-                "IsLinkedToCuratedProduct": true,
-                "IsSaleable": false,
-                "IsArchived": false,
-                "Version": 14
-              }
-            },
-            {
-              "baseUri": "https://productlibrarydemo.iqmetrix.net",
-              "uri": "/v1/products/M6855",
-              "method": "GET",
-              "replyHeaders": {},
-              "statusCode": 200,
-              "responsePayload": {
-                "Id": "M9411",
-                "Name": "iPhone 7 Adidas Dual Layer Hard Cover Case",
-                "MasterProductId": 9411,
-                "VariationId": null,
-                "Owner": null,
-                "CanonicalClassification": {
-                  "TreeId": 1,
-                  "Id": 40,
-                  "Name": "Cases",
-                  "ParentCategories": [
-                    {
-                      "Id": 12,
-                      "Name": "Accessories"
-                    },
-                    {
-                      "Id": 37,
-                      "Name": "Cases & Protection"
-                    }
-                  ]
-                },
-                "ShortDescription": "This impact-resistant Adidas Originals Dual Layer Hard Cover Case.",
-                "LongDescription": "<p>Safeguard your iPhone 7 in style. This Dual Layered Hard Case (Taupe) features the Adidas logo on a bold canvas.</p>\n<p>Designed to give you easy access to every button and port, this protective iPhone 7 case has a hard, impact-resistant TPU shell to keep you covered. Impact-resistant TPU helps protect your iPhone against drops while the raised edge helps keep your screen scratch free.</p>",
-                "Manufacturer": {
-                  "Id": 99773,
-                  "Name": "adidas"
-                },
-                "MSRP": null,
-                "ReleaseDate": "2017-04-18T00:00:00Z",
-                "VariationInfo": [
-                  {
-                    "VariationId": 1,
-                    "Slug": "M9411-V1",
-                    "Fields": []
-                  },
-                  {
-                    "VariationId": 2,
-                    "Slug": "M9411-V2",
-                    "Fields": []
-                  },
-                  {
-                    "VariationId": 3,
-                    "Slug": "M9411-V3",
-                    "Fields": []
-                  },
-                  {
-                    "VariationId": 4,
-                    "Slug": "M9411-V4",
-                    "Fields": []
-                  }
-                ],
-                "Specifications": [
-                  {
-                    "Id": "6e70f04e-d8f0-4c2c-bf09-a0367bc76412",
-                    "Name": "Dimensions",
-                    "Fields": [
-                      {
-                        "Id": 40,
-                        "StringId": "Height",
-                        "DisplayName": "Height",
-                        "Name": "Height",
-                        "Value": "5.44",
-                        "Type": "Float",
-                        "Unit": "inches"
-                      },
-                      {
-                        "Id": 41,
-                        "StringId": "Width",
-                        "DisplayName": "Width",
-                        "Name": "Width",
-                        "Value": "2.64",
-                        "Type": "Float",
-                        "Unit": "inches"
-                      },
-                      {
-                        "Id": 42,
-                        "StringId": "Depth",
-                        "DisplayName": "Depth",
-                        "Name": "Depth",
-                        "Value": "0.28",
-                        "Type": "Float",
-                        "Unit": "inches"
-                      }
-                    ]
-                  },
-                  {
-                    "Id": "144f294c-af12-46c4-912a-a0c796d22abc",
-                    "Name": "Features",
-                    "Fields": [
-                      {
-                        "Id": 10,
-                        "StringId": "Material",
-                        "DisplayName": "Material",
-                        "Name": "Material",
-                        "Value": "Polycarbonate / Polyurethane",
-                        "Type": "TextSingleLine",
-                        "Unit": ""
-                      },
-                      {
-                        "Id": 89,
-                        "StringId": "Screen Protector Included",
-                        "DisplayName": "Screen Protector Included",
-                        "Name": "Screen Protector Included",
-                        "Value": "No",
-                        "Type": "YesNo",
-                        "Unit": ""
-                      }
-                    ]
-                  },
-                  {
-                    "Id": "6ae2ca33-ea03-4c23-ab23-fe245c3635d8",
-                    "Name": "Packaging Dimensions",
-                    "Fields": [
-                      {
-                        "Id": 150,
-                        "StringId": "Packaging Width",
-                        "DisplayName": "Packaging Width",
-                        "Name": "Packaging Width",
-                        "Value": "4.13",
-                        "Type": "Float",
-                        "Unit": "inches"
-                      }
-                    ]
-                  }
-                ],
-                "Assets": [
-                  {
-                    "Id": "8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
-                    "Name": "tmp3E4D.png",
-                    "Uri": "https://amsrc.iqmetrix.net/images/8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
-                    "Type": "Image",
-                    "IsHidden": false,
-                    "IsRolledUp": true
-                  },
-                  {
-                    "Id": "f101dbf8-6bc5-4d1b-a430-a80a57b74210",
-                    "Name": "tmp208E.png",
-                    "Uri": "https://amsrc.iqmetrix.net/images/f101dbf8-6bc5-4d1b-a430-a80a57b74210",
-                    "Type": "Image",
-                    "IsHidden": false,
-                    "IsRolledUp": true
-                  },
-                  {
-                    "Id": "0cb5f9f7-2dea-4c34-9f62-1a0e3511b196",
-                    "Name": "tmp2C67.png",
-                    "Uri": "https://amsrc.iqmetrix.net/images/0cb5f9f7-2dea-4c34-9f62-1a0e3511b196",
-                    "Type": "Image",
-                    "IsHidden": false,
-                    "IsRolledUp": true
-                  },
-                  {
-                    "Id": "8e482267-f30c-47ec-b9e4-a4ecdc60c5d0",
-                    "Name": "tmp3552.png",
-                    "Uri": "https://amsrc.iqmetrix.net/images/8e482267-f30c-47ec-b9e4-a4ecdc60c5d0",
-                    "Type": "Image",
-                    "IsHidden": false,
-                    "IsRolledUp": true
-                  }
-                ],
-                "ColorDefinition": null,
-                "HeroShotUri": "https://amsrc.iqmetrix.net/images/8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
-                "HeroShotId": "8d9e3ea1-f562-4d92-b74e-2d877ea1378e",
-                "ManufacturerSkus": [],
-                "VendorSkus": [],
-                "UpcCodes": [],
-                "Region": null,
-                "Entity": null,
-                "HasColor": true,
-                "IsLinkedToCuratedProduct": true,
-                "IsSaleable": false,
-                "IsArchived": false,
-                "Version": 14
               }
             }
           ],
@@ -6096,35 +6875,6 @@
         },
         {
           "ncStatusCode": 204,
-          "payload": {
-            "doc": {
-              "modifiedDateRange": {
-                "startDateGMT": "2019-03-08T00:28:44.183Z",
-                "endDateGMT": "2019-03-08T00:28:44.183Z"
-              },
-              "page": 1,
-              "pageSize": 25
-            }
-          },
-          "baseUri": "https://catalogsdemo.iqmetrix.net",
-          "defaultHeaders": {},
-          "links": [
-            {
-              "uri": "/v1/Companies(23813)/Catalog/GroupedSearch?VendorIds=7190%2C13939&CreatedFromUtc=2010-03-08T00%3A28%3A44.183Z&CreatedToUtc=2019-03-08T00%3A28%3A44.183Z&Page=1&PageSize=25&OrderBy=dateAdded",
-              "method": "GET",
-              "replyHeaders": {},
-              "statusCode": 200,
-              "responsePayload": {
-                "Items": []
-              }
-            }
-          ],
-          "channelProfile": {
-            "productBusinessReferences": ["Slug"]
-          }
-        },
-        {
-          "ncStatusCode": 400,
           "payload": {
             "doc": {
               "modifiedDateRange": {
@@ -6139,7 +6889,39 @@
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/v1/Companies(23813)/Catalog/GroupedSearch?VendorIds=7190%2C13939&CreatedFromUtc=2010-03-08T00%3A28%3A44.183Z&CreatedToUtc=2019-03-08T00%3A28%3A44.183Z&Page=1&PageSize=25&OrderBy=dateAdded",
+              "uri": "/v1/Companies(23813)/Catalog/GroupedSearch?VendorIds=7190%2C13939&CreatedFromUtc=2010-03-08T00%3A28%3A44.183Z&CreatedToUtc=2019-03-08T00%3A28%3A44.183Z&HasChildProducts=true&Page=1&PageSize=25&OrderBy=dateAdded",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": {
+                "Items": [],
+                "MetaData": {
+                  "TotalResults": 0
+                }
+              }
+            }
+          ],
+          "channelProfile": {
+            "productBusinessReferences": ["Slug"]
+          }
+        },
+        {
+          "ncStatusCode": 400,
+          "payload": {
+            "doc": {
+              "modifiedDateRange": {
+                "startDateGMT": "2019-03-08T00:28:44.183Z",
+                "endDateGMT": "2019-03-08T00:28:44.183Z"
+              },
+              "page": 1,
+              "pageSize": 25
+            }
+          },
+          "baseUri": "https://catalogsdemo.iqmetrix.net",
+          "defaultHeaders": {},
+          "links": [
+            {
+              "uri": "/v1/Companies(23813)/Catalog/GroupedSearch?VendorIds=7190%2C13939&CreatedFromUtc=2010-03-08T00%3A28%3A44.183Z&CreatedToUtc=2019-03-08T00%3A28%3A44.183Z&HasChildProducts=true&Page=1&PageSize=25&OrderBy=dateAdded",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 400,
@@ -6166,7 +6948,7 @@
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/v1/Companies(23813)/Catalog/GroupedSearch?VendorIds=7190%2C13939&CreatedFromUtc=2010-03-08T00%3A28%3A44.183Z&CreatedToUtc=2019-03-08T00%3A28%3A44.183Z&Page=1&PageSize=25&OrderBy=dateAdded",
+              "uri": "/v1/Companies(23813)/Catalog/GroupedSearch?VendorIds=7190%2C13939&CreatedFromUtc=2010-03-08T00%3A28%3A44.183Z&CreatedToUtc=2019-03-08T00%3A28%3A44.183Z&HasChildProducts=true&Page=1&PageSize=25&OrderBy=dateAdded",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 429,
@@ -6193,7 +6975,7 @@
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/v1/Companies(23813)/Catalog/GroupedSearch?VendorIds=7190%2C13939&CreatedFromUtc=2010-03-08T00%3A28%3A44.183Z&CreatedToUtc=2019-03-08T00%3A28%3A44.183Z&Page=1&PageSize=25&OrderBy=dateAdded",
+              "uri": "/v1/Companies(23813)/Catalog/GroupedSearch?VendorIds=7190%2C13939&CreatedFromUtc=2010-03-08T00%3A28%3A44.183Z&CreatedToUtc=2019-03-08T00%3A28%3A44.183Z&HasChildProducts=true&Page=1&PageSize=25&OrderBy=dateAdded",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 500,
