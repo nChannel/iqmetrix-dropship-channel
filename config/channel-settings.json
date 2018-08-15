@@ -108,7 +108,7 @@
       "documentDef": {
         "schema": {},
         "referenceLocation": {
-          "productQuantityBusinessReferences": ["Slug"]
+          "productQuantityBusinessReferences": ["SupplierEntityId", "SupplierSku"]
         }
       }
     },
