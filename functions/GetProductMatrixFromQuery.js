@@ -70,7 +70,10 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
         searchResults = await createdDateRangeSearch(queryDoc);
 
         for (const subscriptionList of subscriptionLists) {
-          matrixItems.push(...(await getFilteredMatrixItems(searchResults, subscriptionList)));
+          const listItems = JSON.parse(JSON.stringify(searchResults));
+          const filteredMatrixItems = await getFilteredMatrixItems(listItems, subscriptionList);
+
+          matrixItems.push(...filteredMatrixItems);
         }
 
         await getProductDetails(matrixItems);
@@ -389,7 +392,6 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
   async function buildResponseObject(matrixItems) {
     if (matrixItems.length > 0) {
       logInfo(`Submitting ${matrixItems.length} matrix products...`);
-
       stub.out.payload = [];
       matrixItems.forEach(item => {
         stub.out.payload.push({

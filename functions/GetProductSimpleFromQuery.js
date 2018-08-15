@@ -70,7 +70,9 @@ module.exports.GetProductSimpleFromQuery = (ncUtil, channelProfile, flowContext,
                 searchResults = await createdDateRangeSearch(queryDoc);
 
                 for (const subscriptionList of subscriptionLists) {
-                    simpleItems.push(...(await getSubscribedSimpleItems(searchResults, subscriptionList)));
+                    const listItems = JSON.parse(JSON.stringify(searchResults));
+                    const filteredSimpleItems = await getSubscribedSimpleItems(listItems, subscriptionList);
+                    simpleItems.push(...filteredSimpleItems);
                 }
 
                 await getProductDetails(simpleItems);
