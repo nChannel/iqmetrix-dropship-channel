@@ -26,7 +26,7 @@ if (fs.existsSync('config/channel-settings.json')) {
     // Get the functions for the current channel
     function getFunctions(path) {
       return fs.readdirSync(path).filter(function (file) {
-        return fs.statSync(path+'/'+file);
+        return fs.statSync(path+'/'+file).isFile();
       });
     }
 

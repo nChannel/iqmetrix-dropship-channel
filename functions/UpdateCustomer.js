@@ -39,6 +39,8 @@ function UpdateCustomer(ncUtil, channelProfile, flowContext, payload, callback) 
     async function updateCustomer() {
         logInfo("Updating existing customer record...");
 
+        stub.payload.doc.Id = stub.payload.customerRemoteID
+
         return await stub.request.put({
             url: `${stub.channelProfile.channelSettingsValues.protocol}://crm${
                 stub.channelProfile.channelSettingsValues.environment

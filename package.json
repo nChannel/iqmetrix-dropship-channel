@@ -4,7 +4,9 @@
   "description": "",
   "dependencies": {
     "jsonata": "1.5.3",
+    "moment": "^2.22.2",
     "request": "2.83.0",
+    "request-debug": "^0.2.0",
     "request-promise": "4.2.2"
   },
   "devDependencies": {
@@ -20,7 +22,7 @@
     "node": ">=7.6.0"
   },
   "scripts": {
-    "test": "mocha --timeout 10000 validation/*.spec.js"
+    "test": "mocha --timeout 2000 validation/*.spec.js"
   },
-  "version": "0.0.8"
+  "version": "0.0.26"
 }

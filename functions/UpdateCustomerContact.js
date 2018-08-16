@@ -39,6 +39,8 @@ function UpdateCustomerContact(ncUtil, channelProfile, flowContext, payload, cal
     async function updateCustomerContact() {
         logInfo("Updating existing customer contact method...");
 
+        stub.payload.doc.Id = stub.payload.customerContactRemoteID;
+
         return await stub.request.put({
             url: `${stub.channelProfile.channelSettingsValues.protocol}://crm${
                 stub.channelProfile.channelSettingsValues.environment

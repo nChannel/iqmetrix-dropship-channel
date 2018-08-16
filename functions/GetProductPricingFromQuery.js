@@ -1,255 +1,279 @@
-function GetProductPricingFromQuery(ncUtil, channelProfile, flowContext, payload, callback) {
-    const nc = require("./util/ncUtils");
-    const referenceLocations = ["productPricingBusinessReferences"];
-    const stub = new nc.Stub("GetProductPricingFromQuery", referenceLocations, ...arguments);
+module.exports.GetProductPricingFromQuery = (ncUtil, channelProfile, flowContext, payload, callback) => {
+  const stubName = "GetProductPricingFromQuery";
+  const referenceLocations = ["productPricingBusinessReferences"];
+  const nc = require("./util/ncUtils");
+  let companyId, locationId, subscriptionLists;
+  let page, pageSize;
+  const stub = new nc.Stub(stubName, referenceLocations, ncUtil, channelProfile, flowContext, payload, callback);
 
-    validateFunction()
-        .then(getProductLists)
-        .then(flattenProductLists)
-        .then(getProductDetails)
-        .then(filterVendors)
-        .then(getPrices)
-        .then(keepModifiedItems)
-        .then(buildResponseObject)
-        .catch(handleError)
-        .then(() => callback(stub.out))
-        .catch(error => {
-            logError(`The callback function threw an exception: ${error}`);
-            setTimeout(() => {
-                throw error;
-            });
-        });
+  initializeStubFunction()
+    .then(searchForProducts)
+    .then(buildResponseObject)
+    .catch(handleError)
+    .then(() => callback(stub.out))
+    .catch(error => {
+      logError(`The callback function threw an exception: ${error}`);
+      setTimeout(() => {
+        throw error;
+      });
+    });
 
-    function logInfo(msg) {
-        stub.log(msg, "info");
+  function logInfo(msg) {
+    stub.log(msg, "info");
+  }
+
+  function logWarn(msg) {
+    stub.log(msg, "warn");
+  }
+
+  function logError(msg) {
+    stub.log(msg, "error");
+  }
+
+  async function initializeStubFunction() {
+    if (!stub.isValid) {
+      stub.messages.forEach(msg => logError(msg));
+      stub.out.ncStatusCode = 400;
+      throw new Error(`Invalid request [${stub.messages.join(" ")}]`);
     }
 
-    function logWarn(msg) {
-        stub.log(msg, "warn");
-    }
+    logInfo("Stub function is valid.");
 
-    function logError(msg) {
-        stub.log(msg, "error");
-    }
+    companyId = stub.channelProfile.channelAuthValues.company_id;
+    locationId = stub.channelProfile.channelAuthValues.location_id;
+    subscriptionLists = stub.channelProfile.channelSettingsValues.subscriptionLists;
 
-    async function validateFunction() {
-        if (stub.messages.length === 0) {
-            if (!nc.isNonEmptyArray(stub.channelProfile.channelSettingsValues.subscriptionLists)) {
-                stub.messages.push(
-                    `The channelProfile.channelSettingsValues.subscriptionLists array is ${
-                        stub.channelProfile.channelSettingsValues.subscriptionLists == null ? "missing" : "invalid"
-                    }.`
+    page = stub.payload.doc.page;
+    pageSize = stub.payload.doc.pageSize;
+
+    return JSON.parse(JSON.stringify(stub.payload.doc));
+  }
+
+  async function searchForProducts(queryDoc) {
+    const changedPrices = [];
+
+    switch (stub.queryType) {
+      case "remoteIDs": {
+        const remoteIdSearchResults = await remoteIdSearch(queryDoc);
+        changedPrices.push(...remoteIdSearchResults);
+        break;
+      }
+
+      case "createdDateRange": {
+        logWarn("Searching by createdDateRange is not supported, will search on modifiedDateRange instead.");
+        queryDoc.createdDateRange = queryDoc.createdDateRange;
+      }
+      case "modifiedDateRange": {
+        const prices = await getChangedPrices(queryDoc);
+        const catalogItemIds = prices.map(p => p.CatalogItemId);
+        let catalogItems = await getCatalogItems([...new Set(catalogItemIds)]);
+
+        for (const subscriptionList of subscriptionLists) {
+          await Promise.all(
+            catalogItemIds.map(async catalogItemId => {
+              const catalogItem = catalogItems[catalogItemId];
+              if (catalogItem) {
+                const vendorSku = catalogItem.VendorSkus.find(
+                  s => s.Entity && s.Entity.Id === subscriptionList.supplierId && s.Value
                 );
-            }
-
-            if (!nc.isInteger(stub.channelProfile.channelSettingsValues.maxParallelRequests)) {
-                stub.messages.push(
-                    `The channelProfile.channelSettingsValues.maxParallelRequests integer is ${
-                        stub.channelProfile.channelSettingsValues.maxParallelRequests == null ? "missing" : "invalid"
-                    }.`
-                );
-            }
-
-            if (!nc.isNonEmptyString(stub.channelProfile.channelAuthValues.location_id)) {
-                stub.messages.push(
-                    `The channelProfile.channelAuthValues.location_id string is ${
-                        stub.channelProfile.channelAuthValues.location_id == null ? "missing" : "invalid"
-                    }.`
-                );
-            }
-
-            if (!nc.isObject(stub.payload.doc.modifiedDateRange)) {
-                stub.messages.push(
-                    `The payload.doc.modifiedDateRange object is ${
-                        stub.payload.doc.modifiedDateRange == null ? "missing" : "invalid"
-                    }.`
-                );
-            } else {
-                if (!nc.isNonEmptyString(stub.payload.doc.modifiedDateRange.startDateGMT)) {
-                    stub.messages.push(
-                        `The payload.doc.modifiedDateRange.startDateGMT string is ${
-                            stub.payload.doc.modifiedDateRange.startDateGMT == null ? "missing" : "invalid"
-                        }.`
-                    );
+                if (vendorSku) {
+                  const ncVendorSku = await getVendorSkuDetail(vendorSku.Value, subscriptionList.supplierId);
+                  if (ncVendorSku && nc.isNonEmptyArray(ncVendorSku.Items)) {
+                    ncVendorSku.Items = ncVendorSku.Items.filter(i => i.SourceIds.includes(subscriptionList.listId));
+                  }
+                  if (nc.isNonEmptyArray(ncVendorSku.Items)) {
+                    catalogItem.ncVendorSkus = catalogItem.ncVendorSkus || [];
+                    catalogItem.ncVendorSkus.push(ncVendorSku);
+                  }
                 }
-                if (!nc.isNonEmptyString(stub.payload.doc.modifiedDateRange.endDateGMT)) {
-                    stub.messages.push(
-                        `The payload.doc.modifiedDateRange.endDateGMT string is ${
-                            stub.payload.doc.modifiedDateRange.endDateGMT == null ? "missing" : "invalid"
-                        }.`
-                    );
-                }
-            }
+              }
+            })
+          );
         }
 
-        if (stub.messages.length > 0) {
-            stub.messages.forEach(msg => logError(msg));
-            stub.out.ncStatusCode = 400;
-            throw new Error(`Invalid request [${stub.messages.join(" ")}]`);
+        const filteredCatalogItems = {};
+        for (const i in catalogItems) {
+          if (nc.isNonEmptyArray(catalogItems[i].ncVendorSkus)) {
+            filteredCatalogItems[i] = catalogItems[i];
+          }
         }
-        logInfo("Function is valid.");
-    }
-
-    async function getProductLists() {
-        logInfo("Get product lists...");
-        return await Promise.all(stub.channelProfile.channelSettingsValues.subscriptionLists.map(getProductList));
-    }
-
-    async function getProductList(subscriptionList) {
-        logInfo(`Get product list [${subscriptionList.listId}]...`);
-        const response = await stub.request.get({
-            url: `${stub.channelProfile.channelSettingsValues.protocol}://catalogs${
-                stub.channelProfile.channelSettingsValues.environment
-            }.iqmetrix.net/v1/Companies(${stub.channelProfile.channelAuthValues.company_id})/Catalog/Items(SourceId=${
-                subscriptionList.listId
-            })`
+        prices.forEach(p => {
+          p.ncCatalogItem = filteredCatalogItems[p.CatalogItemId];
         });
-        response.body.Items.forEach(item => {
-            item.subscriptionList = subscriptionList;
-        });
-        return response.body.Items;
+        changedPrices.push(...prices.filter(p => p.ncCatalogItem != null));
+        break;
+      }
+
+      default:
+        stub.out.ncStatusCode = 400;
+        throw new Error(`Invalid request, unknown query type: '${stub.queryType}'`);
     }
 
-    async function flattenProductLists(productLists) {
-        logInfo("Flatten product lists...");
-        return [].concat(...productLists);
-    }
+    return changedPrices;
+  }
 
-    async function getProductDetails(productList) {
-        logInfo("Get product details...");
-        const allIds = productList.map(p => p.CatalogItemId);
-        const batchedIds = [];
-        const max = 500;
-        let current = 0;
-        do {
-            const batchIds = allIds.slice(current, current + max);
-            batchedIds.push(batchIds);
-            current = current + max;
-        } while (current < allIds.length);
-        const batchedDetails = await Promise.all(batchedIds.map(getProductDetailsBulk));
-        const CatalogItems = Object.assign({}, ...batchedDetails);
-        productList.forEach(product => {
-            product.ProductDetails = CatalogItems[product.CatalogItemId];
-        });
-        return productList;
-    }
+  async function remoteIdSearch(queryDoc) {
+    stub.out.ncStatusCode = 400;
+    throw new Error("Searching by remote id has not been implemented.");
+  }
 
-    async function getProductDetailsBulk(catalogIds) {
-        logInfo(`Get ${catalogIds.length} product details...`);
-        const response = await stub.request.post({
-            url: `${stub.channelProfile.channelSettingsValues.protocol}://catalogs${
-                stub.channelProfile.channelSettingsValues.environment
-            }.iqmetrix.net/v1/Companies(${
-                stub.channelProfile.channelAuthValues.company_id
-            })/Catalog/Items/ProductDetails/Bulk`,
-            body: {
-                CatalogItemIds: catalogIds
-            }
-        });
-        return response.body.CatalogItems;
-    }
+  async function getChangedPrices(queryDoc) {
+    logInfo(`Getting prices that have changed since ${queryDoc.modifiedDateRange.startDateGMT}`);
 
-    async function filterVendors(productList) {
-        logInfo("Filter vendors...");
-        productList.forEach(product => {
-            const supplierId = product.subscriptionList.supplierId;
-            const VendorSkus = product.ProductDetails.VendorSkus.filter(vendor => {
-                return vendor.Entity && vendor.Entity.Id === supplierId;
-            });
-            product.VendorSku = VendorSkus[0];
-        });
-        return productList;
-    }
-
-    async function getPrices(productList) {
-        logInfo("Get prices...");
-        const numProducts = productList.length;
-        if (stub.channelProfile.channelSettingsValues.maxParallelRequests === 0) {
-            stub.channelProfile.channelSettingsValues.maxParallelRequests = numProducts;
+    const req = stub.requestPromise.get(
+      Object.assign({}, stub.requestDefaults, {
+        method: "GET",
+        baseUrl: stub.getBaseUrl("pricing"),
+        url: `/v1/Companies(${companyId})/Entities(${locationId})/ChangedPrices`,
+        qs: {
+          $skip: (page - 1) * pageSize,
+          $top: pageSize,
+          $filter: `LastModifiedDateUtc ge datetime'${
+            queryDoc.modifiedDateRange.startDateGMT
+          }' and LastModifiedDateUtc le datetime'${queryDoc.modifiedDateRange.endDateGMT}'`
         }
-        let products = [];
-        let current = 0;
-        do {
-            const batch = productList.slice(
-                current,
-                current + stub.channelProfile.channelSettingsValues.maxParallelRequests
-            );
+      })
+    );
+    logInfo(`Calling: ${req.method} ${req.uri.href}`);
+
+    const resp = await req;
+    stub.out.response.endpointStatusCode = resp.statusCode;
+    stub.out.response.endpointStatusMessage = resp.statusMessage;
+
+    if (resp.timingPhases) {
+      logInfo(`Changed Prices request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
+    }
+
+    if (!nc.isArray(resp.body)) {
+      throw new TypeError("Changed Prices Response is not in expected format, expected an array.");
+    }
+
+    return resp.body;
+  }
+
+  async function getCatalogItems(catalogIds) {
+    let catalogItems = {};
+
+    if (nc.isNonEmptyArray(catalogIds)) {
+      logInfo(`Getting bulk catalog item details by CatalogItemIds for ${catalogIds.length} total items.`);
+      let chunks = [];
+      while (catalogIds.length > 0) {
+        chunks.push(catalogIds.splice(0, 500));
+      }
+
+      for (const chunk of chunks) {
+        if (chunk.length > 0) {
+          logInfo(`Requesting ${chunk.length} catalog item details.`);
+          const req = stub.requestPromise.post(
+            Object.assign({}, stub.requestDefaults, {
+              method: "POST",
+              baseUrl: stub.getBaseUrl("catalogs"),
+              url: `/v1/Companies(${companyId})/Catalog/Items/ProductDetails/Bulk`,
+              body: {
+                CatalogItemIds: chunk
+              }
+            })
+          );
+          logInfo(`Calling: ${req.method} ${req.uri.href}`);
+
+          const resp = await req;
+          stub.out.response.endpointStatusCode = resp.statusCode;
+          stub.out.response.endpointStatusMessage = resp.statusMessage;
+
+          if (resp.timingPhases) {
             logInfo(
-                `Get products ${current} - ${current +
-                    stub.channelProfile.channelSettingsValues.maxParallelRequests}...`
+              `Bulk catalog item details request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`
             );
-            current = current + stub.channelProfile.channelSettingsValues.maxParallelRequests;
-            const productBatch = await Promise.all(batch.map(getPricing));
-            products.push(...productBatch);
-        } while (current < numProducts);
-        return products;
-    }
+          }
 
-    async function getPricing(product) {
-        logInfo(`Get pricing for product ${product.CatalogItemId}...`);
-        const response = await stub.request.get({
-            url: `${stub.channelProfile.channelSettingsValues.protocol}://pricing${
-                stub.channelProfile.channelSettingsValues.environment
-            }.iqmetrix.net/v1/Companies(${stub.channelProfile.channelAuthValues.company_id})/Entities(${
-                stub.channelProfile.channelAuthValues.location_id
-            })/CatalogItems(${product.CatalogItemId})/Pricing`
-        });
-        product.Pricing = response.body[0];
-        return product;
-    }
+          if (!resp.body || !resp.body.CatalogItems) {
+            throw new TypeError("Response is not in expected format, expected CatalogItems property.");
+          }
 
-     // The necessary timestamp is not yet being returned by the iQmetrix API,
-     // so it will never find any modified prices currently.
-    async function keepModifiedItems(productList) {
-        logInfo("Keep items whose quantity has been modified...");
-        const start = Date.parse(stub.payload.doc.modifiedDateRange.startDateGMT);
-        const end = Date.parse(stub.payload.doc.modifiedDateRange.endDateGMT);
-        const products = productList.filter(product => {
-            const priceMod = Date.parse(product.Pricing.DateUpdatedUtc);
-            return priceMod >= start && priceMod <= end;
-        });
-        logInfo(`${products.length} of ${productList.length} prices have been modified within the given date range.`);
-        return products;
-    }
-
-    async function buildResponseObject(products) {
-        if (products.length > 0) {
-            logInfo(`Submitting ${products.length} modified product prices...`);
-            stub.out.ncStatusCode = 200;
-            stub.out.payload = [];
-            products.forEach(product => {
-                stub.out.payload.push({
-                    doc: product,
-                    productPricingRemoteID: product.CatalogItemId,
-                    productPricingBusinessReference: nc.extractBusinessReferences(
-                        stub.channelProfileproductPricingBusinessReferences,
-                        product
-                    )
-                });
-            });
-        } else {
-            logInfo("No product prices have been modified.");
-            stub.out.ncStatusCode = 204;
+          Object.assign(catalogItems, resp.body.CatalogItems);
         }
+      }
+    } else {
+      logInfo("No products to get catalog item details for.");
     }
 
-    async function handleError(error) {
-        logError(error);
-        if (error.name === "StatusCodeError") {
-            stub.out.response.endpointStatusCode = error.statusCode;
-            stub.out.response.endpointStatusMessage = error.message;
-            if (error.statusCode >= 500) {
-                stub.out.ncStatusCode = 500;
-            } else if (error.statusCode === 429) {
-                logWarn("Request was throttled.");
-                stub.out.ncStatusCode = 429;
-            } else {
-                stub.out.ncStatusCode = 400;
-            }
+    return catalogItems;
+  }
+
+  async function getVendorSkuDetail(vendorSku, vendorId) {
+    logInfo(`Getting catalog item details by vendor '${vendorId}' and sku '${vendorSku}'`);
+
+    const req = stub.requestPromise.get(
+      Object.assign({}, stub.requestDefaults, {
+        method: "GET",
+        baseUrl: stub.getBaseUrl("catalogs"),
+        url: `/v1/Companies(${companyId})/Catalog/Items/ByVendorSku`,
+        qs: {
+          vendorId: vendorId,
+          vendorSku: vendorSku
         }
-        stub.out.payload.error = error;
-        stub.out.ncStatusCode = stub.out.ncStatusCode || 500;
-    }
-}
+      })
+    );
+    logInfo(`Calling: ${req.method} ${req.uri.href}`);
 
-module.exports.GetProductPricingFromQuery = GetProductPricingFromQuery;
+    const resp = await req;
+    stub.out.response.endpointStatusCode = resp.statusCode;
+    stub.out.response.endpointStatusMessage = resp.statusMessage;
+
+    if (resp.timingPhases) {
+      logInfo(`Details by VendorSku request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
+    }
+
+    if (!resp.body || !nc.isArray(resp.body.Items)) {
+      throw new TypeError("Details by VendorSku Response is not in expected format, expected Items[] property.");
+    }
+
+    return resp.body;
+  }
+
+  async function buildResponseObject(changedPrices) {
+    if (changedPrices.length > 0) {
+      logInfo(`Submitting ${changedPrices.length} updated prices...`);
+
+      stub.out.payload = [];
+      changedPrices.forEach(item => {
+        stub.out.payload.push({
+          doc: item,
+          productPricingRemoteID: item.Id,
+          productPricingBusinessReference: nc.extractBusinessReferences(
+            stub.channelProfile.productPricingBusinessReferences,
+            item
+          )
+        });
+      });
+
+      stub.out.ncStatusCode = changedPrices.length != pageSize ? 200 : 206;
+    } else {
+      logInfo(`No${page > 1 ? " additional " : " "}products found.`);
+      stub.out.ncStatusCode = 204;
+    }
+    console.log("output");
+    console.log(JSON.stringify(changedPrices));
+    return stub.out;
+  }
+
+  async function handleError(error) {
+    logError(error.stack);
+    if (error.name === "StatusCodeError") {
+      stub.out.response.endpointStatusCode = error.statusCode;
+      stub.out.response.endpointStatusMessage = error.message;
+
+      if (error.statusCode >= 500) {
+        stub.out.ncStatusCode = 500;
+      } else if ([429, 401].includes(error.statusCode)) {
+        stub.out.ncStatusCode = error.statusCode;
+      } else {
+        stub.out.ncStatusCode = 400;
+      }
+    }
+    stub.out.payload.error = error;
+    stub.out.ncStatusCode = stub.out.ncStatusCode || 500;
+
+    return stub.out;
+  }
+};
