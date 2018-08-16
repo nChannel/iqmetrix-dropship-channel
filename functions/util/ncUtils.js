@@ -239,6 +239,13 @@ class Stub {
                         }.`
                     );
                 }
+                if (!isNonEmptyString(this.channelProfile.channelAuthValues.location_id)) {
+                    this.messages.push(
+                        `The channelProfile.channelAuthValues.location_id string is ${
+                        this.channelProfile.channelAuthValues.location_id == null ? "missing" : "invalid"
+                        }.`
+                    );
+                }
                 if (!isNonEmptyString(this.channelProfile.channelAuthValues.access_token)) {
                     this.messages.push(
                         `The channelProfile.channelAuthValues.access_token string is ${
