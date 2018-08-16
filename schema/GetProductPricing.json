@@ -1,0 +1,395 @@
+{
+  "name": "iQmetrix DropShip Get ProductPricing Schema",
+  "schemaDef": {
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "type": "object",
+    "properties": {
+      "LastModifiedDateUtc": {
+        "type": "string"
+      },
+      "Id": {
+        "type": "number"
+      },
+      "CompanyId": {
+        "type": "number"
+      },
+      "EntityId": {
+        "type": "number"
+      },
+      "CatalogItemId": {
+        "type": "string"
+      },
+      "PricingTermId": {
+        "type": "null"
+      },
+      "RegularPrice": {
+        "type": "number"
+      },
+      "IsDiscountable": {
+        "type": "boolean"
+      },
+      "FloorPrice": {
+        "type": "null"
+      },
+      "OriginalPrice": {
+        "type": "null"
+      },
+      "PricingTierId": {
+        "type": "null"
+      },
+      "PricingGroupId": {
+        "type": "null"
+      },
+      "PricingShelfId": {
+        "type": "null"
+      },
+      "OverridePriceId": {
+        "type": "null"
+      },
+      "OverridePrice": {
+        "type": "null"
+      },
+      "OverrideStartDateUtc": {
+        "type": "null"
+      },
+      "OverrideStopDateUtc": {
+        "type": "null"
+      },
+      "ncCatalogItem": {
+        "type": "object",
+        "properties": {
+          "ExtendedAttributes": {
+            "type": "array"
+          },
+          "DateAddedUtc": {
+            "type": "string"
+          },
+          "DateUpdatedUtc": {
+            "type": "string"
+          },
+          "RmsId": {
+            "type": "string"
+          },
+          "MeasurementType": {
+            "type": "string"
+          },
+          "BatchTracking": {
+            "type": "boolean"
+          },
+          "NonStock": {
+            "type": "boolean"
+          },
+          "LifeCycle": {
+            "type": "string"
+          },
+          "Id": {
+            "type": "string"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "MasterProductId": {
+            "type": "number"
+          },
+          "VariationId": {
+            "type": "null"
+          },
+          "Owner": {
+            "type": "null"
+          },
+          "CanonicalClassification": {
+            "type": "object",
+            "properties": {
+              "TreeId": {
+                "type": "number"
+              },
+              "Id": {
+                "type": "number"
+              },
+              "Name": {
+                "type": "string"
+              },
+              "ParentCategories": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "Id": {
+                      "type": "number"
+                    },
+                    "Name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "ShortDescription": {
+            "type": "string"
+          },
+          "LongDescription": {
+            "type": "string"
+          },
+          "Manufacturer": {
+            "type": "object",
+            "properties": {
+              "Id": {
+                "type": "number"
+              },
+              "Name": {
+                "type": "string"
+              }
+            }
+          },
+          "MSRP": {
+            "type": "object",
+            "properties": {
+              "Amount": {
+                "type": "number"
+              },
+              "CurrencyCode": {
+                "type": "string"
+              }
+            }
+          },
+          "ReleaseDate": {
+            "type": "string"
+          },
+          "VariationInfo": {
+            "type": "array"
+          },
+          "Specifications": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Id": {
+                  "type": "string"
+                },
+                "Name": {
+                  "type": "string"
+                },
+                "Fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "Id": {
+                        "type": "number"
+                      },
+                      "StringId": {
+                        "type": "string"
+                      },
+                      "DisplayName": {
+                        "type": "string"
+                      },
+                      "Name": {
+                        "type": "string"
+                      },
+                      "Value": {
+                        "type": "string"
+                      },
+                      "Type": {
+                        "type": "string"
+                      },
+                      "Unit": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "Assets": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Id": {
+                  "type": "string"
+                },
+                "Name": {
+                  "type": "string"
+                },
+                "Uri": {
+                  "type": "string"
+                },
+                "Type": {
+                  "type": "string"
+                },
+                "IsHidden": {
+                  "type": "boolean"
+                },
+                "IsRolledUp": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "ColorDefinition": {
+            "type": "null"
+          },
+          "HeroShotUri": {
+            "type": "string"
+          },
+          "HeroShotId": {
+            "type": "string"
+          },
+          "ManufacturerSkus": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Value": {
+                  "type": "string"
+                },
+                "Description": {
+                  "type": "string"
+                },
+                "Entity": {
+                  "type": "object",
+                  "properties": {
+                    "Id": {
+                      "type": "number"
+                    },
+                    "Name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "VendorSkus": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Value": {
+                  "type": "string"
+                },
+                "Description": {
+                  "type": "string"
+                },
+                "Entity": {
+                  "type": "object",
+                  "properties": {
+                    "Id": {
+                      "type": "number"
+                    },
+                    "Name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "UpcCodes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Value": {
+                  "type": "string"
+                },
+                "Description": {
+                  "type": "string"
+                },
+                "Entity": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "Region": {
+            "type": "null"
+          },
+          "Entity": {
+            "type": "null"
+          },
+          "HasColor": {
+            "type": "boolean"
+          },
+          "IsLinkedToCuratedProduct": {
+            "type": "boolean"
+          },
+          "IsSaleable": {
+            "type": "boolean"
+          },
+          "IsArchived": {
+            "type": "boolean"
+          },
+          "Version": {
+            "type": "number"
+          },
+          "ncVendorSkus": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "VendorId": {
+                  "type": "number"
+                },
+                "Sku": {
+                  "type": "string"
+                },
+                "Items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "RmsId": {
+                        "type": "string"
+                      },
+                      "Slug": {
+                        "type": "string"
+                      },
+                      "CatalogItemId": {
+                        "type": "string"
+                      },
+                      "CatalogSku": {
+                        "type": "string"
+                      },
+                      "MeasurementType": {
+                        "type": "string"
+                      },
+                      "BatchTracking": {
+                        "type": "boolean"
+                      },
+                      "NonStock": {
+                        "type": "boolean"
+                      },
+                      "LifeCycle": {
+                        "type": "string"
+                      },
+                      "IsArchived": {
+                        "type": "boolean"
+                      },
+                      "SourceIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "DateAddedUtc": {
+                        "type": "string"
+                      },
+                      "DateUpdatedUtc": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": ["Get", "ProductPricing"],
+  "audit": {}
+}

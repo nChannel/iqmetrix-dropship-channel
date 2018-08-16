@@ -1,0 +1,82 @@
+{
+  "name": "iQmetrix DropShip Get ProductQuantity Schema",
+  "schemaDef": {
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "type": "object",
+    "properties": {
+      "Id": {
+        "type": "string"
+      },
+      "SupplierSku": {
+        "type": "string"
+      },
+      "SupplierEntityId": {
+        "type": "number"
+      },
+      "IsAvailable": {
+        "type": "boolean"
+      },
+      "Quantity": {
+        "type": "number"
+      },
+      "LastModifiedDateUtc": {
+        "type": "string"
+      },
+      "VendorId": {
+        "type": "number"
+      },
+      "Sku": {
+        "type": "string"
+      },
+      "Items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "RmsId": {
+              "type": "string"
+            },
+            "Slug": {
+              "type": "string"
+            },
+            "CatalogItemId": {
+              "type": "string"
+            },
+            "CatalogSku": {
+              "type": "string"
+            },
+            "MeasurementType": {
+              "type": "string"
+            },
+            "BatchTracking": {
+              "type": "boolean"
+            },
+            "NonStock": {
+              "type": "boolean"
+            },
+            "LifeCycle": {
+              "type": "string"
+            },
+            "IsArchived": {
+              "type": "boolean"
+            },
+            "SourceIds": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "DateAddedUtc": {
+              "type": "string"
+            },
+            "DateUpdatedUtc": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": ["Get", "ProductQuantity"],
+  "audit": {}
+}
