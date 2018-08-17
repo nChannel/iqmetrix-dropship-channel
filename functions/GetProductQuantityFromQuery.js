@@ -126,7 +126,7 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
 
     logInfo(`x-ratelimit-remaining: ${resp.headers['x-ratelimit-remaining']}`);
 
-    if (parseInt(resp.headers['x-ratelimit-remaining']) < 100) {
+    if (parseInt(resp.headers['x-ratelimit-remaining']) < 490) {
       logInfo('Sleeping for 61 seconds to allow the iqmetrix quota to refresh');
       await sleep(61000);
     }
@@ -173,7 +173,7 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
 
     logInfo(`x-ratelimit-remaining: ${resp.headers['x-ratelimit-remaining']}`);
 
-    if (parseInt(resp.headers['x-ratelimit-remaining']) < 100) {
+    if (parseInt(resp.headers['x-ratelimit-remaining']) < 490) {
       logInfo('Sleeping for 61 seconds to allow the iqmetrix quota to refresh');
       await sleep(61000);
     }
