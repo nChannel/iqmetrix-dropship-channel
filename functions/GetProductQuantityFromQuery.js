@@ -66,7 +66,10 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
             queryDoc.modifiedDateRange.endDateGMT
           );
           const vendorSkuDetails = await Promise.all(
-            availabilityList.map(a => getVendorSkuDetails(a, subscriptionList.listId))
+            availabilityList.map(async a => {
+              await sleep(200);
+              return getVendorSkuDetails(a, subscriptionList.listId);
+            })
           );
 
           availabilityList.forEach(item =>
@@ -123,9 +126,9 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
 
     logInfo(`x-ratelimit-remaining: ${resp.headers['x-ratelimit-remaining']}`);
 
-    if (parseInt(resp.headers['x-ratelimit-remaining']) < 400) {
+    if (parseInt(resp.headers['x-ratelimit-remaining']) < 100) {
       logInfo('Sleeping for 61 seconds to allow the iqmetrix quota to refresh');
-      await sleep();
+      await sleep(61000);
     }
 
     return resp.body;
@@ -170,9 +173,9 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
 
     logInfo(`x-ratelimit-remaining: ${resp.headers['x-ratelimit-remaining']}`);
 
-    if (parseInt(resp.headers['x-ratelimit-remaining']) < 400) {
+    if (parseInt(resp.headers['x-ratelimit-remaining']) < 100) {
       logInfo('Sleeping for 61 seconds to allow the iqmetrix quota to refresh');
-      await sleep();
+      await sleep(61000);
     }
 
     return resp.body;
@@ -223,7 +226,7 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
     return stub.out;
   }
 
-  function sleep() {
-    return new Promise(resolve => setTimeout(resolve, 61000));
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 };
