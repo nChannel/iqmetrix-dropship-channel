@@ -64,6 +64,59 @@
       "CatalogItemId": {
         "type": "string"
       },
+      "CatalogItemIds": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "CatalogItems": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "RmsId": {
+              "type": "string"
+            },
+            "Slug": {
+              "type": "string"
+            },
+            "CatalogItemId": {
+              "type": "string"
+            },
+            "CatalogSku": {
+              "type": "string"
+            },
+            "MeasurementType": {
+              "type": "string"
+            },
+            "BatchTracking": {
+              "type": "boolean"
+            },
+            "NonStock": {
+              "type": "boolean"
+            },
+            "LifeCycle": {
+              "type": "string"
+            },
+            "IsArchived": {
+              "type": "boolean"
+            },
+            "SourceIds": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "DateAddedUtc": {
+              "type": "string"
+            },
+            "DateUpdatedUtc": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "CatalogSku": {
         "type": "string"
       },
@@ -123,6 +176,9 @@
       },
       "CompanyId": {
         "type": "number"
+      },
+      "ContextualRevisions": {
+        "type": "array"
       },
       "DateAddedUtc": {
         "type": "string"
@@ -197,6 +253,9 @@
         "type": "boolean"
       },
       "IsMasterProduct": {
+        "type": "boolean"
+      },
+      "IsPrivate": {
         "type": "boolean"
       },
       "IsSaleable": {
@@ -441,6 +500,12 @@
           }
         }
       },
+      "Variations": {
+        "type": "array",
+        "items": {
+          "$href": "#"
+        }
+      },
       "VendorSkus": {
         "type": "array",
         "items": {
@@ -498,6 +563,9 @@
         "type": "object",
         "properties": {
           "Sku": {
+            "type": "string"
+          },
+          "Value": {
             "type": "string"
           },
           "SkuType": {

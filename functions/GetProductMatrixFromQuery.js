@@ -61,6 +61,7 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
     switch (stub.queryType) {
       case "remoteIDs":
         searchResults = await remoteIdSearch(queryDoc);
+        matrixItems.push(...searchResults);
         break;
 
       case "modifiedDateRange":
@@ -88,8 +89,67 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
   }
 
   async function remoteIdSearch(queryDoc) {
-    stub.out.ncStatusCode = 400;
-    throw new Error("Searching by remote id has not been implemented.");
+    // search for remote ids.
+    let catalogItems = await Promise.all(queryDoc.remoteIDs.map(getStructureByCatalogId));
+
+    // keep only unique parent objects
+    const uniqueParents = new Set();
+    catalogItems = catalogItems.map(i => {
+      const slug = i && i.Slug ? i.Slug : null;
+      if (slug != null && !uniqueParents.has(slug)) {
+        uniqueParents.add(slug);
+        return i;
+      }
+    });
+
+    const subscribedMatrixItems = [];
+    for (const subscriptionList of subscriptionLists) {
+      let subscribedItems = JSON.parse(JSON.stringify(catalogItems));
+
+      // keep only child variations that we are subscribed to.
+      subscribedItems.forEach(i => {
+        i.Variations = i.Variations.filter(v => {
+          v.CatalogItems.some(c => {
+            c.SourceIds.includes(subscriptionList.listId);
+          });
+        });
+      });
+
+      // keep only matrix items
+      subscribedItems = catalogItems.filter(i => {
+        return singleVariantIsSimple ? nc.isNonEmptyArray(i.Variations) && i.Variations.length > 1 : nc.isNonEmptyArray(i.Variations);
+      });
+
+      // get unique slugs from all parents and children
+      const slugSet = new Set();
+      subscribedItems.forEach(i => {
+        slugSet.add(i.Slug);
+        i.Variations.forEach(v => {
+          slugSet.add(v.Slug);
+        });
+      });
+
+      // get slug details for all parents and children
+      let slugDetails = await getSlugDetails([...slugSet]);
+
+      // merge additional slug details to each parent and child
+      subscribedItems.forEach(i => {
+        Object.assign(i, slugDetails[i.Slug]);
+        i.ncSubscriptionList = subscriptionList;
+        i.ncVendorSku = i.VendorSkus.find(s => s.Entity && s.Entity.Id == subscriptionList.supplierId);
+        if (nc.isNonEmptyArray(i.Variants)) {
+          i.Variants.forEach(v => {
+            Object.assign(v, slugDetails[v.Slug]);
+            v.ncSubscriptionList = subscriptionList;
+            v.ncVendorSku = v.VendorSkus.find(s => s.Entity && s.Entity.Id == subscriptionList.supplierId);
+          });
+        }
+      });
+
+      subscribedMatrixItems.push(...subscribedItems);
+    }
+
+    return subscribedMatrixItems;
   }
 
   async function createdDateRangeSearch(queryDoc) {
@@ -157,6 +217,42 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
     });
 
     return resp.body.Items;
+  }
+
+  async function getStructureByCatalogId(catalogItemId) {
+    logInfo(`Getting item structure by catalog id '${catalogItemId}'`);
+    let resp;
+
+    try {
+      const req = stub.requestPromise.get(Object.assign({}, stub.requestDefaults, {
+        method: "GET",
+        baseUrl: stub.getBaseUrl("catalogs"),
+        url: `/v1/Companies(${companyId})/Catalog/Items(${catalogItemId})/Structure`
+      }));
+      logInfo(`Calling: ${req.method} ${req.uri.href}`);
+
+      resp = await req;
+    } catch (error) {
+      if (error.name === "StatusCodeError" && error.statusCode === 404) {
+        logWarn(`Catalog Item for catalogItemId '${catalogItemId}' does not exist.`);
+        resp = error.response;
+      } else {
+        throw error;
+      }
+    }
+
+    stub.out.response.endpointStatusCode = resp.statusCode;
+    stub.out.response.endpointStatusMessage = resp.statusMessage;
+
+    if (resp.timingPhases) {
+      logInfo(`Item structure request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
+    }
+
+    if ((resp.statusCode !== 404) && (!resp.body || !resp.body.Slug)) {
+      throw new TypeError("Item structure esponse is not in expected format, expected Slug property.");
+    }
+
+    return resp.statusCode !== 404 ? resp.body : null;
   }
 
   async function getFilteredMatrixItems(items, subscriptionList) {
@@ -371,7 +467,7 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
 
           if (resp.timingPhases) {
             logInfo(
-              `Bulk catalog item details request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`
+              `Bulk slug details request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`
             );
           }
 
