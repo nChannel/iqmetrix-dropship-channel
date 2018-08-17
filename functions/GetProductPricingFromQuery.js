@@ -77,6 +77,7 @@ module.exports.GetProductPricingFromQuery = (ncUtil, channelProfile, flowContext
                   s => s.Entity && s.Entity.Id === subscriptionList.supplierId && s.Value
                 );
                 if (vendorSku) {
+                  await sleep(200);
                   const ncVendorSku = await getVendorSkuDetail(vendorSku.Value, subscriptionList.supplierId);
                   if (ncVendorSku && nc.isNonEmptyArray(ncVendorSku.Items)) {
                     ncVendorSku.Items = ncVendorSku.Items.filter(i => i.SourceIds.includes(subscriptionList.listId));
@@ -150,9 +151,9 @@ module.exports.GetProductPricingFromQuery = (ncUtil, channelProfile, flowContext
 
     logInfo(`x-ratelimit-remaining: ${resp.headers['x-ratelimit-remaining']}`);
 
-    if (parseInt(resp.headers['x-ratelimit-remaining']) < 400) {
+    if (parseInt(resp.headers['x-ratelimit-remaining']) < 100) {
       logInfo('Sleeping for 61 seconds to allow the iqmetrix quota to refresh');
-      await sleep();
+      await sleep(61000);
     }
 
     return resp.body;
@@ -237,9 +238,9 @@ module.exports.GetProductPricingFromQuery = (ncUtil, channelProfile, flowContext
 
     logInfo(`x-ratelimit-remaining: ${resp.headers['x-ratelimit-remaining']}`);
 
-    if (parseInt(resp.headers['x-ratelimit-remaining']) < 400) {
+    if (parseInt(resp.headers['x-ratelimit-remaining']) < 100) {
       logInfo('Sleeping for 61 seconds to allow the iqmetrix quota to refresh');
-      await sleep();
+      await sleep(61000);
     }
 
     return resp.body;
@@ -291,7 +292,7 @@ module.exports.GetProductPricingFromQuery = (ncUtil, channelProfile, flowContext
     return stub.out;
   }
 
-  function sleep() {
-    return new Promise(resolve => setTimeout(resolve, 61000));
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 };
