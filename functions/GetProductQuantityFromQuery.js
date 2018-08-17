@@ -125,7 +125,10 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
   }
 
   async function getVendorSkuDetails(availabilityItem, subscriptionListId) {
-    const vendorSkuDetail = await getVendorSkuDetail(availabilityItem.SupplierSku, availabilityItem.SupplierEntityId);
+    const vendorSkuDetail = { Items: [] };
+    if (nc.isNonEmptyString(availabilityItem.SupplierSku)) {
+      vendorSkuDetail = await getVendorSkuDetail(availabilityItem.SupplierSku, availabilityItem.SupplierEntityId);
+    }
     vendorSkuDetail.Items = vendorSkuDetail.Items.filter(i => i.SourceIds.includes(subscriptionListId));
     return vendorSkuDetail;
   }
