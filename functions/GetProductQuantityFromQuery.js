@@ -121,6 +121,11 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
       throw new TypeError("Response is not in expected format, expected an array of availability objects.");
     }
 
+    if (resp.headers['X-RateLimit-Remaining'] < 10) {
+      logInfo('Sleeping for 61 seconds to allow the iqmetrix quota to refresh');
+      await sleep();
+    }
+
     return resp.body;
   }
 
@@ -159,6 +164,11 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
 
     if (!resp.body || !nc.isArray(resp.body.Items)) {
       throw new TypeError("Details by VendorSku Response is not in expected format, expected Items[] property.");
+    }
+
+    if (resp.headers['X-RateLimit-Remaining'] < 10) {
+      logInfo('Sleeping for 61 seconds to allow the iqmetrix quota to refresh');
+      await sleep();
     }
 
     return resp.body;
@@ -207,5 +217,9 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
     stub.out.ncStatusCode = stub.out.ncStatusCode || 500;
 
     return stub.out;
+  }
+
+  function sleep() {
+    return new Promise(resolve => setTimeout(resolve, 61000));
   }
 };
