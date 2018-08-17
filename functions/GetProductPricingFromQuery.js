@@ -148,6 +148,13 @@ module.exports.GetProductPricingFromQuery = (ncUtil, channelProfile, flowContext
       throw new TypeError("Changed Prices Response is not in expected format, expected an array.");
     }
 
+    logInfo(`x-ratelimit-remaining: ${resp.headers['x-ratelimit-remaining']}`);
+
+    if (parseInt(resp.headers['x-ratelimit-remaining']) < 10) {
+      logInfo('Sleeping for 61 seconds to allow the iqmetrix quota to refresh');
+      await sleep();
+    }
+
     return resp.body;
   }
 
@@ -228,6 +235,13 @@ module.exports.GetProductPricingFromQuery = (ncUtil, channelProfile, flowContext
       throw new TypeError("Details by VendorSku Response is not in expected format, expected Items[] property.");
     }
 
+    logInfo(`x-ratelimit-remaining: ${resp.headers['x-ratelimit-remaining']}`);
+
+    if (parseInt(resp.headers['x-ratelimit-remaining']) < 10) {
+      logInfo('Sleeping for 61 seconds to allow the iqmetrix quota to refresh');
+      await sleep();
+    }
+
     return resp.body;
   }
 
@@ -275,5 +289,9 @@ module.exports.GetProductPricingFromQuery = (ncUtil, channelProfile, flowContext
     stub.out.ncStatusCode = stub.out.ncStatusCode || 500;
 
     return stub.out;
+  }
+
+  function sleep() {
+    return new Promise(resolve => setTimeout(resolve, 61000));
   }
 };
