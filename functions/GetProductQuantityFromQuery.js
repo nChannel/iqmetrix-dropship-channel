@@ -2,7 +2,7 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
   const stubName = "GetProductQuantityFromQuery";
   const referenceLocations = ["productQuantityBusinessReferences"];
   const nc = require("./util/ncUtils");
-  let companyId, subscriptionLists, totalSkipped = 0;
+  let companyId, subscriptionLists;
   const stub = new nc.Stub(stubName, referenceLocations, ncUtil, channelProfile, flowContext, payload, callback);
 
   initializeStubFunction()
@@ -81,9 +81,11 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
             )
           );
 
+          let skippedSkus = [];
           supplierSkus.push(...availabilityList.filter(l => nc.isNonEmptyArray(l.Items)));
+          skippedSkus.push(...availabilityList.filter(l => !nc.isNonEmptyArray(l.Items)));
           logInfo(`SupplierSku count: ${supplierSkus.length}`);
-          logInfo(`SupplierSkus with an empty Items array: ${totalSkipped}`);
+          logInfo(`SupplierSkus with an empty Items array: ${skippedSkus.length}`);
         }
         break;
       }
@@ -173,7 +175,6 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
     }
 
     if (!nc.isNonEmptyArray(resp.body.Item)) {
-      totalSkipped++;
       logInfo(`Vendor '${vendorId}' and SKU '${vendorSku}' returned 0 Items.`);
     }
 
