@@ -9,7 +9,7 @@ function GetProductPricingFromQuery(ncUtil, channelProfile, flowContext, payload
         .then(getProductDetails)
         .then(filterVendors)
         .then(getPrices)
-        .then(keepModifiedItems)
+        //.then(keepModifiedItems)
         .then(buildResponseObject)
         .catch(handleError)
         .then(() => {
