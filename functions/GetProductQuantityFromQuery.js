@@ -81,8 +81,11 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
             )
           );
 
+          let skippedSkus = [];
           supplierSkus.push(...availabilityList.filter(l => nc.isNonEmptyArray(l.Items)));
+          skippedSkus.push(...availabilityList.filter(l => !nc.isNonEmptyArray(l.Items)));
           logInfo(`SupplierSku count: ${supplierSkus.length}`);
+          logInfo(`SupplierSkus with an empty Items array: ${skippedSkus.length}`);
         }
         break;
       }
@@ -169,6 +172,10 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
 
     if (!resp.body || !nc.isArray(resp.body.Items)) {
       throw new TypeError("Details by VendorSku Response is not in expected format, expected Items[] property.");
+    }
+
+    if (!nc.isNonEmptyArray(resp.body.Item)) {
+      logInfo(`Vendor '${vendorId}' and SKU '${vendorSku}' returned 0 Items.`);
     }
 
     logInfo(`x-ratelimit-remaining: ${resp.headers['x-ratelimit-remaining']}`);
