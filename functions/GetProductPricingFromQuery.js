@@ -128,7 +128,11 @@ function GetProductPricingFromQuery(ncUtil, channelProfile, flowContext, payload
             batchedIds.push(batchIds);
             current = current + max;
         } while (current < allIds.length);
-        const batchedDetails = await Promise.all(batchedIds.map(getProductDetailsBulk));
+        let batchedDetails = [];
+        for (const b of batchedIds) {
+          let result = await getProductDetailsBulk(b);
+          batchedDetails.push(result);
+        }
         const CatalogItems = Object.assign({}, ...batchedDetails);
         productList.forEach(product => {
             product.ProductDetails = CatalogItems[product.CatalogItemId];
@@ -181,7 +185,12 @@ function GetProductPricingFromQuery(ncUtil, channelProfile, flowContext, payload
                     stub.channelProfile.channelSettingsValues.maxParallelRequests}...`
             );
             current = current + stub.channelProfile.channelSettingsValues.maxParallelRequests;
-            const productBatch = await Promise.all(batch.map(getPricing));
+            let productBatch = [];
+
+            for (const b of batch) {
+              let result = await getPricing(b);
+              productBatch.push(result);
+            }
             products.push(...productBatch);
         } while (current < numProducts);
         return products;
