@@ -6992,100 +6992,63 @@
           "payload": {
             "doc": {
               "modifiedDateRange": {
-                "startDateGMT": "2010-03-08T00:28:44.183Z",
+                "startDateGMT": "2010-03-06T00:28:44.183Z",
                 "endDateGMT": "2019-03-08T00:28:44.183Z"
-              },
-              "page": 1,
-              "pageSize": 25
+              }
             }
           },
           "baseUri": "https://catalogsdemo.iqmetrix.net",
           "defaultHeaders": {},
           "links": [
             {
-              "baseUri": "https://pricingdemo.iqmetrix.net",
-              "uri": "/v1/Companies(23813)/Entities(23841)/ChangedPrices?%24skip=0&%24top=25&%24filter=LastModifiedDateUtc%20ge%20datetime%272010-03-08T00%3A28%3A44.183Z%27%20and%20LastModifiedDateUtc%20le%20datetime%272019-03-08T00%3A28%3A44.183Z%27",
+              "uri": "/v1/Companies(23813)/Catalog/Items(SourceId=419faf6c-3906-47d8-a855-f3883d58902d)",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
-              "responsePayload": [
-                {
-                  "LastModifiedDateUtc": "2018-08-15T09:10:15.8966667",
-                  "Id": 4056016,
-                  "CompanyId": 149937,
-                  "EntityId": 149937,
-                  "CatalogItemId": "67de2d15-0abc-4d06-9914-7f0e6bcaa687",
-                  "PricingTermId": null,
-                  "RegularPrice": 49.99,
-                  "IsDiscountable": false,
-                  "FloorPrice": null,
-                  "OriginalPrice": null,
-                  "PricingTierId": null,
-                  "PricingGroupId": null,
-                  "PricingShelfId": null,
-                  "OverridePriceId": null,
-                  "OverridePrice": null,
-                  "OverrideStartDateUtc": null,
-                  "OverrideStopDateUtc": null
-                },
-                {
-                  "LastModifiedDateUtc": "2018-08-15T09:10:15.8966667",
-                  "Id": 4056014,
-                  "CompanyId": 149937,
-                  "EntityId": 149937,
-                  "CatalogItemId": "702cb90d-dd8c-4475-8223-82fca43e940a",
-                  "PricingTermId": null,
-                  "RegularPrice": 59.99,
-                  "IsDiscountable": false,
-                  "FloorPrice": null,
-                  "OriginalPrice": null,
-                  "PricingTierId": null,
-                  "PricingGroupId": null,
-                  "PricingShelfId": null,
-                  "OverridePriceId": null,
-                  "OverridePrice": null,
-                  "OverrideStartDateUtc": null,
-                  "OverrideStopDateUtc": null
-                },
-                {
-                  "LastModifiedDateUtc": "2018-08-15T09:10:15.8966667",
-                  "Id": 4056018,
-                  "CompanyId": 149937,
-                  "EntityId": 149937,
-                  "CatalogItemId": "227ccc59-fe02-44f6-a6ad-e414ef0bac7e",
-                  "PricingTermId": null,
-                  "RegularPrice": 79.99,
-                  "IsDiscountable": false,
-                  "FloorPrice": null,
-                  "OriginalPrice": null,
-                  "PricingTierId": null,
-                  "PricingGroupId": null,
-                  "PricingShelfId": null,
-                  "OverridePriceId": null,
-                  "OverridePrice": null,
-                  "OverrideStartDateUtc": null,
-                  "OverrideStopDateUtc": null
-                },
-                {
-                  "LastModifiedDateUtc": "2018-08-15T09:10:15.8533333",
-                  "Id": 4056010,
-                  "CompanyId": 149937,
-                  "EntityId": 149937,
-                  "CatalogItemId": "4c9de5f7-7114-4438-b2c4-4659799d3ca8",
-                  "PricingTermId": null,
-                  "RegularPrice": 79.99,
-                  "IsDiscountable": false,
-                  "FloorPrice": null,
-                  "OriginalPrice": null,
-                  "PricingTierId": null,
-                  "PricingGroupId": null,
-                  "PricingShelfId": null,
-                  "OverridePriceId": null,
-                  "OverridePrice": null,
-                  "OverrideStartDateUtc": null,
-                  "OverrideStopDateUtc": null
-                }
-              ]
+              "responsePayload": {
+                "Items": [
+                  {
+                    "Slug": "M5970-V3",
+                    "CatalogItemId": "749447b5-5969-42af-8f9f-a8a712626732",
+                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z"
+                  },
+                  {
+                    "Slug": "M8170",
+                    "CatalogItemId": "144859f4-e8a0-4367-afcb-a9d39c94fa8f",
+                    "DateUpdatedUtc": "2018-03-08T00:28:43.647Z"
+                  },
+                  {
+                    "Slug": "M5970-V2",
+                    "CatalogItemId": "4773c97f-bbb8-4063-8de4-d7242a6a5933",
+                    "DateUpdatedUtc": "2018-03-08T00:28:43.803Z"
+                  }
+                ]
+              }
+            },
+            {
+              "uri": "/v1/Companies(23813)/Catalog/Items(SourceId=e7a9e7b1-4708-460c-ae34-37c30e64f14a)",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": {
+                "Items": [
+                  {
+                    "Slug": "M5902-V1",
+                    "CatalogItemId": "a61887ce-db07-4c1d-a24e-d23fddae65c6",
+                    "DateUpdatedUtc": "2018-03-08T00:33:05.83Z"
+                  },
+                  {
+                    "Slug": "M6855-V1",
+                    "CatalogItemId": "a8c1c049-5dce-453f-b0cb-aacb14ada7b4",
+                    "DateUpdatedUtc": "2018-03-08T00:33:06.427Z"
+                  },
+                  {
+                    "Slug": "M6855-V2",
+                    "CatalogItemId": "49f57d8e-a170-458a-91f6-e9ee06c28b37",
+                    "DateUpdatedUtc": "2018-03-08T00:33:06.52Z"
+                  }
+                ]
+              }
             },
             {
               "uri": "/v1/Companies(23813)/Catalog/Items/ProductDetails/Bulk",
@@ -7094,879 +7057,186 @@
               "statusCode": 200,
               "responsePayload": {
                 "CatalogItems": {
-                  "4c9de5f7-7114-4438-b2c4-4659799d3ca8": {
-                    "ExtendedAttributes": [],
-                    "DateAddedUtc": "2018-08-07T12:51:33.747Z",
-                    "DateUpdatedUtc": "2018-08-07T12:51:33.747Z",
-                    "RmsId": "",
-                    "MeasurementType": "SingleUnit",
-                    "BatchTracking": false,
-                    "NonStock": false,
-                    "LifeCycle": "Active",
-                    "Id": "M9411-V2",
-                    "Name": "iPhone 7 Adidas Dual Layer Hard Cover Case - Maroon",
-                    "MasterProductId": 9411,
-                    "VariationId": 2,
-                    "Owner": null,
-                    "CanonicalClassification": {
-                      "TreeId": 1,
-                      "Id": 40,
-                      "Name": "Cases",
-                      "ParentCategories": [
-                        {
-                          "Id": 12,
-                          "Name": "Accessories"
-                        },
-                        {
-                          "Id": 37,
-                          "Name": "Cases & Protection"
-                        }
-                      ]
-                    },
-                    "ShortDescription": "This impact-resistant Adidas Originals Dual Layer Hard Cover Case.",
-                    "LongDescription": "<p>Safeguard your iPhone 7 in style. This Dual Layered Hard Case (Taupe) features the Adidas logo on a bold canvas.</p>\n<p>Designed to give you easy access to every button and port, this protective iPhone 7 case has a hard, impact-resistant TPU shell to keep you covered. Impact-resistant TPU helps protect your iPhone against drops while the raised edge helps keep your screen scratch free.</p>",
-                    "Manufacturer": {
-                      "Id": 99773,
-                      "Name": "adidas"
-                    },
-                    "MSRP": null,
-                    "ReleaseDate": "2017-04-18T00:00:00Z",
-                    "VariationInfo": [],
-                    "Specifications": [
-                      {
-                        "Id": "6e70f04e-d8f0-4c2c-bf09-a0367bc76412",
-                        "Name": "Dimensions",
-                        "Fields": [
-                          {
-                            "Id": 40,
-                            "StringId": "Height",
-                            "DisplayName": "Height",
-                            "Name": "Height",
-                            "Value": "5.44",
-                            "Type": "Float",
-                            "Unit": "inches"
-                          },
-                          {
-                            "Id": 41,
-                            "StringId": "Width",
-                            "DisplayName": "Width",
-                            "Name": "Width",
-                            "Value": "2.64",
-                            "Type": "Float",
-                            "Unit": "inches"
-                          },
-                          {
-                            "Id": 42,
-                            "StringId": "Depth",
-                            "DisplayName": "Depth",
-                            "Name": "Depth",
-                            "Value": "0.28",
-                            "Type": "Float",
-                            "Unit": "inches"
-                          }
-                        ]
-                      },
-                      {
-                        "Id": "144f294c-af12-46c4-912a-a0c796d22abc",
-                        "Name": "Features",
-                        "Fields": [
-                          {
-                            "Id": 10,
-                            "StringId": "Material",
-                            "DisplayName": "Material",
-                            "Name": "Material",
-                            "Value": "Polycarbonate / Polyurethane",
-                            "Type": "TextSingleLine",
-                            "Unit": ""
-                          },
-                          {
-                            "Id": 89,
-                            "StringId": "Screen Protector Included",
-                            "DisplayName": "Screen Protector Included",
-                            "Name": "Screen Protector Included",
-                            "Value": "No",
-                            "Type": "YesNo",
-                            "Unit": ""
-                          }
-                        ]
-                      },
-                      {
-                        "Id": "6ae2ca33-ea03-4c23-ab23-fe245c3635d8",
-                        "Name": "Packaging Dimensions",
-                        "Fields": [
-                          {
-                            "Id": 150,
-                            "StringId": "Packaging Width",
-                            "DisplayName": "Packaging Width",
-                            "Name": "Packaging Width",
-                            "Value": "4.13",
-                            "Type": "Float",
-                            "Unit": "inches"
-                          }
-                        ]
-                      },
-                      {
-                        "Id": "e89615f4-efc8-4c45-828e-c95b1303bafb",
-                        "Name": "Color",
-                        "Fields": [
-                          {
-                            "Id": 4,
-                            "StringId": "Color",
-                            "DisplayName": "Color",
-                            "Name": "Color",
-                            "Value": "Maroon",
-                            "Type": "TextSingleLine",
-                            "Unit": ""
-                          },
-                          {
-                            "Id": 129,
-                            "StringId": "Color Tags",
-                            "DisplayName": "Color Tags",
-                            "Name": "Color Tags",
-                            "Value": "Red",
-                            "Type": "MultiSelect",
-                            "Unit": ""
-                          }
-                        ]
-                      }
-                    ],
-                    "Assets": [
-                      {
-                        "Id": "0cb5f9f7-2dea-4c34-9f62-1a0e3511b196",
-                        "Name": "tmp2C67.png",
-                        "Uri": "https://amsrc.iqmetrix.net/images/0cb5f9f7-2dea-4c34-9f62-1a0e3511b196",
-                        "Type": "Image",
-                        "IsHidden": false,
-                        "IsRolledUp": false
-                      }
-                    ],
-                    "ColorDefinition": {
-                      "Id": "79f9be71-6074-4981-906b-365ea08f9f97",
-                      "Name": "Maroon",
-                      "ColorTagIds": [9],
-                      "ColorTags": [
-                        {
-                          "Id": 9,
-                          "Name": "Red",
-                          "ColorCode": "#E41D18"
-                        }
-                      ],
-                      "Swatch": {
-                        "Type": "ColorCode",
-                        "AssetId": null,
-                        "ColorCode": "#834C63"
-                      },
-                      "IsUsed": true
-                    },
-                    "HeroShotUri": "https://amsrc.iqmetrix.net/images/0cb5f9f7-2dea-4c34-9f62-1a0e3511b196",
-                    "HeroShotId": "0cb5f9f7-2dea-4c34-9f62-1a0e3511b196",
-                    "ManufacturerSkus": [
-                      {
-                        "Value": "25859",
-                        "Description": "",
-                        "Entity": {
-                          "Id": 99773,
-                          "Name": "adidas"
-                        }
-                      }
-                    ],
+                  "144859f4-e8a0-4367-afcb-a9d39c94fa8f": {
+                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z",
                     "VendorSkus": [
                       {
-                        "Value": "545670",
-                        "Description": "Distributer",
+                        "Value": "NCKH-0004",
                         "Entity": {
-                          "Id": 7190,
-                          "Name": "Tessco"
-                        }
-                      },
-                      {
-                        "Value": "101047",
-                        "Description": "",
-                        "Entity": {
-                          "Id": 188979,
-                          "Name": "nChannel  Supplier 1 - Tessco"
+                          "Id": 7190
                         }
                       }
-                    ],
-                    "UpcCodes": [
-                      {
-                        "Value": "8718846034685",
-                        "Description": "",
-                        "Entity": null
-                      }
-                    ],
-                    "Region": null,
-                    "Entity": null,
-                    "HasColor": true,
-                    "IsLinkedToCuratedProduct": true,
-                    "IsSaleable": true,
-                    "IsArchived": false,
-                    "Version": 17
+                    ]
                   },
-                  "67de2d15-0abc-4d06-9914-7f0e6bcaa687": {
-                    "ExtendedAttributes": [],
-                    "DateAddedUtc": "2018-08-07T12:51:33.997Z",
-                    "DateUpdatedUtc": "2018-08-07T12:51:33.997Z",
-                    "RmsId": "",
-                    "MeasurementType": "SingleUnit",
-                    "BatchTracking": false,
-                    "NonStock": false,
-                    "LifeCycle": "Active",
-                    "Id": "M11530",
-                    "Name": "iPhone 7 Plus Black Ice Glass Screen Protector",
-                    "MasterProductId": 11530,
-                    "VariationId": null,
-                    "Owner": null,
-                    "CanonicalClassification": {
-                      "TreeId": 1,
-                      "Id": 42,
-                      "Name": "Screen Protectors",
-                      "ParentCategories": [
-                        {
-                          "Id": 12,
-                          "Name": "Accessories"
-                        },
-                        {
-                          "Id": 37,
-                          "Name": "Cases & Protection"
-                        }
-                      ]
-                    },
-                    "ShortDescription": "Black Ice by Gadget Guard. Premium protection that is just as cool as it is clear.",
-                    "LongDescription": "<p>It may seem like magic, but trust us it’s the good kind. When you lay our custom cut Black Ice Edition Screen Guard over your freshly cleaned touch screen and tap it in place, it will affix itself in a way that science has trouble explaining. The optical grade tempered glass is incredibly strong, scratch resistant and treated to repel annoying smudges. Black Ice by Gadget Guard; premium protection that is just as cool as it is clear.</p>\n<p>Features:</p>\n\n\n<ul><li>Tempered Glass</li>\n\n<li>Reduces Fingerprints</li>\n\n<li>Smooth Glass Finish</li>\n\n<li>Simple Application</li>\n\n<li>Scratch Protection</li>\n\n<li>Optical Grade Glass</li>\n\n<li>Install Kit Included</li>\n\n<li>Precision Cut to Fit Device Perfectly</li></ul>",
-                    "Manufacturer": {
-                      "Id": 13139,
-                      "Name": "Gadgetguard"
-                    },
-                    "MSRP": {
-                      "Amount": 39.99,
-                      "CurrencyCode": "USD"
-                    },
-                    "ReleaseDate": "2016-07-01T00:00:00Z",
-                    "VariationInfo": [],
-                    "Specifications": [
-                      {
-                        "Id": "1d49e7f5-17bd-481a-9817-d1138667f031",
-                        "Name": "Dimensions",
-                        "Fields": [
-                          {
-                            "Id": 40,
-                            "StringId": "Height",
-                            "DisplayName": "Height",
-                            "Name": "Height",
-                            "Value": "6.23",
-                            "Type": "Float",
-                            "Unit": "inches"
-                          },
-                          {
-                            "Id": 41,
-                            "StringId": "Width",
-                            "DisplayName": "Width",
-                            "Name": "Width",
-                            "Value": "3.07",
-                            "Type": "Float",
-                            "Unit": "inches"
-                          },
-                          {
-                            "Id": 43,
-                            "StringId": "Weight",
-                            "DisplayName": "Weight",
-                            "Name": "Weight",
-                            "Value": "0.145",
-                            "Type": "Float",
-                            "Unit": "ounces"
-                          }
-                        ]
-                      },
-                      {
-                        "Id": "325a1461-c34c-43c1-8691-5c7e13cad085",
-                        "Name": "Features",
-                        "Fields": [
-                          {
-                            "Id": 10,
-                            "StringId": "Material",
-                            "DisplayName": "Material",
-                            "Name": "Material",
-                            "Value": "Tempered glass",
-                            "Type": "TextSingleLine",
-                            "Unit": ""
-                          }
-                        ]
-                      },
-                      {
-                        "Id": "3a9e948d-1a5f-42db-9414-5e41f75030fb",
-                        "Name": "Packaging Dimensions",
-                        "Fields": [
-                          {
-                            "Id": 150,
-                            "StringId": "Packaging Width",
-                            "DisplayName": "Packaging Width",
-                            "Name": "Packaging Width",
-                            "Value": "4.25",
-                            "Type": "Float",
-                            "Unit": "inches"
-                          },
-                          {
-                            "Id": 151,
-                            "StringId": "Packaging Depth",
-                            "DisplayName": "Packaging Depth",
-                            "Name": "Packaging Depth",
-                            "Value": "0.38",
-                            "Type": "Float",
-                            "Unit": "inches"
-                          }
-                        ]
-                      }
-                    ],
-                    "Assets": [
-                      {
-                        "Id": "ce454a31-7923-4cf9-b2c3-b5a25b24d638",
-                        "Name": "29c0811a-9353-46cb-8dc2-e97633d42f6d (1).png",
-                        "Uri": "https://amsrc.iqmetrix.net/images/ce454a31-7923-4cf9-b2c3-b5a25b24d638",
-                        "Type": "Image",
-                        "IsHidden": false,
-                        "IsRolledUp": false
-                      },
-                      {
-                        "Id": "e3d44e4f-33a4-453c-96ee-b90f0ff5b1db",
-                        "Name": "026af0a6-4eff-4868-9f93-5bb5af27c754.png",
-                        "Uri": "https://amsrc.iqmetrix.net/images/e3d44e4f-33a4-453c-96ee-b90f0ff5b1db",
-                        "Type": "Image",
-                        "IsHidden": false,
-                        "IsRolledUp": false
-                      }
-                    ],
-                    "ColorDefinition": null,
-                    "HeroShotUri": "https://amsrc.iqmetrix.net/images/e3d44e4f-33a4-453c-96ee-b90f0ff5b1db",
-                    "HeroShotId": "e3d44e4f-33a4-453c-96ee-b90f0ff5b1db",
-                    "ManufacturerSkus": [
-                      {
-                        "Value": "GEGEAP000105",
-                        "Description": "",
-                        "Entity": {
-                          "Id": 13139,
-                          "Name": "Gadgetguard"
-                        }
-                      }
-                    ],
+                  "a61887ce-db07-4c1d-a24e-d23fddae65c6": {
+                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z",
                     "VendorSkus": [
                       {
-                        "Value": "415767",
-                        "Description": "",
+                        "Value": "NCDM-0002",
                         "Entity": {
-                          "Id": 1216,
-                          "Name": "Brightstar"
-                        }
-                      },
-                      {
-                        "Value": "585637",
-                        "Description": "",
-                        "Entity": {
-                          "Id": 7190,
-                          "Name": "Tessco"
-                        }
-                      },
-                      {
-                        "Value": "GEGEAP000105",
-                        "Description": "",
-                        "Entity": {
-                          "Id": 13939,
-                          "Name": "VoiceComm"
-                        }
-                      },
-                      {
-                        "Value": "101051",
-                        "Description": "",
-                        "Entity": {
-                          "Id": 188979,
-                          "Name": "nChannel  Supplier 1 - Tessco"
+                          "Id": 13939
                         }
                       }
-                    ],
-                    "UpcCodes": [
-                      {
-                        "Value": "813394022646",
-                        "Description": "",
-                        "Entity": null
-                      }
-                    ],
-                    "Region": null,
-                    "Entity": null,
-                    "HasColor": true,
-                    "IsLinkedToCuratedProduct": true,
-                    "IsSaleable": true,
-                    "IsArchived": false,
-                    "Version": 4
+                    ]
                   },
-                  "702cb90d-dd8c-4475-8223-82fca43e940a": {
-                    "ExtendedAttributes": [],
-                    "DateAddedUtc": "2018-08-07T12:51:33.653Z",
-                    "DateUpdatedUtc": "2018-08-07T12:51:33.653Z",
-                    "RmsId": "",
-                    "MeasurementType": "SingleUnit",
-                    "BatchTracking": false,
-                    "NonStock": false,
-                    "LifeCycle": "Active",
-                    "Id": "M9371-V1",
-                    "Name": "iPhone 7 Design Series Case -  Spring Floral",
-                    "MasterProductId": 9371,
-                    "VariationId": 1,
-                    "Owner": null,
-                    "CanonicalClassification": {
-                      "TreeId": 1,
-                      "Id": 40,
-                      "Name": "Cases",
-                      "ParentCategories": [
-                        {
-                          "Id": 12,
-                          "Name": "Accessories"
-                        },
-                        {
-                          "Id": 37,
-                          "Name": "Cases & Protection"
-                        }
-                      ]
-                    },
-                    "ShortDescription": "Perfect for the fashion-forward trendsetter.",
-                    "LongDescription": "<p>Wrap your phone in chic elegance with the Incipio Design Series. The translucent designs accented with eye-catching metallic foil adds a stylish flair to your phone while keeping it fully protected from daily wear and tear. Specially coated in a premium scratch resistant finish for a flawless sheen and long-lasting durability, the Design Series cases are perfect for the fashion-forward trendsetter.</p>",
-                    "Manufacturer": {
-                      "Id": 13151,
-                      "Name": "Incipio"
-                    },
-                    "MSRP": {
-                      "Amount": 24.99,
-                      "CurrencyCode": "USD"
-                    },
-                    "ReleaseDate": "2017-04-06T00:00:00Z",
-                    "VariationInfo": [],
-                    "Specifications": [
-                      {
-                        "Id": "6e70f04e-d8f0-4c2c-bf09-a0367bc76412",
-                        "Name": "Dimensions",
-                        "Fields": [
-                          {
-                            "Id": 40,
-                            "StringId": "Height",
-                            "DisplayName": "Height",
-                            "Name": "Height",
-                            "Value": "5.44",
-                            "Type": "Float",
-                            "Unit": "inches"
-                          },
-                          {
-                            "Id": 41,
-                            "StringId": "Width",
-                            "DisplayName": "Width",
-                            "Name": "Width",
-                            "Value": "2.64",
-                            "Type": "Float",
-                            "Unit": "inches"
-                          },
-                          {
-                            "Id": 42,
-                            "StringId": "Depth",
-                            "DisplayName": "Depth",
-                            "Name": "Depth",
-                            "Value": "0.28",
-                            "Type": "Float",
-                            "Unit": "inches"
-                          },
-                          {
-                            "Id": 43,
-                            "StringId": "Weight",
-                            "DisplayName": "Weight",
-                            "Name": "Weight",
-                            "Value": "0.25",
-                            "Type": "Float",
-                            "Unit": "ounces"
-                          }
-                        ]
-                      },
-                      {
-                        "Id": "144f294c-af12-46c4-912a-a0c796d22abc",
-                        "Name": "Features",
-                        "Fields": [
-                          {
-                            "Id": 10,
-                            "StringId": "Material",
-                            "DisplayName": "Material",
-                            "Name": "Material",
-                            "Value": "Plastic Hard Shell",
-                            "Type": "TextSingleLine",
-                            "Unit": ""
-                          }
-                        ]
-                      },
-                      {
-                        "Id": "6ae2ca33-ea03-4c23-ab23-fe245c3635d8",
-                        "Name": "Packaging Dimensions",
-                        "Fields": [
-                          {
-                            "Id": 150,
-                            "StringId": "Packaging Width",
-                            "DisplayName": "Packaging Width",
-                            "Name": "Packaging Width",
-                            "Value": "4.33",
-                            "Type": "Float",
-                            "Unit": "inches"
-                          },
-                          {
-                            "Id": 151,
-                            "StringId": "Packaging Depth",
-                            "DisplayName": "Packaging Depth",
-                            "Name": "Packaging Depth",
-                            "Value": "0.75",
-                            "Type": "Float",
-                            "Unit": "inches"
-                          }
-                        ]
-                      }
-                    ],
-                    "Assets": [
-                      {
-                        "Id": "4554910d-30aa-42d7-86e2-ea7c7e1bf51c",
-                        "Name": "h1.png",
-                        "Uri": "https://amsrc.iqmetrix.net/images/4554910d-30aa-42d7-86e2-ea7c7e1bf51c",
-                        "Type": "Image",
-                        "IsHidden": false,
-                        "IsRolledUp": false
-                      }
-                    ],
-                    "ColorDefinition": {
-                      "Id": "bae9ee5e-6bb9-48e1-8e73-ef10dcbc9275",
-                      "Name": "Spring Floral",
-                      "ColorTagIds": [17],
-                      "ColorTags": [
-                        {
-                          "Id": 17,
-                          "Name": "Multicolor",
-                          "ColorCode": "#FFFFFF"
-                        }
-                      ],
-                      "Swatch": {
-                        "Type": "Asset",
-                        "AssetId": "b7e50ae9-eac8-4033-b4de-c49615c278fc",
-                        "ColorCode": null
-                      },
-                      "IsUsed": true
-                    },
-                    "HeroShotUri": "https://amsrc.iqmetrix.net/images/4554910d-30aa-42d7-86e2-ea7c7e1bf51c",
-                    "HeroShotId": "4554910d-30aa-42d7-86e2-ea7c7e1bf51c",
-                    "ManufacturerSkus": [
-                      {
-                        "Value": "IPH-1553-FLR",
-                        "Description": "",
-                        "Entity": {
-                          "Id": 13151,
-                          "Name": "Incipio"
-                        }
-                      }
-                    ],
+                  "749447b5-5969-42af-8f9f-a8a712626732": {
+                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z",
                     "VendorSkus": [
                       {
-                        "Value": "589303",
-                        "Description": "",
+                        "Value": "NCKH-0008",
                         "Entity": {
-                          "Id": 71906,
-                          "Name": "Tessco"
-                        }
-                      },
-                      {
-                        "Value": "101054",
-                        "Description": "",
-                        "Entity": {
-                          "Id": 13939,
-                          "Name": "nChannel  Supplier 1 - Tessco"
+                          "Id": 7190
                         }
                       }
-                    ],
-                    "UpcCodes": [
-                      {
-                        "Value": "191058009852",
-                        "Description": "",
-                        "Entity": null
-                      }
-                    ],
-                    "Region": null,
-                    "Entity": null,
-                    "HasColor": true,
-                    "IsLinkedToCuratedProduct": true,
-                    "IsSaleable": true,
-                    "IsArchived": false,
-                    "Version": 10
+                    ]
                   },
-                  "227ccc59-fe02-44f6-a6ad-e414ef0bac7e": {
-                    "ExtendedAttributes": [],
-                    "DateAddedUtc": "2018-08-07T12:51:33.903Z",
-                    "DateUpdatedUtc": "2018-08-07T12:51:33.903Z",
-                    "RmsId": "",
-                    "MeasurementType": "SingleUnit",
-                    "BatchTracking": false,
-                    "NonStock": false,
-                    "LifeCycle": "Active",
-                    "Id": "M11529",
-                    "Name": "iPhone 8/7/6s/6 Black Ice Screen Protector",
-                    "MasterProductId": 11529,
-                    "VariationId": null,
-                    "Owner": null,
-                    "CanonicalClassification": {
-                      "TreeId": 1,
-                      "Id": 42,
-                      "Name": "Screen Protectors",
-                      "ParentCategories": [
-                        {
-                          "Id": 12,
-                          "Name": "Accessories"
-                        },
-                        {
-                          "Id": 37,
-                          "Name": "Cases & Protection"
-                        }
-                      ]
-                    },
-                    "ShortDescription": "Black Ice by Gadget Guard. Premium protection that is just as cool as it is clear.",
-                    "LongDescription": "<p>It may seem like magic, but trust us it’s the good kind. When you lay our custom cut Black Ice Edition Screen Guard over your freshly cleaned touch screen and tap it in place, it will affix itself in a way that science has trouble explaining. The optical grade tempered glass is incredibly strong, scratch resistant and treated to repel annoying smudges. Black Ice by Gadget Guard; premium protection that is just as cool as it is clear.</p>\n<p>Features:</p>\n\n\n<ul><li>Tempered Glass</li>\n\n<li>Reduces Fingerprints</li>\n\n<li>Smooth Glass Finish</li>\n\n<li>Simple Application</li>\n\n<li>Scratch Protection</li>\n\n<li>Optical Grade Glass</li>\n\n<li>Install Kit Included</li>\n\n<li>Precision Cut to Fit Device Perfectly</li></ul>",
-                    "Manufacturer": {
-                      "Id": 13139,
-                      "Name": "Gadgetguard"
-                    },
-                    "MSRP": {
-                      "Amount": 39.99,
-                      "CurrencyCode": "USD"
-                    },
-                    "ReleaseDate": "2016-06-29T00:00:00Z",
-                    "VariationInfo": [],
-                    "Specifications": [
-                      {
-                        "Id": "1d49e7f5-17bd-481a-9817-d1138667f031",
-                        "Name": "Dimensions",
-                        "Fields": [
-                          {
-                            "Id": 40,
-                            "StringId": "Height",
-                            "DisplayName": "Height",
-                            "Name": "Height",
-                            "Value": "6.23",
-                            "Type": "Float",
-                            "Unit": "inches"
-                          },
-                          {
-                            "Id": 41,
-                            "StringId": "Width",
-                            "DisplayName": "Width",
-                            "Name": "Width",
-                            "Value": "3.07",
-                            "Type": "Float",
-                            "Unit": "inches"
-                          }
-                        ]
-                      },
-                      {
-                        "Id": "325a1461-c34c-43c1-8691-5c7e13cad085",
-                        "Name": "Features",
-                        "Fields": [
-                          {
-                            "Id": 10,
-                            "StringId": "Material",
-                            "DisplayName": "Material",
-                            "Name": "Material",
-                            "Value": "Tempered glass",
-                            "Type": "TextSingleLine",
-                            "Unit": ""
-                          }
-                        ]
-                      }
-                    ],
-                    "Assets": [
-                      {
-                        "Id": "8cbabed8-4b6a-49d6-baf3-2a7a2a21f656",
-                        "Name": "115.png",
-                        "Uri": "https://amsrc.iqmetrix.net/images/8cbabed8-4b6a-49d6-baf3-2a7a2a21f656",
-                        "Type": "Image",
-                        "IsHidden": false,
-                        "IsRolledUp": false
-                      },
-                      {
-                        "Id": "cbad69eb-b204-4fc1-880f-95706980623b",
-                        "Name": "29c0811a-9353-46cb-8dc2-e97633d42f6d.png",
-                        "Uri": "https://amsrc.iqmetrix.net/images/cbad69eb-b204-4fc1-880f-95706980623b",
-                        "Type": "Image",
-                        "IsHidden": false,
-                        "IsRolledUp": false
-                      }
-                    ],
-                    "ColorDefinition": null,
-                    "HeroShotUri": "https://amsrc.iqmetrix.net/images/8cbabed8-4b6a-49d6-baf3-2a7a2a21f656",
-                    "HeroShotId": "8cbabed8-4b6a-49d6-baf3-2a7a2a21f656",
-                    "ManufacturerSkus": [
-                      {
-                        "Value": "GEGEAP000104",
-                        "Description": "",
-                        "Entity": {
-                          "Id": 13139,
-                          "Name": "Gadgetguard"
-                        }
-                      }
-                    ],
+                  "4773c97f-bbb8-4063-8de4-d7242a6a5933": {
+                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z",
                     "VendorSkus": [
                       {
-                        "Value": "415768",
-                        "Description": "",
+                        "Value": "NCKH-0007",
                         "Entity": {
-                          "Id": 1216,
-                          "Name": "Brightstar"
-                        }
-                      },
-                      {
-                        "Value": "549363",
-                        "Description": "",
-                        "Entity": {
-                          "Id": 71902,
-                          "Name": "Tessco"
-                        }
-                      },
-                      {
-                        "Value": "GEGEAP000104",
-                        "Description": "",
-                        "Entity": {
-                          "Id": 15193,
-                          "Name": "VoiceComm"
-                        }
-                      },
-                      {
-                        "Value": "101050",
-                        "Description": "",
-                        "Entity": {
-                          "Id": 188979,
-                          "Name": "nChannel  Supplier 1 - Tessco"
+                          "Id": 7190
                         }
                       }
-                    ],
-                    "UpcCodes": [
+                    ]
+                  },
+                  "a8c1c049-5dce-453f-b0cb-aacb14ada7b4": {
+                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z",
+                    "VendorSkus": [
                       {
-                        "Value": "813394022639",
-                        "Description": "",
-                        "Entity": null
+                        "Value": "NCDM-0009",
+                        "Entity": {
+                          "Id": 13939
+                        }
                       }
-                    ],
-                    "Region": null,
-                    "Entity": null,
-                    "HasColor": true,
-                    "IsLinkedToCuratedProduct": true,
-                    "IsSaleable": true,
-                    "IsArchived": false,
-                    "Version": 8
+                    ]
+                  },
+                  "49f57d8e-a170-458a-91f6-e9ee06c28b37": {
+                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z",
+                    "VendorSkus": [
+                      {
+                        "Value": "NCDM-0010",
+                        "Entity": {
+                          "Id": 13939
+                        }
+                      }
+                    ]
                   }
                 }
               }
             },
             {
-              "uri": "/v1/Companies(23813)/Catalog/Items/ByVendorSku?vendorId=7190&vendorSku=545670",
+              "baseUri": "https://pricingdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/Entities(23841)/CatalogItems(144859f4-e8a0-4367-afcb-a9d39c94fa8f)/Pricing",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
-              "responsePayload": {
-                "VendorId": 7190,
-                "Sku": "545670",
-                "Items": [
-                  {
-                    "RmsId": "",
-                    "Slug": "M9411-V2",
-                    "CatalogItemId": "4c9de5f7-7114-4438-b2c4-4659799d3ca8",
-                    "CatalogSku": "HZ7REQBW",
-                    "MeasurementType": "SingleUnit",
-                    "BatchTracking": false,
-                    "NonStock": false,
-                    "LifeCycle": "Active",
-                    "IsArchived": false,
-                    "SourceIds": ["419faf6c-3906-47d8-a855-f3883d58902d"],
-                    "DateAddedUtc": "2018-08-07T12:51:33.747Z",
-                    "DateUpdatedUtc": "2018-08-07T12:51:33.747Z"
-                  }
-                ]
-              }
+              "responsePayload": [
+                {
+                  "Id": 591800,
+                  "CompanyId": 23813,
+                  "EntityId": 23813,
+                  "CatalogItemId": "144859f4-e8a0-4367-afcb-a9d39c94fa8f",
+                  "RegularPrice": 199.99,
+                  "IsDiscountable": false,
+                  "DateUpdatedUtc": "2018-03-07T21:36:44.897"
+                }
+              ]
             },
             {
-              "uri": "/v1/Companies(23813)/Catalog/Items/ByVendorSku?vendorId=7190&vendorSku=585637",
+              "baseUri": "https://pricingdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/Entities(23841)/CatalogItems(a61887ce-db07-4c1d-a24e-d23fddae65c6)/Pricing",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
-              "responsePayload": {
-                "VendorId": 7190,
-                "Sku": "585637",
-                "Items": [
-                  {
-                    "RmsId": "",
-                    "Slug": "M11530",
-                    "CatalogItemId": "67de2d15-0abc-4d06-9914-7f0e6bcaa687",
-                    "CatalogSku": "0K2JZL3V",
-                    "MeasurementType": "SingleUnit",
-                    "BatchTracking": false,
-                    "NonStock": false,
-                    "LifeCycle": "Active",
-                    "IsArchived": false,
-                    "SourceIds": ["419faf6c-3906-47d8-a855-f3883d58902d", "e7a9e7b1-4708-460c-ae34-37c30e64f14a"],
-                    "DateAddedUtc": "2018-08-07T12:51:33.997Z",
-                    "DateUpdatedUtc": "2018-08-07T12:51:33.997Z"
-                  }
-                ]
-              }
+              "responsePayload": [
+                {
+                  "Id": 591808,
+                  "CompanyId": 23813,
+                  "EntityId": 23813,
+                  "CatalogItemId": "a61887ce-db07-4c1d-a24e-d23fddae65c6",
+                  "RegularPrice": 99.95,
+                  "IsDiscountable": false,
+                  "DateUpdatedUtc": "2018-03-07T21:36:44.897"
+                }
+              ]
             },
             {
-              "uri": "/v1/Companies(23813)/Catalog/Items/ByVendorSku?vendorId=13939&vendorSku=GEGEAP000105",
+              "baseUri": "https://pricingdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/Entities(23841)/CatalogItems(749447b5-5969-42af-8f9f-a8a712626732)/Pricing",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
-              "responsePayload": {
-                "VendorId": 13939,
-                "Sku": "GEGEAP000105",
-                "Items": [
-                  {
-                    "RmsId": "",
-                    "Slug": "M11530",
-                    "CatalogItemId": "67de2d15-0abc-4d06-9914-7f0e6bcaa687",
-                    "CatalogSku": "0K2JZL3V",
-                    "MeasurementType": "SingleUnit",
-                    "BatchTracking": false,
-                    "NonStock": false,
-                    "LifeCycle": "Active",
-                    "IsArchived": false,
-                    "SourceIds": ["419faf6c-3906-47d8-a855-f3883d58902d", "e7a9e7b1-4708-460c-ae34-37c30e64f14a"],
-                    "DateAddedUtc": "2018-08-07T12:51:33.997Z",
-                    "DateUpdatedUtc": "2018-08-07T12:51:33.997Z"
-                  }
-                ]
-              }
+              "responsePayload": [
+                {
+                  "Id": 591804,
+                  "CompanyId": 23813,
+                  "EntityId": 23813,
+                  "CatalogItemId": "749447b5-5969-42af-8f9f-a8a712626732",
+                  "RegularPrice": 34.99,
+                  "IsDiscountable": false,
+                  "DateUpdatedUtc": "2018-03-07T21:36:44.897"
+                }
+              ]
             },
             {
-              "uri": "/v1/Companies(23813)/Catalog/Items/ByVendorSku?vendorId=13939&vendorSku=101054",
+              "baseUri": "https://pricingdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/Entities(23841)/CatalogItems(a8c1c049-5dce-453f-b0cb-aacb14ada7b4)/Pricing",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
-              "responsePayload": {
-                "VendorId": 13939,
-                "Sku": "101054",
-                "Items": [
-                  {
-                    "RmsId": "",
-                    "Slug": "M9371-V1",
-                    "CatalogItemId": "702cb90d-dd8c-4475-8223-82fca43e940a",
-                    "CatalogSku": "QNXR280Z",
-                    "MeasurementType": "SingleUnit",
-                    "BatchTracking": false,
-                    "NonStock": false,
-                    "LifeCycle": "Active",
-                    "IsArchived": false,
-                    "SourceIds": ["e7a9e7b1-4708-460c-ae34-37c30e64f14a"],
-                    "DateAddedUtc": "2018-08-07T12:51:33.653Z",
-                    "DateUpdatedUtc": "2018-08-07T12:51:33.653Z"
-                  }
-                ]
-              }
+              "responsePayload": [
+                {
+                  "Id": 591814,
+                  "CompanyId": 23813,
+                  "EntityId": 23813,
+                  "CatalogItemId": "a8c1c049-5dce-453f-b0cb-aacb14ada7b4",
+                  "RegularPrice": 99.95,
+                  "IsDiscountable": false,
+                  "DateUpdatedUtc": "2018-03-07T21:36:44.897"
+                }
+              ]
+            },
+            {
+              "baseUri": "https://pricingdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/Entities(23841)/CatalogItems(4773c97f-bbb8-4063-8de4-d7242a6a5933)/Pricing",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": [
+                {
+                  "Id": 591803,
+                  "CompanyId": 23813,
+                  "EntityId": 23813,
+                  "CatalogItemId": "4773c97f-bbb8-4063-8de4-d7242a6a5933",
+                  "RegularPrice": 34.99,
+                  "IsDiscountable": false,
+                  "DateUpdatedUtc": "2018-03-07T21:36:44.897"
+                }
+              ]
+            },
+            {
+              "baseUri": "https://pricingdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/Entities(23841)/CatalogItems(49f57d8e-a170-458a-91f6-e9ee06c28b37)/Pricing",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": [
+                {
+                  "Id": 591816,
+                  "CompanyId": 23813,
+                  "EntityId": 23813,
+                  "CatalogItemId": "49f57d8e-a170-458a-91f6-e9ee06c28b37",
+                  "RegularPrice": 99.95,
+                  "IsDiscountable": false,
+                  "DateUpdatedUtc": "2018-03-07T21:36:44.897"
+                }
+              ]
             }
           ],
           "channelProfile": {
-            "productPricingBusinessReferences": ["CatalogItemId"]
+            "productPricingBusinessReferences": ["VendorSku.Value"]
           }
         },
         {
@@ -7974,27 +7244,251 @@
           "payload": {
             "doc": {
               "modifiedDateRange": {
-                "startDateGMT": "2010-03-08T00:28:44.183Z",
+                "startDateGMT": "2019-03-08T00:28:44.182Z",
                 "endDateGMT": "2019-03-08T00:28:44.183Z"
-              },
-              "page": 1,
-              "pageSize": 25
+              }
             }
           },
           "baseUri": "https://catalogsdemo.iqmetrix.net",
           "defaultHeaders": {},
           "links": [
             {
-              "baseUri": "https://pricingdemo.iqmetrix.net",
-              "uri": "/v1/Companies(23813)/Entities(23841)/ChangedPrices?%24skip=0&%24top=25&%24filter=LastModifiedDateUtc%20ge%20datetime%272010-03-08T00%3A28%3A44.183Z%27%20and%20LastModifiedDateUtc%20le%20datetime%272019-03-08T00%3A28%3A44.183Z%27",
+              "uri": "/v1/Companies(23813)/Catalog/Items(SourceId=419faf6c-3906-47d8-a855-f3883d58902d)",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
-              "responsePayload": []
+              "responsePayload": {
+                "Items": [
+                  {
+                    "Slug": "M5970-V3",
+                    "CatalogItemId": "749447b5-5969-42af-8f9f-a8a712626732",
+                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z"
+                  },
+                  {
+                    "Slug": "M8170",
+                    "CatalogItemId": "144859f4-e8a0-4367-afcb-a9d39c94fa8f",
+                    "DateUpdatedUtc": "2018-03-08T00:28:43.647Z"
+                  },
+                  {
+                    "Slug": "M5970-V2",
+                    "CatalogItemId": "4773c97f-bbb8-4063-8de4-d7242a6a5933",
+                    "DateUpdatedUtc": "2018-03-08T00:28:43.803Z"
+                  }
+                ]
+              }
+            },
+            {
+              "uri": "/v1/Companies(23813)/Catalog/Items(SourceId=e7a9e7b1-4708-460c-ae34-37c30e64f14a)",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": {
+                "Items": [
+                  {
+                    "Slug": "M5902-V1",
+                    "CatalogItemId": "a61887ce-db07-4c1d-a24e-d23fddae65c6",
+                    "DateUpdatedUtc": "2018-03-08T00:33:05.83Z"
+                  },
+                  {
+                    "Slug": "M6855-V1",
+                    "CatalogItemId": "a8c1c049-5dce-453f-b0cb-aacb14ada7b4",
+                    "DateUpdatedUtc": "2018-03-08T00:33:06.427Z"
+                  },
+                  {
+                    "Slug": "M6855-V2",
+                    "CatalogItemId": "49f57d8e-a170-458a-91f6-e9ee06c28b37",
+                    "DateUpdatedUtc": "2018-03-08T00:33:06.52Z"
+                  }
+                ]
+              }
+            },
+            {
+              "uri": "/v1/Companies(23813)/Catalog/Items/ProductDetails/Bulk",
+              "method": "POST",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": {
+                "CatalogItems": {
+                  "144859f4-e8a0-4367-afcb-a9d39c94fa8f": {
+                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z",
+                    "VendorSkus": [
+                      {
+                        "Value": "NCKH-0004",
+                        "Entity": {
+                          "Id": 7190
+                        }
+                      }
+                    ]
+                  },
+                  "a61887ce-db07-4c1d-a24e-d23fddae65c6": {
+                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z",
+                    "VendorSkus": [
+                      {
+                        "Value": "NCDM-0002",
+                        "Entity": {
+                          "Id": 13939
+                        }
+                      }
+                    ]
+                  },
+                  "749447b5-5969-42af-8f9f-a8a712626732": {
+                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z",
+                    "VendorSkus": [
+                      {
+                        "Value": "NCKH-0008",
+                        "Entity": {
+                          "Id": 7190
+                        }
+                      }
+                    ]
+                  },
+                  "4773c97f-bbb8-4063-8de4-d7242a6a5933": {
+                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z",
+                    "VendorSkus": [
+                      {
+                        "Value": "NCKH-0007",
+                        "Entity": {
+                          "Id": 7190
+                        }
+                      }
+                    ]
+                  },
+                  "a8c1c049-5dce-453f-b0cb-aacb14ada7b4": {
+                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z",
+                    "VendorSkus": [
+                      {
+                        "Value": "NCDM-0009",
+                        "Entity": {
+                          "Id": 13939
+                        }
+                      }
+                    ]
+                  },
+                  "49f57d8e-a170-458a-91f6-e9ee06c28b37": {
+                    "DateUpdatedUtc": "2018-03-08T00:28:43.883Z",
+                    "VendorSkus": [
+                      {
+                        "Value": "NCDM-0010",
+                        "Entity": {
+                          "Id": 13939
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "baseUri": "https://pricingdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/Entities(23841)/CatalogItems(144859f4-e8a0-4367-afcb-a9d39c94fa8f)/Pricing",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": [
+                {
+                  "Id": 591800,
+                  "CompanyId": 23813,
+                  "EntityId": 23813,
+                  "CatalogItemId": "144859f4-e8a0-4367-afcb-a9d39c94fa8f",
+                  "RegularPrice": 199.99,
+                  "IsDiscountable": false,
+                  "DateUpdatedUtc": "2018-03-07T21:36:44.897"
+                }
+              ]
+            },
+            {
+              "baseUri": "https://pricingdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/Entities(23841)/CatalogItems(a61887ce-db07-4c1d-a24e-d23fddae65c6)/Pricing",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": [
+                {
+                  "Id": 591808,
+                  "CompanyId": 23813,
+                  "EntityId": 23813,
+                  "CatalogItemId": "a61887ce-db07-4c1d-a24e-d23fddae65c6",
+                  "RegularPrice": 99.95,
+                  "IsDiscountable": false,
+                  "DateUpdatedUtc": "2018-03-07T21:36:44.897"
+                }
+              ]
+            },
+            {
+              "baseUri": "https://pricingdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/Entities(23841)/CatalogItems(749447b5-5969-42af-8f9f-a8a712626732)/Pricing",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": [
+                {
+                  "Id": 591804,
+                  "CompanyId": 23813,
+                  "EntityId": 23813,
+                  "CatalogItemId": "749447b5-5969-42af-8f9f-a8a712626732",
+                  "RegularPrice": 34.99,
+                  "IsDiscountable": false,
+                  "DateUpdatedUtc": "2018-03-07T21:36:44.897"
+                }
+              ]
+            },
+            {
+              "baseUri": "https://pricingdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/Entities(23841)/CatalogItems(a8c1c049-5dce-453f-b0cb-aacb14ada7b4)/Pricing",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": [
+                {
+                  "Id": 591814,
+                  "CompanyId": 23813,
+                  "EntityId": 23813,
+                  "CatalogItemId": "a8c1c049-5dce-453f-b0cb-aacb14ada7b4",
+                  "RegularPrice": 99.95,
+                  "IsDiscountable": false,
+                  "DateUpdatedUtc": "2018-03-07T21:36:44.897"
+                }
+              ]
+            },
+            {
+              "baseUri": "https://pricingdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/Entities(23841)/CatalogItems(4773c97f-bbb8-4063-8de4-d7242a6a5933)/Pricing",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": [
+                {
+                  "Id": 591803,
+                  "CompanyId": 23813,
+                  "EntityId": 23813,
+                  "CatalogItemId": "4773c97f-bbb8-4063-8de4-d7242a6a5933",
+                  "RegularPrice": 34.99,
+                  "IsDiscountable": false,
+                  "DateUpdatedUtc": "2018-03-07T21:36:44.897"
+                }
+              ]
+            },
+            {
+              "baseUri": "https://pricingdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/Entities(23841)/CatalogItems(49f57d8e-a170-458a-91f6-e9ee06c28b37)/Pricing",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": [
+                {
+                  "Id": 591816,
+                  "CompanyId": 23813,
+                  "EntityId": 23813,
+                  "CatalogItemId": "49f57d8e-a170-458a-91f6-e9ee06c28b37",
+                  "RegularPrice": 99.95,
+                  "IsDiscountable": false,
+                  "DateUpdatedUtc": "2018-03-07T21:36:44.897"
+                }
+              ]
             }
           ],
           "channelProfile": {
-            "productPricingBusinessReferences": ["CatalogItemId"]
+            "productPricingBusinessReferences": ["VendorSku.Value"]
           }
         },
         {
@@ -8006,16 +7500,22 @@
           "defaultHeaders": {},
           "links": [
             {
-              "baseUri": "https://pricingdemo.iqmetrix.net",
-              "uri": "/v1/Companies(23813)/Entities(23841)/ChangedPrices?%24skip=0&%24top=25&%24filter=LastModifiedDateUtc%20ge%20datetime%272010-03-08T00%3A28%3A44.183Z%27%20and%20LastModifiedDateUtc%20le%20datetime%272019-03-08T00%3A28%3A44.183Z%27",
+              "uri": "/v1/Companies(23813)/Catalog/Items(SourceId=419faf6c-3906-47d8-a855-f3883d58902d)",
               "method": "GET",
               "replyHeaders": {},
-              "statusCode": 404,
-              "responsePayload": []
+              "statusCode": 400,
+              "responsePayload": {}
+            },
+            {
+              "uri": "/v1/Companies(23813)/Catalog/Items(SourceId=e7a9e7b1-4708-460c-ae34-37c30e64f14a)",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 400,
+              "responsePayload": {}
             }
           ],
           "channelProfile": {
-            "productPricingBusinessReferences": ["CatalogItemId"]
+            "productPricingBusinessReferences": ["VendorSku.Value"]
           }
         },
         {
@@ -8025,25 +7525,29 @@
               "modifiedDateRange": {
                 "startDateGMT": "2010-03-08T00:28:44.183Z",
                 "endDateGMT": "2019-03-08T00:28:44.183Z"
-              },
-              "page": 1,
-              "pageSize": 25
+              }
             }
           },
           "baseUri": "https://catalogsdemo.iqmetrix.net",
           "defaultHeaders": {},
           "links": [
             {
-              "baseUri": "https://pricingdemo.iqmetrix.net",
-              "uri": "/v1/Companies(23813)/Entities(23841)/ChangedPrices?%24skip=0&%24top=25&%24filter=LastModifiedDateUtc%20ge%20datetime%272010-03-08T00%3A28%3A44.183Z%27%20and%20LastModifiedDateUtc%20le%20datetime%272019-03-08T00%3A28%3A44.183Z%27",
+              "uri": "/v1/Companies(23813)/Catalog/Items(SourceId=419faf6c-3906-47d8-a855-f3883d58902d)",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 429,
-              "responsePayload": []
+              "responsePayload": {}
+            },
+            {
+              "uri": "/v1/Companies(23813)/Catalog/Items(SourceId=e7a9e7b1-4708-460c-ae34-37c30e64f14a)",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 429,
+              "responsePayload": {}
             }
           ],
           "channelProfile": {
-            "productPricingBusinessReferences": ["CatalogItemId"]
+            "productPricingBusinessReferences": ["VendorSku.Value"]
           }
         },
         {
@@ -8053,25 +7557,29 @@
               "modifiedDateRange": {
                 "startDateGMT": "2010-03-08T00:28:44.183Z",
                 "endDateGMT": "2019-03-08T00:28:44.183Z"
-              },
-              "page": 1,
-              "pageSize": 25
+              }
             }
           },
           "baseUri": "https://catalogsdemo.iqmetrix.net",
           "defaultHeaders": {},
           "links": [
             {
-              "baseUri": "https://pricingdemo.iqmetrix.net",
-              "uri": "/v1/Companies(23813)/Entities(23841)/ChangedPrices?%24skip=0&%24top=25&%24filter=LastModifiedDateUtc%20ge%20datetime%272010-03-08T00%3A28%3A44.183Z%27%20and%20LastModifiedDateUtc%20le%20datetime%272019-03-08T00%3A28%3A44.183Z%27",
+              "uri": "/v1/Companies(23813)/Catalog/Items(SourceId=419faf6c-3906-47d8-a855-f3883d58902d)",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 500,
-              "responsePayload": []
+              "responsePayload": {}
+            },
+            {
+              "uri": "/v1/Companies(23813)/Catalog/Items(SourceId=e7a9e7b1-4708-460c-ae34-37c30e64f14a)",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 500,
+              "responsePayload": {}
             }
           ],
           "channelProfile": {
-            "productPricingBusinessReferences": ["CatalogItemId"]
+            "productPricingBusinessReferences": ["VendorSku.Value"]
           }
         }
       ]
