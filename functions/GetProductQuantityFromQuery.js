@@ -65,12 +65,14 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
             queryDoc.modifiedDateRange.startDateGMT,
             queryDoc.modifiedDateRange.endDateGMT
           );
-          const vendorSkuDetails = await Promise.all(
-            availabilityList.map(async a => {
-              await sleep(200);
-              return getVendorSkuDetails(a, subscriptionList.listId);
-            })
-          );
+
+          let vendorSkuDetails = [];
+
+          for (const a of availabilityList) {
+            sleep(200 * subscriptionLists.length);
+            let result = await getVendorSkuDetails(a, subscriptionList.listId);
+            vendorSkuDetails.push(result);
+          }
 
           availabilityList.forEach(item =>
             Object.assign(
@@ -126,11 +128,6 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
 
     logInfo(`x-ratelimit-remaining: ${resp.headers['x-ratelimit-remaining']}`);
 
-    if (parseInt(resp.headers['x-ratelimit-remaining']) < 490) {
-      logInfo('Sleeping for 61 seconds to allow the iqmetrix quota to refresh');
-      await sleep(61000);
-    }
-
     return resp.body;
   }
 
@@ -172,11 +169,6 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
     }
 
     logInfo(`x-ratelimit-remaining: ${resp.headers['x-ratelimit-remaining']}`);
-
-    if (parseInt(resp.headers['x-ratelimit-remaining']) < 490) {
-      logInfo('Sleeping for 61 seconds to allow the iqmetrix quota to refresh');
-      await sleep(61000);
-    }
 
     return resp.body;
   }
