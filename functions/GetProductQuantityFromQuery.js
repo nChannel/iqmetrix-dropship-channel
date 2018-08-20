@@ -65,11 +65,12 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
             queryDoc.modifiedDateRange.startDateGMT,
             queryDoc.modifiedDateRange.endDateGMT
           );
+          logInfo(`AvailabilityList count: ${availabilityList.length}`);
 
           let vendorSkuDetails = [];
 
           for (const a of availabilityList) {
-            sleep(200 * subscriptionLists.length);
+            sleep(100 * subscriptionLists.length);
             let result = await getVendorSkuDetails(a, subscriptionList.listId);
             vendorSkuDetails.push(result);
           }
@@ -82,6 +83,7 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
           );
 
           supplierSkus.push(...availabilityList.filter(l => nc.isNonEmptyArray(l.Items)));
+          logInfo(`SupplierSku count: ${supplierSkus.length}`);
         }
         break;
       }
@@ -135,6 +137,8 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
     let vendorSkuDetail = { Items: [] };
     if (nc.isNonEmptyString(availabilityItem.SupplierSku)) {
       vendorSkuDetail = await getVendorSkuDetail(availabilityItem.SupplierSku, availabilityItem.SupplierEntityId);
+    } else {
+      logInfo(`AvailabilityItem with Id ${availabilityItem.Id} has no SupplierSku. Skipping.`);
     }
     vendorSkuDetail.Items = vendorSkuDetail.Items.filter(i => i.SourceIds.includes(subscriptionListId));
     return vendorSkuDetail;
