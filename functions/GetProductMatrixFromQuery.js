@@ -263,8 +263,6 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
   async function getDetailsByVendorSku(vendorSku, vendorId) {
     logInfo(`Getting catalog item details by vendor '${vendorId}' and sku '${vendorSku}'`);
 
-    await sleep(1000);
-
     const req = stub.requestPromise.get(
       Object.assign({}, stub.requestDefaults, {
         method: "GET",
@@ -305,7 +303,6 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
 
       for (const chunk of chunks) {
         if (chunk.length > 0) {
-          await sleep(1000);
           logInfo(`Requesting ${chunk.length} catalog item details.`);
           const req = stub.requestPromise.post(
             Object.assign({}, stub.requestDefaults, {
@@ -355,7 +352,6 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
 
       for (const chunk of chunks) {
         if (chunk.length > 0) {
-          await sleep(1000);
           logInfo(`Requesting ${chunk.length} slug details.`);
           const req = stub.requestPromise.get(
             Object.assign({}, stub.requestDefaults, {
@@ -432,9 +428,5 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
     stub.out.ncStatusCode = stub.out.ncStatusCode || 500;
 
     return stub.out;
-  }
-
-  function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
   }
 };
