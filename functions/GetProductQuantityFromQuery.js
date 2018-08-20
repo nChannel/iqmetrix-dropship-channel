@@ -171,6 +171,10 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
       throw new TypeError("Details by VendorSku Response is not in expected format, expected Items[] property.");
     }
 
+    if (!nc.isNonEmptyArray(resp.body.Item)) {
+      logInfo(`Vendor '${vendorId}' and SKU '${vendorSku}' returned 0 Items.`);
+    }
+
     logInfo(`x-ratelimit-remaining: ${resp.headers['x-ratelimit-remaining']}`);
 
     return resp.body;
