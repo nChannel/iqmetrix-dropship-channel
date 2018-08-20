@@ -70,7 +70,6 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
           let vendorSkuDetails = [];
 
           for (const a of availabilityList) {
-            sleep(100 * subscriptionLists.length);
             let result = await getVendorSkuDetails(a, subscriptionList.listId);
             vendorSkuDetails.push(result);
           }
