@@ -94,6 +94,7 @@ function GetProductPricingFromQuery(ncUtil, channelProfile, flowContext, payload
 
     async function getProductLists() {
         logInfo("Get product lists...");
+        console.time("Elapsed Time");
         return await Promise.all(stub.channelProfile.channelSettingsValues.subscriptionLists.map(getProductList));
     }
 
@@ -119,6 +120,7 @@ function GetProductPricingFromQuery(ncUtil, channelProfile, flowContext, payload
 
     async function getProductDetails(productList) {
         logInfo("Get product details...");
+        logInfo(`Total product count: ${productList.length}`);
         const allIds = productList.map(p => p.CatalogItemId);
         const batchedIds = [];
         const max = 500;
@@ -224,6 +226,8 @@ function GetProductPricingFromQuery(ncUtil, channelProfile, flowContext, payload
     }
 
     async function buildResponseObject(products) {
+        console.timeEnd("Elapsed Time");
+        logInfo(`Total processed product count: ${products.length}`);
         if (products.length > 0) {
             logInfo(`Submitting ${products.length} modified product prices...`);
             stub.out.ncStatusCode = 200;
