@@ -65,9 +65,14 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
             queryDoc.modifiedDateRange.startDateGMT,
             queryDoc.modifiedDateRange.endDateGMT
           );
-          const vendorSkuDetails = await Promise.all(
-            availabilityList.map(a => getVendorSkuDetails(a, subscriptionList.listId))
-          );
+          logInfo(`AvailabilityList count: ${availabilityList.length}`);
+
+          let vendorSkuDetails = [];
+
+          for (const a of availabilityList) {
+            let result = await getVendorSkuDetails(a, subscriptionList.listId);
+            vendorSkuDetails.push(result);
+          }
 
           availabilityList.forEach(item =>
             Object.assign(
@@ -76,7 +81,11 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
             )
           );
 
+          let skippedSkus = [];
           supplierSkus.push(...availabilityList.filter(l => nc.isNonEmptyArray(l.Items)));
+          skippedSkus.push(...availabilityList.filter(l => !nc.isNonEmptyArray(l.Items)));
+          logInfo(`SupplierSku count: ${supplierSkus.length}`);
+          logInfo(`SupplierSkus with an empty Items array: ${skippedSkus.length}`);
         }
         break;
       }
@@ -121,11 +130,18 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
       throw new TypeError("Response is not in expected format, expected an array of availability objects.");
     }
 
+    logInfo(`x-ratelimit-remaining: ${resp.headers['x-ratelimit-remaining']}`);
+
     return resp.body;
   }
 
   async function getVendorSkuDetails(availabilityItem, subscriptionListId) {
-    const vendorSkuDetail = await getVendorSkuDetail(availabilityItem.SupplierSku, availabilityItem.SupplierEntityId);
+    let vendorSkuDetail = { Items: [] };
+    if (nc.isNonEmptyString(availabilityItem.SupplierSku)) {
+      vendorSkuDetail = await getVendorSkuDetail(availabilityItem.SupplierSku, availabilityItem.SupplierEntityId);
+    } else {
+      logInfo(`AvailabilityItem with Id ${availabilityItem.Id} has no SupplierSku. Skipping.`);
+    }
     vendorSkuDetail.Items = vendorSkuDetail.Items.filter(i => i.SourceIds.includes(subscriptionListId));
     return vendorSkuDetail;
   }
@@ -157,6 +173,12 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
     if (!resp.body || !nc.isArray(resp.body.Items)) {
       throw new TypeError("Details by VendorSku Response is not in expected format, expected Items[] property.");
     }
+
+    if (!nc.isNonEmptyArray(resp.body.Items)) {
+      logInfo(`Vendor '${vendorId}' and SKU '${vendorSku}' returned 0 Items.`);
+    }
+
+    logInfo(`x-ratelimit-remaining: ${resp.headers['x-ratelimit-remaining']}`);
 
     return resp.body;
   }
@@ -204,5 +226,9 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
     stub.out.ncStatusCode = stub.out.ncStatusCode || 500;
 
     return stub.out;
+  }
+
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 };
