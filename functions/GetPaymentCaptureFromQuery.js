@@ -97,7 +97,7 @@ let GetPaymentCaptureFromQuery = function (ncUtil, channelProfile, flowContext, 
   if (!invalid) {
     let request = require('request');
 
-    let url = `${channelProfile.channelSettingsValues.protocol}://ordermanagementreporting${channelProfile.channelSettingsValues.environment}.iqmetrix.net`
+    let url = `${channelProfile.channelSettingsValues.protocol}://ordermanagementreporting${channelProfile.channelSettingsValues.environment}.iqmetrix.net/v1`
 
     /*
      Create query string for searching orders by specific fields
@@ -185,7 +185,7 @@ let GetPaymentCaptureFromQuery = function (ncUtil, channelProfile, flowContext, 
                 };
 
                 let endPoint = "/Companies(" + channelProfile.channelAuthValues.company_id + ")/OrderDetails(" + order._id + ")";
-                let url = `${channelProfile.channelSettingsValues.protocol}://ordermanagementreporting${channelProfile.channelSettingsValues.environment}.iqmetrix.net${endPoint}`;
+                let url = `${channelProfile.channelSettingsValues.protocol}://ordermanagementreporting${channelProfile.channelSettingsValues.environment}.iqmetrix.net/v1${endPoint}`;
                 options.url = url;
 
                 log("Using URL [" + url + "]", ncUtil);
