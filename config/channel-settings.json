@@ -328,8 +328,7 @@
       "documentDef": {
         "schema": {},
         "referenceLocation": {
-          "paymentCaptureBusinessReferences": ["id"],
-          "salesOrderBusinessReferences": ["invoiceNumber"]
+          "paymentCaptureBusinessReferences": ["id"]
         }
       }
     },

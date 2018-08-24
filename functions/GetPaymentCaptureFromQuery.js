@@ -50,15 +50,6 @@ let GetPaymentCaptureFromQuery = function (ncUtil, channelProfile, flowContext, 
   } else if (channelProfile.paymentCaptureBusinessReferences.length === 0) {
     invalid = true;
     invalidMsg = "channelProfile.paymentCaptureBusinessReferences is empty"
-  } else if (!channelProfile.salesOrderBusinessReferences) {
-    invalid = true;
-    invalidMsg = "channelProfile.salesOrderBusinessReferences was not provided"
-  } else if (!Array.isArray(channelProfile.salesOrderBusinessReferences)) {
-    invalid = true;
-    invalidMsg = "channelProfile.salesOrderBusinessReferences is not an array"
-  } else if (channelProfile.salesOrderBusinessReferences.length === 0) {
-    invalid = true;
-    invalidMsg = "channelProfile.salesOrderBusinessReferences is empty"
   }
 
   //If a paymentCapture document was not passed in, the request is invalid
@@ -211,8 +202,6 @@ let GetPaymentCaptureFromQuery = function (ncUtil, channelProfile, flowContext, 
                           paymentCapture.doc = body;
                           paymentCapture.paymentCaptureRemoteID = body.id;
                           paymentCapture.paymentCaptureBusinessReference = nc.extractBusinessReferences(channelProfile.paymentCaptureBusinessReferences, body);
-                          paymentCapture.salesOrderRemoteID = body.dropshipOrderItems[0].dropshipOrderId;
-                          paymentCapture.salesOrderBusinessReference = nc.extractBusinessReferences(channelProfile.salesOrderBusinessReferences, body);
 
                         } else if (response.statusCode === 429) {
                           paymentCapture.ncStatusCode = 429;
