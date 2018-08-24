@@ -2015,7 +2015,7 @@
               "pageSize": 5
             }
           },
-          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net/v1",
           "defaultHeaders": {},
           "links": [
             {
@@ -2146,7 +2146,7 @@
               "pageSize": 5
             }
           },
-          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net/v1",
           "defaultHeaders": {},
           "links": [
             {
@@ -2190,7 +2190,7 @@
               "pageSize": 1
             }
           },
-          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net/v1",
           "defaultHeaders": {},
           "links": [
             {
@@ -2393,7 +2393,7 @@
               "pageSize": 5
             }
           },
-          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net/v1",
           "defaultHeaders": {},
           "links": [
             {
@@ -2459,7 +2459,7 @@
               "pageSize": 5
             }
           },
-          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net/v1",
           "defaultHeaders": {},
           "links": [
             {
@@ -2525,7 +2525,7 @@
               "pageSize": 5
             }
           },
-          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net/v1",
           "defaultHeaders": {},
           "links": [
             {
@@ -2596,7 +2596,7 @@
               "pageSize": 5
             }
           },
-          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net/v1",
           "defaultHeaders": {},
           "links": [
             {
@@ -2726,7 +2726,7 @@
               "pageSize": 5
             }
           },
-          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net/v1",
           "defaultHeaders": {},
           "links": [
             {
@@ -2769,7 +2769,7 @@
               "pageSize": 1
             }
           },
-          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net/v1",
           "defaultHeaders": {},
           "links": [
             {
@@ -2971,7 +2971,7 @@
               "pageSize": 5
             }
           },
-          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net/v1",
           "defaultHeaders": {},
           "links": [
             {
@@ -3036,7 +3036,7 @@
               "pageSize": 5
             }
           },
-          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net/v1",
           "defaultHeaders": {},
           "links": [
             {
@@ -3101,7 +3101,7 @@
               "pageSize": 5
             }
           },
-          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net/v1",
           "defaultHeaders": {},
           "links": [
             {
