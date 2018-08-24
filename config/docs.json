@@ -2711,8 +2711,7 @@
             }
           ],
           "channelProfile": {
-            "fulfillmentBusinessReferences": ["id"],
-            "salesOrderBusinessReferences": ["invoiceNumber"]
+            "paymentCaptureBusinessReferences": ["id"]
           }
         },
         {
@@ -2756,8 +2755,7 @@
             }
           ],
           "channelProfile": {
-            "fulfillmentBusinessReferences": ["id"],
-            "salesOrderBusinessReferences": ["invoiceNumber"]
+            "paymentCaptureBusinessReferences": ["id"]
           }
         },
         {
@@ -2958,8 +2956,7 @@
             }
           ],
           "channelProfile": {
-            "fulfillmentBusinessReferences": ["id"],
-            "salesOrderBusinessReferences": ["invoiceNumber"]
+            "paymentCaptureBusinessReferences": ["id"]
           }
         },
         {
@@ -3024,8 +3021,7 @@
             }
           ],
           "channelProfile": {
-            "fulfillmentBusinessReferences": ["id"],
-            "salesOrderBusinessReferences": ["invoiceNumber"]
+            "paymentCaptureBusinessReferences": ["id"]
           }
         },
         {
@@ -3090,8 +3086,7 @@
             }
           ],
           "channelProfile": {
-            "fulfillmentBusinessReferences": ["id"],
-            "salesOrderBusinessReferences": ["invoiceNumber"]
+            "paymentCaptureBusinessReferences": ["id"]
           }
         },
         {
@@ -3156,8 +3151,7 @@
             }
           ],
           "channelProfile": {
-            "fulfillmentBusinessReferences": ["id"],
-            "salesOrderBusinessReferences": ["invoiceNumber"]
+            "paymentCaptureBusinessReferences": ["id"]
           }
         }
       ]
