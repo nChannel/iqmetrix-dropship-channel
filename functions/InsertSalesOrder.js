@@ -124,7 +124,7 @@ function InsertSalesOrder(ncUtil, channelProfile, flowContext, payload, callback
     }
 
     async function getItemId({ vendorSku, supplierId }) {
-        const itemResponse = await stub.request.get({
+        const itemResponse = await stub.requestPromise.get(Object.assign({}, stub.requestDefaults, {
             url: `https://catalogs${stub.channelProfile.channelSettingsValues.environment}.iqmetrix.net/v1/Companies(${
                 stub.channelProfile.channelAuthValues.company_id
             })/Catalog/Items/ByVendorSku`,
@@ -132,7 +132,7 @@ function InsertSalesOrder(ncUtil, channelProfile, flowContext, payload, callback
                 vendorsku: vendorSku,
                 vendorid: supplierId
             }
-        });
+        }));
 
         if (nc.isArray(itemResponse.body.Items) && itemResponse.body.Items.length > 0) {
             if (itemResponse.body.Items.length === 1) {
@@ -165,12 +165,12 @@ function InsertSalesOrder(ncUtil, channelProfile, flowContext, payload, callback
     async function postDropShipOrder() {
         try {
             logInfo("Posting dropship order...");
-            response.dropship = await stub.request.post({
+            response.dropship = await stub.requestPromise.post(Object.assign({}, stub.requestDefaults, {
                 url: `https://order${stub.channelProfile.channelSettingsValues.environment}.iqmetrix.net/v1/Companies(${
                     stub.channelProfile.channelAuthValues.company_id
                 })/OrderFull`,
                 body: stub.payload.doc.DropshipOrder
-            });
+            }));
             logInfo(`Successfully posted dropship order (id = ${response.dropship.body.Id}).`);
         } catch (error) {
             logError("Error posting dropship order.");
@@ -181,14 +181,14 @@ function InsertSalesOrder(ncUtil, channelProfile, flowContext, payload, callback
     async function processOrder() {
         try {
             logInfo("Processing dropship order...");
-            response.process = await stub.request.post({
+            response.process = await stub.requestPromise.post(Object.assign({}, stub.requestDefaults, {
                 url: `https://order${stub.channelProfile.channelSettingsValues.environment}.iqmetrix.net/v1/Companies(${
                     stub.channelProfile.channelAuthValues.company_id
                 })/Orders(${response.dropship.body.Id})/Process`,
                 body: {
                     OrderId: response.dropship.body.Id
                 }
-            });
+            }));
             logInfo(`Successfully processed dropship order (id = ${response.process.body.Id}).`);
         } catch (error) {
             logError("Error processing dropship order.");
@@ -201,14 +201,14 @@ function InsertSalesOrder(ncUtil, channelProfile, flowContext, payload, callback
         try {
             logInfo("Posting sales order...");
             stub.payload.doc.SalesOrder.DropshipOrderId = response.dropship.body.Id;
-            response.salesOrder = await stub.request.post({
+            response.salesOrder = await stub.requestPromise.post(Object.assign({}, stub.requestDefaults, {
                 url: `https://salesorder${
                     stub.channelProfile.channelSettingsValues.environment
                 }.iqmetrix.net/v1/Companies(${stub.channelProfile.channelAuthValues.company_id})/${
                     stub.channelProfile.channelSettingsValues.canPostInvoice
                 }`,
                 body: stub.payload.doc.SalesOrder
-            });
+            }));
             logInfo(`Successfully posted sales order (id = ${response.salesOrder.body.Id}).`);
         } catch (error) {
             logError("Error posting sales order.");

@@ -40,7 +40,6 @@ class Stub {
                 simple: true,
                 resolveWithFullResponse: true
             };
-            this.request = this.requestPromise.defaults(this.requestDefaults);
 
             requestDebug(this.requestPromise, (type, data) => {
                 if (data && (!data.headers || data.headers.host !== "localhost:4")) {

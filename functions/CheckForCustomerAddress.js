@@ -39,13 +39,13 @@ function CheckForCustomerAddress(ncUtil, channelProfile, flowContext, payload, c
     async function searchForCustomerAddress() {
         logInfo("Searching for existing customer address...");
 
-        return await stub.request.get({
+        return await stub.requestPromise.get(Object.assign({}, stub.requestDefaults, {
             url: `${stub.channelProfile.channelSettingsValues.protocol}://crm${
                 stub.channelProfile.channelSettingsValues.environment
             }.iqmetrix.net/v1/Companies(${stub.channelProfile.channelAuthValues.company_id})/Customers(${
                 stub.payload.doc.CustomerId
             })/Addresses`
-        });
+        }));
     }
 
     async function buildResponse(response) {
