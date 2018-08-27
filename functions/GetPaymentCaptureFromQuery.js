@@ -1,7 +1,7 @@
 'use strict'
 const nc = require("./util/ncUtils");
 
-let GetFulfillmentFromQuery = function (ncUtil, channelProfile, flowContext, payload, callback) {
+let GetPaymentCaptureFromQuery = function (ncUtil, channelProfile, flowContext, payload, callback) {
 
   log("Building response object...", ncUtil);
   let out = {
@@ -19,7 +19,7 @@ let GetFulfillmentFromQuery = function (ncUtil, channelProfile, flowContext, pay
     invalidMsg = "ncUtil was not provided"
   }
 
-  //If channelProfile does not contain channelSettingsValues, channelAuthValues or fulfillmentBusinessReferences, the request can't be sent
+  //If channelProfile does not contain channelSettingsValues, channelAuthValues or paymentCaptureBusinessReferences, the request can't be sent
   if (!channelProfile) {
     invalid = true;
     invalidMsg = "channelProfile was not provided"
@@ -41,27 +41,18 @@ let GetFulfillmentFromQuery = function (ncUtil, channelProfile, flowContext, pay
   } else if (!channelProfile.channelAuthValues.company_id) {
     invalid = true;
     invalidMsg = "channelProfile.channelAuthValues.company_id was not provided"
-  } else if (!channelProfile.fulfillmentBusinessReferences) {
+  } else if (!channelProfile.paymentCaptureBusinessReferences) {
     invalid = true;
-    invalidMsg = "channelProfile.fulfillmentBusinessReferences was not provided"
-  } else if (!Array.isArray(channelProfile.fulfillmentBusinessReferences)) {
+    invalidMsg = "channelProfile.paymentCaptureBusinessReferences was not provided"
+  } else if (!Array.isArray(channelProfile.paymentCaptureBusinessReferences)) {
     invalid = true;
-    invalidMsg = "channelProfile.fulfillmentBusinessReferences is not an array"
-  } else if (channelProfile.fulfillmentBusinessReferences.length === 0) {
+    invalidMsg = "channelProfile.paymentCaptureBusinessReferences is not an array"
+  } else if (channelProfile.paymentCaptureBusinessReferences.length === 0) {
     invalid = true;
-    invalidMsg = "channelProfile.fulfillmentBusinessReferences is empty"
-  } else if (!channelProfile.salesOrderBusinessReferences) {
-    invalid = true;
-    invalidMsg = "channelProfile.salesOrderBusinessReferences was not provided"
-  } else if (!Array.isArray(channelProfile.salesOrderBusinessReferences)) {
-    invalid = true;
-    invalidMsg = "channelProfile.salesOrderBusinessReferences is not an array"
-  } else if (channelProfile.salesOrderBusinessReferences.length === 0) {
-    invalid = true;
-    invalidMsg = "channelProfile.salesOrderBusinessReferences is empty"
+    invalidMsg = "channelProfile.paymentCaptureBusinessReferences is empty"
   }
 
-  //If a fulfillment document was not passed in, the request is invalid
+  //If a paymentCapture document was not passed in, the request is invalid
   if (!payload) {
     invalid = true;
     invalidMsg = "payload was not provided"
@@ -106,7 +97,7 @@ let GetFulfillmentFromQuery = function (ncUtil, channelProfile, flowContext, pay
   if (!invalid) {
     let request = require('request');
 
-    let url = `${channelProfile.channelSettingsValues.protocol}://ordermanagementreporting${channelProfile.channelSettingsValues.environment}.iqmetrix.net/v1`;
+    let url = `${channelProfile.channelSettingsValues.protocol}://ordermanagementreporting${channelProfile.channelSettingsValues.environment}.iqmetrix.net/v1`
 
     /*
      Create query string for searching orders by specific fields
@@ -115,45 +106,13 @@ let GetFulfillmentFromQuery = function (ncUtil, channelProfile, flowContext, pay
     let filterParams = [];
     let uris = [];
 
-    if (payload.doc.searchFields) {
-
-      let fields = [];
-      payload.doc.searchFields.forEach(function(searchField) {
-          // Loop through each value
-          let values = [];
-          searchField.searchValues.forEach(function(searchValue) {
-              values.push(searchField.searchField + " eq '" + encodeURIComponent(searchValue) + "'");
-          });
-          fields.push(values);
-      });
-
-      let endpoints = fieldsArray(fields);
-      endpoints.forEach(function(endpoint) {
-        uris.push("/Reports/OrderList/report?filter=companyId eq " + channelProfile.channelAuthValues.company_id + " and " + endpoint);
-      });
-
-      function fieldsArray(array) {
-          if (array.length == 1) {
-              return array[0];
-          } else {
-              let result = [];
-              let remainingFields = fieldsArray(array.slice(1));
-              for (var i = 0; i < remainingFields.length; i++) {
-                  for (var j = 0; j < array[0].length; j++) {
-                      result.push(array[0][j] + ' and '+ remainingFields[i]);
-                  }
-              }
-              return result;
-          }
-      }
-
-    } else if (payload.doc.remoteIDs) {
+    if (payload.doc.remoteIDs) {
       /*
        Add remote IDs as a query parameter
        */
       payload.doc.remoteIDs.forEach((remoteID) => {
-         let endpoint = "/Reports/OrderList/report?filter=companyId eq " + channelProfile.channelAuthValues.company_id + " and id eq " + remoteID;
-         uris.push(endpoint);
+        let endpoint = "/Reports/OrderList/report?filter=companyId eq " + channelProfile.channelAuthValues.company_id + " and id eq " + remoteID;
+        uris.push(endpoint);
       });
 
     } else if (payload.doc.modifiedDateRange) {
@@ -189,16 +148,16 @@ let GetFulfillmentFromQuery = function (ncUtil, channelProfile, flowContext, pay
     uris.forEach(function(uri) {
       // Add the authorization header
       let headers = {
-          "Authorization": "Bearer " + channelProfile.channelAuthValues.access_token
+        "Authorization": "Bearer " + channelProfile.channelAuthValues.access_token
       };
 
       /*
        Set URL and headers
        */
       let options = {
-          url: url + uri + queryParams.join(''),
-          headers: headers,
-          json: true
+        url: url + uri + queryParams.join(''),
+        headers: headers,
+        json: true
       };
 
       log("Using URL [" + url + uri + queryParams.join('') + "]", ncUtil);
@@ -208,7 +167,7 @@ let GetFulfillmentFromQuery = function (ncUtil, channelProfile, flowContext, pay
         try {
           if (!error) {
             console.log(body);
-            log("Do GetFulfillmentFromQuery Callback", ncUtil);
+            log("Do GetPaymentCaptureFromQuery Callback", ncUtil);
             out.response.endpointStatusCode = response.statusCode;
             out.response.endpointStatusMessage = response.statusMessage;
 
@@ -219,9 +178,9 @@ let GetFulfillmentFromQuery = function (ncUtil, channelProfile, flowContext, pay
                 out.ncStatusCode = 200;
               }
 
-              //For each order, get the order detail (i.e. fulfillment)
-              let fulfillmentPromises = body.rows.map((order) => {
-                let fulfillment = {
+              //For each order, get the order detail (i.e. paymentCapture)
+              let paymentCapturePromises = body.rows.map((order) => {
+                let paymentCapture = {
                   response: {}
                 };
 
@@ -235,34 +194,32 @@ let GetFulfillmentFromQuery = function (ncUtil, channelProfile, flowContext, pay
                   try {
                     request(options, function (error, response, body) {
                       if (!error) {
-                        fulfillment.response.endpointStatusCode = response.statusCode;
-                        fulfillment.response.endpointStatusMessage = response.statusMessage;
+                        paymentCapture.response.endpointStatusCode = response.statusCode;
+                        paymentCapture.response.endpointStatusMessage = response.statusMessage;
 
                         if (response.statusCode === 200) {
-                          fulfillment.ncStatusCode = 200;
-                          fulfillment.doc = body;
-                          fulfillment.fulfillmentRemoteID = body.id;
-                          fulfillment.fulfillmentBusinessReference = nc.extractBusinessReferences(channelProfile.fulfillmentBusinessReferences, body);
-                          fulfillment.salesOrderRemoteID = body.dropshipOrderItems[0].dropshipOrderId;
-                          fulfillment.salesOrderBusinessReference = nc.extractBusinessReferences(channelProfile.salesOrderBusinessReferences, body);
+                          paymentCapture.ncStatusCode = 200;
+                          paymentCapture.doc = body;
+                          paymentCapture.paymentCaptureRemoteID = body.id;
+                          paymentCapture.paymentCaptureBusinessReference = nc.extractBusinessReferences(channelProfile.paymentCaptureBusinessReferences, body);
 
                         } else if (response.statusCode === 429) {
-                          fulfillment.ncStatusCode = 429;
-                          fulfillment.error = body;
+                          paymentCapture.ncStatusCode = 429;
+                          paymentCapture.error = body;
                         } else if (response.statusCode === 500) {
-                          fulfillment.ncStatusCode = 500;
-                          fulfillment.error = body;
+                          paymentCapture.ncStatusCode = 500;
+                          paymentCapture.error = body;
                         } else {
-                          fulfillment.ncStatusCode = 400;
-                          fulfillment.error = body;
+                          paymentCapture.ncStatusCode = 400;
+                          paymentCapture.error = body;
                         }
                       } else {
-                        logError("Do GetFulfillmentFromQuery Callback error - " + error, ncUtil);
-                        fulfillment.error = error;
-                        fulfillment.ncStatusCode = 500;
+                        logError("Do GetPaymentCaptureFromQuery Callback error - " + error, ncUtil);
+                        paymentCapture.error = error;
+                        paymentCapture.ncStatusCode = 500;
                       }
 
-                      resolve(fulfillment);
+                      resolve(paymentCapture);
                     });
                   } catch (err) {
                     let rej = {payload: {}};
@@ -274,7 +231,7 @@ let GetFulfillmentFromQuery = function (ncUtil, channelProfile, flowContext, pay
               });
 
               try {
-                out.payload = await Promise.all(fulfillmentPromises);
+                out.payload = await Promise.all(paymentCapturePromises);
               } catch (rejected) {
                 out.ncStatusCode = rejected.ncStatusCode;
                 out.payload = rejected.payload;
@@ -295,13 +252,13 @@ let GetFulfillmentFromQuery = function (ncUtil, channelProfile, flowContext, pay
 
             callback(out);
           } else {
-            logError("Do GetFulfillmentFromQuery Callback error - " + error, ncUtil);
+            logError("Do GetPaymentCaptureFromQuery Callback error - " + error, ncUtil);
             out.payload.error = error;
             out.ncStatusCode = 500;
             callback(out);
           }
         } catch (err) {
-          logError("Exception occurred in GetFulfillmentFromQuery - " + err, ncUtil);
+          logError("Exception occurred in GetPaymentCaptureFromQuery - " + err, ncUtil);
           out.payload.error = {err: err, stack: err.stackTrace};
           out.ncStatusCode = 500;
           callback(out);
@@ -324,4 +281,4 @@ function log(msg, ncUtil) {
   console.log("[info] " + msg);
 }
 
-module.exports.GetFulfillmentFromQuery = GetFulfillmentFromQuery;
+module.exports.GetPaymentCaptureFromQuery = GetPaymentCaptureFromQuery;

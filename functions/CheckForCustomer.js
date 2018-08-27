@@ -45,12 +45,12 @@ function CheckForCustomer(ncUtil, channelProfile, flowContext, payload, callback
             filters.push(`${refName} eq '${refValue}'`);
         });
 
-        return await stub.request.get({
+        return await stub.requestPromise.get(Object.assign({}, stub.requestDefaults, {
             url: `${stub.channelProfile.channelSettingsValues.protocol}://crm${
                 stub.channelProfile.channelSettingsValues.environment
             }.iqmetrix.net/v1/Companies(${stub.channelProfile.channelAuthValues.company_id})/Customers`,
             qs: { $filter: filters.join(" and ") }
-        });
+        }));
     }
 
     async function buildResponse(response) {

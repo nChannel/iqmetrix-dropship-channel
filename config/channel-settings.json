@@ -80,14 +80,20 @@
         "defaultRuleValues": {}
       },
       "configDef": {
-        "configModel": {},
+        "configModel": {
+          "getPollInterval": {
+            "type": "string"
+          }
+        },
         "configView": [],
-        "configValues": {}
+        "configValues": {
+          "getPollInterval": "30 9 * * *"
+        }
       },
       "documentDef": {
         "schema": {},
         "referenceLocation": {
-          "productPricingBusinessReferences": ["CatalogItemId"]
+          "productPricingBusinessReferences": ["VendorSku.Value"]
         }
       }
     },
@@ -583,6 +589,10 @@
             "title": "Environment",
             "type": "string"
           },
+          "maxParallelRequests": {
+            "title": "Max number of parallel requests",
+            "type": "integer"
+          },
           "canPostInvoice": {
             "title": "canPostInvoice",
             "description": "POST a Sales Order and Create an Invoice in RQ (SaleInvoice).  OR Submit a Sales Order with No Invoice (SaleOrder).",
@@ -609,9 +619,9 @@
             }
           }
         },
-        "required": ["protocol", "implFolderName", "environment", "canPostInvoice", "subscriptionLists"]
+        "required": ["protocol", "implFolderName", "maxParallelRequests", "environment", "canPostInvoice", "subscriptionLists"]
       },
-      "configView": ["protocol", "environment", "canPostInvoice", "subscriptionLists"],
+      "configView": ["protocol", "environment", "maxParallelRequests", "canPostInvoice", "subscriptionLists"],
       "configValues": {
         "protocol": "https",
         "implFolderName": "iqmetrix-dropship-channel",
