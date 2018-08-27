@@ -41,14 +41,14 @@ function InsertCustomerContact(ncUtil, channelProfile, flowContext, payload, cal
 
         stub.payload.doc.CustomerId = stub.payload.customerRemoteID;
 
-        return await stub.request.post({
+        return await stub.requestPromise.post(Object.assign({}, stub.requestDefaults, {
             url: `${stub.channelProfile.channelSettingsValues.protocol}://crm${
                 stub.channelProfile.channelSettingsValues.environment
             }.iqmetrix.net/v1/Companies(${stub.channelProfile.channelAuthValues.company_id})/Customers(${
                 stub.payload.customerRemoteID
             })/ContactMethods`,
             body: stub.payload.doc
-        });
+        }));
     }
 
     async function buildResponse(response) {

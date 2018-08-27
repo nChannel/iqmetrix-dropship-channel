@@ -41,14 +41,14 @@ function UpdateCustomer(ncUtil, channelProfile, flowContext, payload, callback) 
 
         stub.payload.doc.Id = stub.payload.customerRemoteID
 
-        return await stub.request.put({
+        return await stub.requestPromise.put(Object.assign({}, stub.requestDefaults, {
             url: `${stub.channelProfile.channelSettingsValues.protocol}://crm${
                 stub.channelProfile.channelSettingsValues.environment
             }.iqmetrix.net/v1/Companies(${stub.channelProfile.channelAuthValues.company_id})/Customers(${
                 stub.payload.customerRemoteID
             })`,
             body: stub.payload.doc
-        });
+        }));
     }
 
     async function buildResponse(response) {

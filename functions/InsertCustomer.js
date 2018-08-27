@@ -39,12 +39,12 @@ function InsertCustomer(ncUtil, channelProfile, flowContext, payload, callback) 
     async function insertCustomer() {
         logInfo("Inserting new customer record...");
 
-        return await stub.request.post({
+        return await stub.requestPromise.post(Object.assign({}, stub.requestDefaults, {
             url: `${stub.channelProfile.channelSettingsValues.protocol}://crm${
                 stub.channelProfile.channelSettingsValues.environment
             }.iqmetrix.net/v1/Companies(${stub.channelProfile.channelAuthValues.company_id})/Customers`,
             body: stub.payload.doc
-        });
+        }));
     }
 
     async function buildResponse(response) {

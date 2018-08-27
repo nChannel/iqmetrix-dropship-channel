@@ -100,13 +100,13 @@ function GetProductPricingFromQuery(ncUtil, channelProfile, flowContext, payload
 
     async function getProductList(subscriptionList) {
         logInfo(`Get product list [${subscriptionList.listId}]...`);
-        const response = await stub.request.get({
+        const response = await stub.requestPromise.get(Object.assign({}, stub.requestDefaults, {
             url: `${stub.channelProfile.channelSettingsValues.protocol}://catalogs${
                 stub.channelProfile.channelSettingsValues.environment
             }.iqmetrix.net/v1/Companies(${stub.channelProfile.channelAuthValues.company_id})/Catalog/Items(SourceId=${
                 subscriptionList.listId
             })`
-        });
+        }));
         response.body.Items.forEach(item => {
             item.subscriptionList = subscriptionList;
         });
@@ -144,7 +144,7 @@ function GetProductPricingFromQuery(ncUtil, channelProfile, flowContext, payload
 
     async function getProductDetailsBulk(catalogIds) {
         logInfo(`Get ${catalogIds.length} product details...`);
-        const response = await stub.request.post({
+        const response = await stub.requestPromise.post(Object.assign({}, stub.requestDefaults, {
             url: `${stub.channelProfile.channelSettingsValues.protocol}://catalogs${
                 stub.channelProfile.channelSettingsValues.environment
             }.iqmetrix.net/v1/Companies(${
@@ -153,7 +153,7 @@ function GetProductPricingFromQuery(ncUtil, channelProfile, flowContext, payload
             body: {
                 CatalogItemIds: catalogIds
             }
-        });
+        }));
         return response.body.CatalogItems;
     }
 
@@ -200,13 +200,13 @@ function GetProductPricingFromQuery(ncUtil, channelProfile, flowContext, payload
 
     async function getPricing(product) {
         logInfo(`Get pricing for product ${product.CatalogItemId}...`);
-        const response = await stub.request.get({
+        const response = await stub.requestPromise.get(Object.assign({}, stub.requestDefaults, {
             url: `${stub.channelProfile.channelSettingsValues.protocol}://pricing${
                 stub.channelProfile.channelSettingsValues.environment
             }.iqmetrix.net/v1/Companies(${stub.channelProfile.channelAuthValues.company_id})/Entities(${
                 stub.channelProfile.channelAuthValues.location_id
             })/CatalogItems(${product.CatalogItemId})/Pricing`
-        });
+        }));
         product.Pricing = response.body[0];
         return product;
     }
