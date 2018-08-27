@@ -80,9 +80,15 @@
         "defaultRuleValues": {}
       },
       "configDef": {
-        "configModel": {},
+        "configModel": {
+          "getPollInterval": {
+            "type": "string"
+          }
+        },
         "configView": [],
-        "configValues": {}
+        "configValues": {
+          "getPollInterval": "30 9 * * *"
+        }
       },
       "documentDef": {
         "schema": {},
