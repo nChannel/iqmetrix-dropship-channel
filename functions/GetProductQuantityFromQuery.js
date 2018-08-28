@@ -130,7 +130,7 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
       throw new TypeError("Response is not in expected format, expected an array of availability objects.");
     }
 
-    logInfo(`x-ratelimit-remaining: ${resp.headers['x-ratelimit-remaining']}`);
+    logInfo(`x-ratelimit-remaining: ${resp.headers["x-ratelimit-remaining"]}`);
 
     return resp.body;
   }
@@ -178,7 +178,7 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
       logInfo(`Vendor '${vendorId}' and SKU '${vendorSku}' returned 0 Items.`);
     }
 
-    logInfo(`x-ratelimit-remaining: ${resp.headers['x-ratelimit-remaining']}`);
+    logInfo(`x-ratelimit-remaining: ${resp.headers["x-ratelimit-remaining"]}`);
 
     return resp.body;
   }
@@ -228,7 +228,4 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
     return stub.out;
   }
 
-  function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
 };
