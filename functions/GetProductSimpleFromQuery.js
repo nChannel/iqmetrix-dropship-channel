@@ -89,8 +89,11 @@ module.exports.GetProductSimpleFromQuery = (ncUtil, channelProfile, flowContext,
 
     async function remoteIdSearch(queryDoc) {
         // search for remote ids.
+        totalResults = queryDoc.remoteIDs.length;
+        const startIndex = (page - 1) * pageSize;
+        const endIndex = page * pageSize;
         let catalogItems = [];
-        for (const remoteId of queryDoc.remoteIDs) {
+        for (const remoteId of queryDoc.remoteIDs.slice(startIndex, endIndex)) {
             catalogItems.push(await getStructureByCatalogId(remoteId))
         }
 
