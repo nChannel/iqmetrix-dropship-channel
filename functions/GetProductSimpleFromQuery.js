@@ -89,17 +89,19 @@ module.exports.GetProductSimpleFromQuery = (ncUtil, channelProfile, flowContext,
 
     async function remoteIdSearch(queryDoc) {
         // search for remote ids.
-        let catalogItems = await Promise.all(queryDoc.remoteIDs.map(getStructureByCatalogId));
+        let catalogItems = [];
+        for (const remoteId of queryDoc.remoteIDs) {
+            catalogItems.push(await getStructureByCatalogId(remoteId))
+        }
 
         // keep only unique parent objects
-        const uniqueParents = new Set();
-        catalogItems = catalogItems.map(i => {
-            const slug = i && i.Slug ? i.Slug : null;
-            if (slug != null && !uniqueParents.has(slug)) {
-                uniqueParents.add(slug);
-                return i;
+        let uniqueCatalogItems = [];
+        catalogItems.forEach(i => {
+            if (i.Slug != null && !uniqueCatalogItems.some(x => x.Slug === i.Slug)) {
+                uniqueCatalogItems.push(i);
             }
-        });
+        })
+        catalogItems = uniqueCatalogItems;
 
         const subscribedSimpleItems = [];
         for (const subscriptionList of subscriptionLists) {
@@ -107,11 +109,9 @@ module.exports.GetProductSimpleFromQuery = (ncUtil, channelProfile, flowContext,
 
             // keep only child variations that we are subscribed to.
             subscribedItems.forEach(i => {
-                i.Variations = i.Variations.filter(v => {
-                    v.CatalogItems.some(c => {
-                      c.SourceIds.includes(subscriptionList.listId);
-                    });
-                });
+                i.Variations = i.Variations.filter(v =>
+                    v.CatalogItems.some(c => c.SourceIds.includes(subscriptionList.listId))
+                );
             });
 
             // merge single variations onto parent and keep only simple items.
@@ -120,12 +120,12 @@ module.exports.GetProductSimpleFromQuery = (ncUtil, channelProfile, flowContext,
                     return i;
                 } else {
                     if (i.Variations.length === 1 && singleVariantIsSimple) {
-                        const simpleVariation =  Object.assign({}, i, i.Variations[0])
+                        const simpleVariation = Object.assign(i, i.Variations[0])
                         simpleVariation.Variations = [];
                         return simpleVariation;
                     }
                 }
-            })
+            }).filter(x => x != null);
 
             // get slug details for all simple items
             let slugDetails = await getSlugDetails([...new Set(subscribedItems.map(s => s.Slug))]);
@@ -134,7 +134,7 @@ module.exports.GetProductSimpleFromQuery = (ncUtil, channelProfile, flowContext,
             subscribedItems.forEach(i => {
               Object.assign(i, slugDetails[i.Slug]);
               i.ncSubscriptionList = subscriptionList;
-              i.ncVendorSku = i.VendorSkus.find(v => v.Entity && v.Entity.Id == subscriptionList.supplierId);
+              i.ncVendorSku = i.VendorSkus.find(v => v.Entity.Id == subscriptionList.supplierId);
             });
 
             subscribedSimpleItems.push(...subscribedItems);
@@ -238,26 +238,26 @@ module.exports.GetProductSimpleFromQuery = (ncUtil, channelProfile, flowContext,
     }
 
     async function getSubscribedSimpleItems(items, subscriptionList) {
-        let subscribedItems = await Promise.all(items
-            .map(async item => {
-              item.ncSubscriptionList = subscriptionList;
-              item.ncVendorSku = item.Identifiers.find(i => i.SkuType === "VendorSKU" && i.Entity && i.Entity.Id == subscriptionList.supplierId);
-              if (item.ncVendorSku && item.ncVendorSku.Sku) {
+        let subscribedItems = [];
+        for (const item of items) {
+            item.ncSubscriptionList = subscriptionList;
+            item.ncVendorSku = item.Identifiers.find(i => i.SkuType === "VendorSKU" && i.Entity && i.Entity.Id == subscriptionList.supplierId);
+            if (item.ncVendorSku && item.ncVendorSku.Sku) {
                 let vendorSkuDetail = await getVendorSkuDetail(item, subscriptionList);
                 if (vendorSkuDetail != null) {
-                  Object.assign(item, vendorSkuDetail);
+                    Object.assign(item, vendorSkuDetail);
                 }
-              }
-              item.Products = await getFilteredVariants(item.Products, subscriptionList);
+            }
+            item.Products = await getFilteredVariants(item.Products, subscriptionList);
 
-              if (nc.isNonEmptyArray(item.Products)) {
-                return item;
-              } else {
+            if (nc.isNonEmptyArray(item.Products)) {
+                subscribedItems.push(item);
+            } else {
                 if (nc.isNonEmptyArray(item.SourceIds)) {
-                  return item;
+                    subscribedItems.push(item);
                 }
-              }
-            }));
+            }
+        }
         subscribedItems = subscribedItems.filter(i => i != null);
 
         return subscribedItems.map(item => {
@@ -274,19 +274,19 @@ module.exports.GetProductSimpleFromQuery = (ncUtil, channelProfile, flowContext,
     }
 
     async function getFilteredVariants(products, subscriptionList) {
-        const filteredVariants = await Promise.all(products
-            .map(async product => {
-              product.ncSubscriptionList = subscriptionList;
-              product.ncVendorSku = product.Identifiers.find(p => p.SkuType === "VendorSKU" && p.Entity && p.Entity.Id == subscriptionList.supplierId);
+        let filteredVariants = [];
+        for (const product of products) {
+            product.ncSubscriptionList = subscriptionList;
+            product.ncVendorSku = product.Identifiers.find(p => p.SkuType === "VendorSKU" && p.Entity && p.Entity.Id == subscriptionList.supplierId);
 
-              if (product.ncVendorSku && product.ncVendorSku.Sku) {
+            if (product.ncVendorSku && product.ncVendorSku.Sku) {
                 let vendorSkuDetail = await getVendorSkuDetail(product, subscriptionList);
                 if (vendorSkuDetail != null) {
-                  Object.assign(product, vendorSkuDetail);
-                  return product;
+                    Object.assign(product, vendorSkuDetail);
+                    filteredVariants.push(product);
                 }
-              }
-            }));
+            }
+        }
         return filteredVariants.filter(v => v != null);
     }
 
