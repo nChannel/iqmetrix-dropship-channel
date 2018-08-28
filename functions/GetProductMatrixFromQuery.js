@@ -61,6 +61,7 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
     switch (stub.queryType) {
       case "remoteIDs":
         searchResults = await remoteIdSearch(queryDoc);
+        matrixItems.push(...searchResults);
         break;
 
       case "modifiedDateRange":
@@ -88,8 +89,65 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
   }
 
   async function remoteIdSearch(queryDoc) {
-    stub.out.ncStatusCode = 400;
-    throw new Error("Searching by remote id has not been implemented.");
+    // search for remote ids.
+    let catalogItems = [];
+    for (const remoteId of queryDoc.remoteIDs) {
+      catalogItems.push(await getStructureByCatalogId(remoteId))
+    }
+
+    // keep only unique parent objects
+    let uniqueCatalogItems = [];
+    catalogItems.forEach(i => {
+      if (i.Slug != null && !uniqueCatalogItems.some(x => x.Slug === i.Slug)) {
+        uniqueCatalogItems.push(i);
+      }
+    })
+    catalogItems = uniqueCatalogItems;
+
+    const subscribedMatrixItems = [];
+    for (const subscriptionList of subscriptionLists) {
+      let subscribedItems = JSON.parse(JSON.stringify(catalogItems));
+
+      // keep only child variations that we are subscribed to.
+      subscribedItems.forEach(i => {
+        i.Variations = i.Variations.filter(v =>
+          v.CatalogItems.some(c => c.SourceIds.includes(subscriptionList.listId))
+        );
+      });
+
+      // keep only matrix items
+      subscribedItems = subscribedItems.filter(i => singleVariantIsSimple ? nc.isNonEmptyArray(i.Variations) && i.Variations.length > 1 : nc.isNonEmptyArray(i.Variations));
+
+      // get unique slugs from all parents and children
+      const slugSet = new Set();
+      subscribedItems.forEach(i => {
+        slugSet.add(i.Slug);
+        i.Variations.forEach(v => {
+          slugSet.add(v.Slug);
+        });
+      });
+
+      // get slug details for all parents and children
+      let slugDetails = await getSlugDetails([...slugSet]);
+
+      // merge additional slug details to each parent and child
+      subscribedItems.forEach(i => {
+        i = Object.assign(i, slugDetails[i.Slug]);
+        i.ncSubscriptionList = subscriptionList;
+        i.ncVendorSku = i.VendorSkus.find(s => s.Entity.Id == subscriptionList.supplierId) || null;
+        if (nc.isNonEmptyArray(i.Variations)) {
+          i.Variations.forEach(v => {
+            v = Object.assign(v, slugDetails[v.Slug]);
+            v.ncSubscriptionList = subscriptionList;
+            v.ncVendorSku = v.VendorSkus.find(s => s.Entity.Id == subscriptionList.supplierId) || null;
+          });
+        }
+      });
+
+      subscribedMatrixItems.push(...subscribedItems);
+    }
+
+    return subscribedMatrixItems;
   }
 
   async function createdDateRangeSearch(queryDoc) {
@@ -159,50 +217,86 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
     return resp.body.Items;
   }
 
+  async function getStructureByCatalogId(catalogItemId) {
+    logInfo(`Getting item structure by catalog id '${catalogItemId}'`);
+    let resp;
+
+    try {
+      const req = stub.requestPromise.get(Object.assign({}, stub.requestDefaults, {
+        method: "GET",
+        baseUrl: stub.getBaseUrl("catalogs"),
+        url: `/v1/Companies(${companyId})/Catalog/Items(${catalogItemId})/Structure`
+      }));
+      logInfo(`Calling: ${req.method} ${req.uri.href}`);
+
+      resp = await req;
+    } catch (error) {
+      if (error.name === "StatusCodeError" && error.statusCode === 404) {
+        logWarn(`Catalog Item for catalogItemId '${catalogItemId}' does not exist.`);
+        resp = error.response;
+      } else {
+        throw error;
+      }
+    }
+
+    stub.out.response.endpointStatusCode = resp.statusCode;
+    stub.out.response.endpointStatusMessage = resp.statusMessage;
+
+    if (resp.timingPhases) {
+      logInfo(`Item structure request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
+    }
+
+    if ((resp.statusCode !== 404) && (!resp.body || !resp.body.Slug)) {
+      throw new TypeError("Item structure response is not in expected format, expected Slug property.");
+    }
+
+    return resp.statusCode !== 404 ? resp.body : null;
+  }
+
   async function getFilteredMatrixItems(items, subscriptionList) {
-    const filteredMatrixItems = await Promise.all(items
-        .map(async item => {
-          item.ncSubscriptionList = subscriptionList;
-          item.ncVendorSku = item.Identifiers.find(i => i.SkuType === "VendorSKU" && i.Entity && i.Entity.Id == subscriptionList.supplierId);
+    let filteredMatrixItems = [];
+    for (const item of items) {
+      item.ncSubscriptionList = subscriptionList;
+      item.ncVendorSku = item.Identifiers.find(i => i.SkuType === "VendorSKU" && i.Entity && i.Entity.Id == subscriptionList.supplierId);
 
-          item.Products = await getFilteredVariants(item.Products, subscriptionList);
+      item.Products = await getFilteredVariants(item.Products, subscriptionList);
 
-          let isMatrixItem = false;
-          if (singleVariantIsSimple) {
-            if (nc.isArray(item.Products) && item.Products.length > 1) {
-              isMatrixItem = true;
-            }
-          } else if (nc.isNonEmptyArray(item.Products)) {
-            isMatrixItem = true;
+      let isMatrixItem = false;
+      if (singleVariantIsSimple) {
+        if (nc.isArray(item.Products) && item.Products.length > 1) {
+          isMatrixItem = true;
+        }
+      } else if (nc.isNonEmptyArray(item.Products)) {
+        isMatrixItem = true;
+      }
+
+      if (isMatrixItem) {
+        if (item.ncVendorSku && item.ncVendorSku.Sku) {
+          let vendorSkuDetail = await getVendorSkuDetail(item, subscriptionList);
+          if (vendorSkuDetail != null) {
+            Object.assign(item, vendorSkuDetail);
           }
-
-          if (isMatrixItem) {
-            if (item.ncVendorSku && item.ncVendorSku.Sku) {
-              let vendorSkuDetail = await getVendorSkuDetail(item, subscriptionList);
-              if (vendorSkuDetail != null) {
-                Object.assign(item, vendorSkuDetail);
-              }
-            }
-            return item;
-          }
-        }));
+        }
+        filteredMatrixItems.push(item);
+      }
+    }
     return filteredMatrixItems.filter(i => i != null);
   }
 
   async function getFilteredVariants(products, subscriptionList) {
-    const filteredVariants = await Promise.all(products
-        .map(async product => {
-          product.ncSubscriptionList = subscriptionList;
-          product.ncVendorSku = product.Identifiers.find(p => p.SkuType === "VendorSKU" && p.Entity && p.Entity.Id == subscriptionList.supplierId);
+    let filteredVariants = [];
+    for (const product of products) {
+      product.ncSubscriptionList = subscriptionList;
+      product.ncVendorSku = product.Identifiers.find(p => p.SkuType === "VendorSKU" && p.Entity && p.Entity.Id == subscriptionList.supplierId);
 
-          if (product.ncVendorSku && product.ncVendorSku.Sku) {
-            let vendorSkuDetail = await getVendorSkuDetail(product, subscriptionList);
-            if (vendorSkuDetail != null) {
-              Object.assign(product, vendorSkuDetail);
-              return product;
-            }
-          }
-        }));
+      if (product.ncVendorSku && product.ncVendorSku.Sku) {
+        let vendorSkuDetail = await getVendorSkuDetail(product, subscriptionList);
+        if (vendorSkuDetail != null) {
+          Object.assign(product, vendorSkuDetail);
+          filteredVariants.push(product);
+        }
+      }
+    }
     return filteredVariants.filter(v => v != null);
   }
 
@@ -371,7 +465,7 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
 
           if (resp.timingPhases) {
             logInfo(
-              `Bulk catalog item details request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`
+              `Bulk slug details request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`
             );
           }
 
