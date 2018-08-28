@@ -61,6 +61,7 @@ module.exports.GetProductSimpleFromQuery = (ncUtil, channelProfile, flowContext,
         switch (stub.queryType) {
             case "remoteIDs":
                 searchResults = await remoteIdSearch(queryDoc);
+                simpleItems.push(...searchResults);
                 break;
 
             case "modifiedDateRange":
@@ -87,8 +88,59 @@ module.exports.GetProductSimpleFromQuery = (ncUtil, channelProfile, flowContext,
     }
 
     async function remoteIdSearch(queryDoc) {
-        stub.out.ncStatusCode = 400;
-        throw new Error("Searching by remote id has not been implemented.");
+        // search for remote ids.
+        let catalogItems = [];
+        for (const remoteId of queryDoc.remoteIDs) {
+            catalogItems.push(await getStructureByCatalogId(remoteId))
+        }
+
+        // keep only unique parent objects
+        let uniqueCatalogItems = [];
+        catalogItems.forEach(i => {
+            if (i.Slug != null && !uniqueCatalogItems.some(x => x.Slug === i.Slug)) {
+                uniqueCatalogItems.push(i);
+            }
+        })
+        catalogItems = uniqueCatalogItems;
+
+        const subscribedSimpleItems = [];
+        for (const subscriptionList of subscriptionLists) {
+            let subscribedItems = JSON.parse(JSON.stringify(catalogItems));
+
+            // keep only child variations that we are subscribed to.
+            subscribedItems.forEach(i => {
+                i.Variations = i.Variations.filter(v =>
+                    v.CatalogItems.some(c => c.SourceIds.includes(subscriptionList.listId))
+                );
+            });
+
+            // merge single variations onto parent and keep only simple items.
+            subscribedItems = subscribedItems.map(i => {
+                if (!nc.isNonEmptyArray(i.Variations)) {
+                    return i;
+                } else {
+                    if (i.Variations.length === 1 && singleVariantIsSimple) {
+                        const simpleVariation = Object.assign(i, i.Variations[0])
+                        simpleVariation.Variations = [];
+                        return simpleVariation;
+                    }
+                }
+            }).filter(x => x != null);
+
+            // get slug details for all simple items
+            let slugDetails = await getSlugDetails([...new Set(subscribedItems.map(s => s.Slug))]);
+
+            // merge additional slug details to each simple item
+            subscribedItems.forEach(i => {
+              Object.assign(i, slugDetails[i.Slug]);
+              i.ncSubscriptionList = subscriptionList;
+              i.ncVendorSku = i.VendorSkus.find(v => v.Entity.Id == subscriptionList.supplierId);
+            });
+
+            subscribedSimpleItems.push(...subscribedItems);
+        }
+
+        return subscribedSimpleItems;
     }
 
     async function createdDateRangeSearch(queryDoc) {
@@ -149,27 +201,63 @@ module.exports.GetProductSimpleFromQuery = (ncUtil, channelProfile, flowContext,
         return resp.body.Items;
     }
 
+    async function getStructureByCatalogId(catalogItemId) {
+        logInfo(`Getting item structure by catalog id '${catalogItemId}'`);
+        let resp;
+
+        try {
+            const req = stub.requestPromise.get(Object.assign({}, stub.requestDefaults, {
+                method: "GET",
+                baseUrl: stub.getBaseUrl("catalogs"),
+                url: `/v1/Companies(${companyId})/Catalog/Items(${catalogItemId})/Structure`
+            }));
+            logInfo(`Calling: ${req.method} ${req.uri.href}`);
+
+            resp = await req;
+        } catch (error) {
+            if (error.name === "StatusCodeError" && error.statusCode === 404) {
+                logWarn(`Catalog Item for catalogItemId '${catalogItemId}' does not exist.`);
+                resp = error.response;
+            } else {
+                throw error;
+            }
+        }
+
+        stub.out.response.endpointStatusCode = resp.statusCode;
+        stub.out.response.endpointStatusMessage = resp.statusMessage;
+
+        if (resp.timingPhases) {
+            logInfo(`Item structure request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
+        }
+
+        if ((resp.statusCode !== 404) && (!resp.body || !resp.body.Slug)) {
+            throw new TypeError("Item structure esponse is not in expected format, expected Slug property.");
+        }
+
+        return resp.statusCode !== 404 ? resp.body : null;
+    }
+
     async function getSubscribedSimpleItems(items, subscriptionList) {
-        let subscribedItems = await Promise.all(items
-            .map(async item => {
-              item.ncSubscriptionList = subscriptionList;
-              item.ncVendorSku = item.Identifiers.find(i => i.SkuType === "VendorSKU" && i.Entity && i.Entity.Id == subscriptionList.supplierId);
-              if (item.ncVendorSku && item.ncVendorSku.Sku) {
+        let subscribedItems = [];
+        for (const item of items) {
+            item.ncSubscriptionList = subscriptionList;
+            item.ncVendorSku = item.Identifiers.find(i => i.SkuType === "VendorSKU" && i.Entity && i.Entity.Id == subscriptionList.supplierId);
+            if (item.ncVendorSku && item.ncVendorSku.Sku) {
                 let vendorSkuDetail = await getVendorSkuDetail(item, subscriptionList);
                 if (vendorSkuDetail != null) {
-                  Object.assign(item, vendorSkuDetail);
+                    Object.assign(item, vendorSkuDetail);
                 }
-              }
-              item.Products = await getFilteredVariants(item.Products, subscriptionList);
+            }
+            item.Products = await getFilteredVariants(item.Products, subscriptionList);
 
-              if (nc.isNonEmptyArray(item.Products)) {
-                return item;
-              } else {
+            if (nc.isNonEmptyArray(item.Products)) {
+                subscribedItems.push(item);
+            } else {
                 if (nc.isNonEmptyArray(item.SourceIds)) {
-                  return item;
+                    subscribedItems.push(item);
                 }
-              }
-            }));
+            }
+        }
         subscribedItems = subscribedItems.filter(i => i != null);
 
         return subscribedItems.map(item => {
@@ -186,19 +274,19 @@ module.exports.GetProductSimpleFromQuery = (ncUtil, channelProfile, flowContext,
     }
 
     async function getFilteredVariants(products, subscriptionList) {
-        const filteredVariants = await Promise.all(products
-            .map(async product => {
-              product.ncSubscriptionList = subscriptionList;
-              product.ncVendorSku = product.Identifiers.find(p => p.SkuType === "VendorSKU" && p.Entity && p.Entity.Id == subscriptionList.supplierId);
+        let filteredVariants = [];
+        for (const product of products) {
+            product.ncSubscriptionList = subscriptionList;
+            product.ncVendorSku = product.Identifiers.find(p => p.SkuType === "VendorSKU" && p.Entity && p.Entity.Id == subscriptionList.supplierId);
 
-              if (product.ncVendorSku && product.ncVendorSku.Sku) {
+            if (product.ncVendorSku && product.ncVendorSku.Sku) {
                 let vendorSkuDetail = await getVendorSkuDetail(product, subscriptionList);
                 if (vendorSkuDetail != null) {
-                  Object.assign(product, vendorSkuDetail);
-                  return product;
+                    Object.assign(product, vendorSkuDetail);
+                    filteredVariants.push(product);
                 }
-              }
-            }));
+            }
+        }
         return filteredVariants.filter(v => v != null);
     }
 
@@ -367,7 +455,7 @@ module.exports.GetProductSimpleFromQuery = (ncUtil, channelProfile, flowContext,
 
                     if (resp.timingPhases) {
                         logInfo(
-                            `Bulk catalog item details request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`
+                            `Bulk slug details request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`
                         );
                     }
 
