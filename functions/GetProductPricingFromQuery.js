@@ -9,7 +9,6 @@ function GetProductPricingFromQuery(ncUtil, channelProfile, flowContext, payload
         .then(getProductDetails)
         .then(filterVendors)
         .then(getPrices)
-        //.then(keepModifiedItems)
         .then(buildResponseObject)
         .catch(handleError)
         .then(() => {
@@ -44,14 +43,6 @@ function GetProductPricingFromQuery(ncUtil, channelProfile, flowContext, payload
                 );
             }
 
-            if (!nc.isInteger(stub.channelProfile.channelSettingsValues.maxParallelRequests)) {
-                stub.messages.push(
-                    `The channelProfile.channelSettingsValues.maxParallelRequests integer is ${
-                        stub.channelProfile.channelSettingsValues.maxParallelRequests == null ? "missing" : "invalid"
-                    }.`
-                );
-            }
-
             if (!nc.isNonEmptyString(stub.channelProfile.channelAuthValues.location_id)) {
                 stub.messages.push(
                     `The channelProfile.channelAuthValues.location_id string is ${
@@ -60,27 +51,8 @@ function GetProductPricingFromQuery(ncUtil, channelProfile, flowContext, payload
                 );
             }
 
-            if (!nc.isObject(stub.payload.doc.modifiedDateRange)) {
-                stub.messages.push(
-                    `The payload.doc.modifiedDateRange object is ${
-                        stub.payload.doc.modifiedDateRange == null ? "missing" : "invalid"
-                    }.`
-                );
-            } else {
-                if (!nc.isNonEmptyString(stub.payload.doc.modifiedDateRange.startDateGMT)) {
-                    stub.messages.push(
-                        `The payload.doc.modifiedDateRange.startDateGMT string is ${
-                            stub.payload.doc.modifiedDateRange.startDateGMT == null ? "missing" : "invalid"
-                        }.`
-                    );
-                }
-                if (!nc.isNonEmptyString(stub.payload.doc.modifiedDateRange.endDateGMT)) {
-                    stub.messages.push(
-                        `The payload.doc.modifiedDateRange.endDateGMT string is ${
-                            stub.payload.doc.modifiedDateRange.endDateGMT == null ? "missing" : "invalid"
-                        }.`
-                    );
-                }
+            if (stub.payload.doc.remoteIDs != null && !nc.isNonEmptyArray(stub.payload.doc.remoteIDs)) {
+                stub.messages.push("payload.doc.remoteIDs was provided, but is either empty or not an array.");
             }
         }
 
@@ -95,7 +67,12 @@ function GetProductPricingFromQuery(ncUtil, channelProfile, flowContext, payload
     async function getProductLists() {
         logInfo("Get product lists...");
         console.time("Elapsed Time");
-        return await Promise.all(stub.channelProfile.channelSettingsValues.subscriptionLists.map(getProductList));
+        const productLists = [];
+        for (const list of stub.channelProfile.channelSettingsValues.subscriptionLists) {
+            const productList = await getProductList(list);
+            productLists.push(productList);
+        }
+        return productLists;
     }
 
     async function getProductList(subscriptionList) {
@@ -115,7 +92,15 @@ function GetProductPricingFromQuery(ncUtil, channelProfile, flowContext, payload
 
     async function flattenProductLists(productLists) {
         logInfo("Flatten product lists...");
-        return [].concat(...productLists);
+        let flattenedProductLists = [].concat(...productLists);
+
+        if (nc.isNonEmptyArray(stub.payload.doc.remoteIDs)) {
+            flattenedProductLists = flattenedProductLists.filter(l =>
+              stub.payload.doc.remoteIDs.includes(l.CatalogItemId)
+            );
+        }
+
+        return flattenedProductLists;
     }
 
     async function getProductDetails(productList) {
@@ -132,8 +117,10 @@ function GetProductPricingFromQuery(ncUtil, channelProfile, flowContext, payload
         } while (current < allIds.length);
         let batchedDetails = [];
         for (const b of batchedIds) {
-          let result = await getProductDetailsBulk(b);
-          batchedDetails.push(result);
+            if (b.length > 0) {
+                let result = await getProductDetailsBulk(b);
+                batchedDetails.push(result);
+            }
         }
         const CatalogItems = Object.assign({}, ...batchedDetails);
         productList.forEach(product => {
@@ -171,30 +158,13 @@ function GetProductPricingFromQuery(ncUtil, channelProfile, flowContext, payload
 
     async function getPrices(productList) {
         logInfo("Get prices...");
-        const numProducts = productList.length;
-        if (stub.channelProfile.channelSettingsValues.maxParallelRequests === 0) {
-            stub.channelProfile.channelSettingsValues.maxParallelRequests = numProducts;
-        }
-        let products = [];
-        let current = 0;
-        do {
-            const batch = productList.slice(
-                current,
-                current + stub.channelProfile.channelSettingsValues.maxParallelRequests
-            );
-            logInfo(
-                `Get products ${current} - ${current +
-                    stub.channelProfile.channelSettingsValues.maxParallelRequests}...`
-            );
-            current = current + stub.channelProfile.channelSettingsValues.maxParallelRequests;
-            let productBatch = [];
 
-            for (const b of batch) {
-              let result = await getPricing(b);
-              productBatch.push(result);
-            }
-            products.push(...productBatch);
-        } while (current < numProducts);
+        let products = [];
+        for (const p of productList) {
+            const result = await getPricing(p);
+            products.push(result);
+        }
+
         return products;
     }
 
@@ -209,20 +179,6 @@ function GetProductPricingFromQuery(ncUtil, channelProfile, flowContext, payload
         }));
         product.Pricing = response.body[0];
         return product;
-    }
-
-     // The necessary timestamp is not yet being returned by the iQmetrix API,
-     // so it will never find any modified prices currently.
-    async function keepModifiedItems(productList) {
-        logInfo("Keep items whose quantity has been modified...");
-        const start = Date.parse(stub.payload.doc.modifiedDateRange.startDateGMT);
-        const end = Date.parse(stub.payload.doc.modifiedDateRange.endDateGMT);
-        const products = productList.filter(product => {
-            const priceMod = Date.parse(product.Pricing.DateUpdatedUtc);
-            return priceMod >= start && priceMod <= end;
-        });
-        logInfo(`${products.length} of ${productList.length} prices have been modified within the given date range.`);
-        return products;
     }
 
     async function buildResponseObject(products) {
