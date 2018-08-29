@@ -42,6 +42,9 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
     companyId = stub.channelProfile.channelAuthValues.company_id;
     subscriptionLists = stub.channelProfile.channelSettingsValues.subscriptionLists;
 
+    page = stub.payload.doc.page;
+    pageSize = stub.payload.doc.pageSize;
+
     return JSON.parse(JSON.stringify(stub.payload.doc));
   }
 
@@ -57,7 +60,7 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
 
       case "createdDateRange": {
         logWarn("Searching by createdDateRange is not supported, will search on modifiedDateRange instead.");
-        queryDoc.createdDateRange = queryDoc.createdDateRange;
+        queryDoc.modifiedDateRange = queryDoc.createdDateRange;
       }
       case "modifiedDateRange": {
         const dateRangeSearchResults = await dateRangeSearch(queryDoc);
