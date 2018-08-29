@@ -3,6 +3,7 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
   const referenceLocations = ["productQuantityBusinessReferences"];
   const nc = require("./util/ncUtils");
   let companyId, subscriptionLists;
+  let page, pageSize, totalResults;
   const stub = new nc.Stub(stubName, referenceLocations, ncUtil, channelProfile, flowContext, payload, callback);
 
   initializeStubFunction()
@@ -59,34 +60,8 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
         queryDoc.createdDateRange = queryDoc.createdDateRange;
       }
       case "modifiedDateRange": {
-        for (const subscriptionList of subscriptionLists) {
-          const availabilityList = await getAvailabilityList(
-            subscriptionList.supplierId,
-            queryDoc.modifiedDateRange.startDateGMT,
-            queryDoc.modifiedDateRange.endDateGMT
-          );
-          logInfo(`AvailabilityList count: ${availabilityList.length}`);
-
-          let vendorSkuDetails = [];
-
-          for (const a of availabilityList) {
-            let result = await getVendorSkuDetails(a, subscriptionList.listId);
-            vendorSkuDetails.push(result);
-          }
-
-          availabilityList.forEach(item =>
-            Object.assign(
-              item,
-              vendorSkuDetails.find(d => d.VendorId === item.SupplierEntityId && d.Sku === item.SupplierSku)
-            )
-          );
-
-          let skippedSkus = [];
-          supplierSkus.push(...availabilityList.filter(l => nc.isNonEmptyArray(l.Items)));
-          skippedSkus.push(...availabilityList.filter(l => !nc.isNonEmptyArray(l.Items)));
-          logInfo(`SupplierSku count: ${supplierSkus.length}`);
-          logInfo(`SupplierSkus with an empty Items array: ${skippedSkus.length}`);
-        }
+        const dateRangeSearchResults = await dateRangeSearch(queryDoc);
+        supplierSkus.push(...dateRangeSearchResults);
         break;
       }
 
@@ -99,8 +74,53 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
   }
 
   async function remoteIdSearch(queryDoc) {
-    stub.out.ncStatusCode = 400;
-    throw new Error("Searching by remote id has not been implemented.");
+    // search for remote ids.
+    totalResults = queryDoc.remoteIDs.length;
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = page * pageSize;
+    const remoteIDs = queryDoc.remoteIDs.slice(startIndex, endIndex);
+
+    const availabilities = [];
+    for (const subscriptionList of subscriptionLists) {
+      const availabilityList = await getSupplierAvailabilities(subscriptionList.supplierId, remoteIDs);
+      const availabilityDetails = await getDetails(availabilityList, subscriptionList);
+      availabilities.push(...availabilityDetails);
+    }
+
+    return availabilities;
+  }
+
+  async function dateRangeSearch(queryDoc) {
+    const availableSkus = [];
+    for (const subscriptionList of subscriptionLists) {
+      const availabilityList = await getAvailabilityList(subscriptionList.supplierId, queryDoc.modifiedDateRange.startDateGMT, queryDoc.modifiedDateRange.endDateGMT);
+      const availabilityDetails = await getDetails(availabilityList, subscriptionList);
+      availableSkus.push(...availabilityDetails);
+    }
+
+    return availableSkus;
+  }
+
+  async function getDetails(supplierAvailabilities, subscriptionList) {
+    logInfo(`SupplierAvailabilities count: ${supplierAvailabilities.length}`);
+    const availableSkus = [];
+    let vendorSkuDetails = [];
+    for (const a of supplierAvailabilities) {
+      let result = await getVendorSkuDetails(a, subscriptionList.listId);
+      vendorSkuDetails.push(result);
+    }
+    supplierAvailabilities.forEach(item =>
+      Object.assign(
+        item,
+        vendorSkuDetails.find(d => d.VendorId === item.SupplierEntityId && d.Sku === item.SupplierSku)
+      )
+    );
+    let skippedSkus = [];
+    availableSkus.push(...supplierAvailabilities.filter(l => nc.isNonEmptyArray(l.Items)));
+    skippedSkus.push(...supplierAvailabilities.filter(l => !nc.isNonEmptyArray(l.Items)));
+    logInfo(`SupplierSku count: ${availableSkus.length}`);
+    logInfo(`SupplierSkus with an empty Items array: ${skippedSkus.length}`);
+    return availableSkus;
   }
 
   async function getAvailabilityList(supplierId, startDate, endDate) {
@@ -133,6 +153,41 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
     logInfo(`x-ratelimit-remaining: ${resp.headers["x-ratelimit-remaining"]}`);
 
     return resp.body;
+  }
+
+  async function getSupplierAvailabilities(supplierId, remoteIDs) {
+    logInfo(`Getting BulkSupplierAvailability for supplier ${supplierId}`);
+
+    let supplierAvailabilities = remoteIDs.map(i => {
+      const supplierSku = { SupplierSku: i };
+      return supplierSku;
+    });
+
+    const req = stub.requestPromise.post(Object.assign({}, stub.requestDefaults, {
+        method: "POST",
+        baseUrl: stub.getBaseUrl("availability"),
+        url: `/v1/Suppliers(${supplierId})/Companies(${companyId})/BulkSupplierAvailability`,
+        body: {
+          SupplierAvailabilities: supplierAvailabilities
+        }
+      }));
+    logInfo(`Calling: ${req.method} ${req.uri.href}`);
+
+    const resp = await req;
+    stub.out.response.endpointStatusCode = resp.statusCode;
+    stub.out.response.endpointStatusMessage = resp.statusMessage;
+
+    if (resp.timingPhases) {
+      logInfo(`BulkSupplierAvailability request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
+    }
+
+    if (!resp.body || !nc.isArray(resp.body.SupplierAvailabilities)) {
+      throw new TypeError("Response is not in expected format, expected SupplierAvailabilities array.");
+    }
+
+    logInfo(`x-ratelimit-remaining: ${resp.headers["x-ratelimit-remaining"]}`);
+
+    return resp.body.SupplierAvailabilities;
   }
 
   async function getVendorSkuDetails(availabilityItem, subscriptionListId) {
@@ -199,7 +254,7 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
         });
       });
 
-      stub.out.ncStatusCode = 200;
+      stub.out.ncStatusCode = page * pageSize <= totalResults ? 206 : 200;
     } else {
       logInfo("No products found.");
       stub.out.ncStatusCode = 204;
