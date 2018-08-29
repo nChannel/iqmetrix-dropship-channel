@@ -4,58 +4,57 @@
     "$schema": "http://json-schema.org/draft-06/schema#",
     "type": "object",
     "properties": {
-      "LastModifiedDateUtc": {
+      "RmsId": {
         "type": "string"
       },
-      "Id": {
-        "type": "number"
-      },
-      "CompanyId": {
-        "type": "number"
-      },
-      "EntityId": {
-        "type": "number"
+      "Slug": {
+        "type": "string"
       },
       "CatalogItemId": {
         "type": "string"
       },
-      "PricingTermId": {
-        "type": "null"
+      "CatalogSku": {
+        "type": "string"
       },
-      "RegularPrice": {
-        "type": "number"
+      "MeasurementType": {
+        "type": "string"
       },
-      "IsDiscountable": {
+      "BatchTracking": {
         "type": "boolean"
       },
-      "FloorPrice": {
-        "type": "null"
+      "NonStock": {
+        "type": "boolean"
       },
-      "OriginalPrice": {
-        "type": "null"
+      "LifeCycle": {
+        "type": "string"
       },
-      "PricingTierId": {
-        "type": "null"
+      "IsArchived": {
+        "type": "boolean"
       },
-      "PricingGroupId": {
-        "type": "null"
+      "SourceIds": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
       },
-      "PricingShelfId": {
-        "type": "null"
+      "DateAddedUtc": {
+        "type": "string"
       },
-      "OverridePriceId": {
-        "type": "null"
+      "DateUpdatedUtc": {
+        "type": "string"
       },
-      "OverridePrice": {
-        "type": "null"
+      "subscriptionList": {
+        "type": "object",
+        "properties": {
+          "listId": {
+            "type": "string"
+          },
+          "supplierId": {
+            "type": "number"
+          }
+        }
       },
-      "OverrideStartDateUtc": {
-        "type": "null"
-      },
-      "OverrideStopDateUtc": {
-        "type": "null"
-      },
-      "ncCatalogItem": {
+      "ProductDetails": {
         "type": "object",
         "properties": {
           "ExtendedAttributes": {
@@ -92,10 +91,18 @@
             "type": "number"
           },
           "VariationId": {
-            "type": "null"
+            "type": "number"
           },
           "Owner": {
-            "type": "null"
+            "type": "object",
+            "properties": {
+              "Id": {
+                "type": "number"
+              },
+              "Name": {
+                "type": "string"
+              }
+            }
           },
           "CanonicalClassification": {
             "type": "object",
@@ -203,33 +210,58 @@
             }
           },
           "Assets": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "Id": {
-                  "type": "string"
-                },
-                "Name": {
-                  "type": "string"
-                },
-                "Uri": {
-                  "type": "string"
-                },
-                "Type": {
-                  "type": "string"
-                },
-                "IsHidden": {
-                  "type": "boolean"
-                },
-                "IsRolledUp": {
-                  "type": "boolean"
-                }
-              }
-            }
+            "type": "array"
           },
           "ColorDefinition": {
-            "type": "null"
+            "type": "object",
+            "properties": {
+              "Id": {
+                "type": "string"
+              },
+              "Name": {
+                "type": "string"
+              },
+              "ColorTagIds": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                }
+              },
+              "ColorTags": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "Id": {
+                      "type": "number"
+                    },
+                    "Name": {
+                      "type": "string"
+                    },
+                    "ColorCode": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "Swatch": {
+                "type": "object",
+                "properties": {
+                  "Type": {
+                    "type": "string"
+                  },
+                  "AssetId": {
+                    "type": "string"
+                  },
+                  "ColorCode": {
+                    "type": "string"
+                  }
+                }
+              },
+              "IsUsed": {
+                "type": "boolean"
+              }
+            }
           },
           "HeroShotUri": {
             "type": "string"
@@ -238,29 +270,7 @@
             "type": "string"
           },
           "ManufacturerSkus": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "Value": {
-                  "type": "string"
-                },
-                "Description": {
-                  "type": "string"
-                },
-                "Entity": {
-                  "type": "object",
-                  "properties": {
-                    "Id": {
-                      "type": "number"
-                    },
-                    "Name": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
+            "type": "array"
           },
           "VendorSkus": {
             "type": "array",
@@ -288,27 +298,35 @@
             }
           },
           "UpcCodes": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "Value": {
-                  "type": "string"
-                },
-                "Description": {
-                  "type": "string"
-                },
-                "Entity": {
-                  "type": "null"
-                }
+            "type": "array"
+          },
+          "Region": {
+            "type": "object",
+            "properties": {
+              "CountryCode": {
+                "type": "string"
+              },
+              "CountryName": {
+                "type": "string"
+              },
+              "StateCode": {
+                "type": "string"
+              },
+              "StateName": {
+                "type": "string"
               }
             }
           },
-          "Region": {
-            "type": "null"
-          },
           "Entity": {
-            "type": "null"
+            "type": "object",
+            "properties": {
+              "Id": {
+                "type": "number"
+              },
+              "Name": {
+                "type": "string"
+              }
+            }
           },
           "HasColor": {
             "type": "boolean"
@@ -324,67 +342,81 @@
           },
           "Version": {
             "type": "number"
+          }
+        }
+      },
+      "VendorSku": {
+        "type": "object",
+        "properties": {
+          "Value": {
+            "type": "string"
           },
-          "ncVendorSkus": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "VendorId": {
-                  "type": "number"
-                },
-                "Sku": {
-                  "type": "string"
-                },
-                "Items": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "RmsId": {
-                        "type": "string"
-                      },
-                      "Slug": {
-                        "type": "string"
-                      },
-                      "CatalogItemId": {
-                        "type": "string"
-                      },
-                      "CatalogSku": {
-                        "type": "string"
-                      },
-                      "MeasurementType": {
-                        "type": "string"
-                      },
-                      "BatchTracking": {
-                        "type": "boolean"
-                      },
-                      "NonStock": {
-                        "type": "boolean"
-                      },
-                      "LifeCycle": {
-                        "type": "string"
-                      },
-                      "IsArchived": {
-                        "type": "boolean"
-                      },
-                      "SourceIds": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "DateAddedUtc": {
-                        "type": "string"
-                      },
-                      "DateUpdatedUtc": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
+          "Description": {
+            "type": "string"
+          },
+          "Entity": {
+            "type": "object",
+            "properties": {
+              "Id": {
+                "type": "number"
+              },
+              "Name": {
+                "type": "string"
               }
             }
+          }
+        }
+      },
+      "Pricing": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "number"
+          },
+          "CompanyId": {
+            "type": "number"
+          },
+          "EntityId": {
+            "type": "number"
+          },
+          "CatalogItemId": {
+            "type": "string"
+          },
+          "PricingTermId": {
+            "type": "number"
+          },
+          "RegularPrice": {
+            "type": "number"
+          },
+          "IsDiscountable": {
+            "type": "boolean"
+          },
+          "FloorPrice": {
+            "type": "number"
+          },
+          "OriginalPrice": {
+            "type": "number"
+          },
+          "PricingTierId": {
+            "type": "number"
+          },
+          "PricingGroupId": {
+            "type": "number"
+          },
+          "PricingShelfId": {
+            "type": "number"
+          },
+          "OverridePriceId": {
+            "type": "number"
+          },
+          "OverridePrice": {
+            "type": "number"
+          },
+          "OverrideStartDateUtc": {
+            "type": "string"
+          },
+          "OverrideStopDateUtc": {
+            "type": "string"
           }
         }
       }
