@@ -318,6 +318,27 @@
       }
     },
     {
+      "name": "GET PAYMENTCAPTURE",
+      "description": "GET PAYMENTCAPTURE",
+      "channelVerb": "GET",
+      "channelNoun": "PAYMENTCAPTURE",
+      "ruleDef": {
+        "ruleSchema": {},
+        "defaultRuleValues": {}
+      },
+      "configDef": {
+        "configModel": {},
+        "configView": [],
+        "configValues": {}
+      },
+      "documentDef": {
+        "schema": {},
+        "referenceLocation": {
+          "paymentCaptureBusinessReferences": ["id"]
+        }
+      }
+    },
+    {
       "name": "PUT CUSTOMER",
       "description": "PUT CUSTOMER",
       "channelVerb": "PUT",
@@ -736,7 +757,7 @@
         "Content-Type": "application/x-www-form-urlencoded"
       },
       "body": {
-        "refresh_token": "{{username}}",
+        "refresh_token": "{{refresh_token}}",
         "client_id": "{{client_id}}",
         "client_secret": "{{client_secret}}",
         "grant_type": "refresh_token"
