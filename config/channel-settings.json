@@ -318,6 +318,27 @@
       }
     },
     {
+      "name": "GET PAYMENTCAPTURE",
+      "description": "GET PAYMENTCAPTURE",
+      "channelVerb": "GET",
+      "channelNoun": "PAYMENTCAPTURE",
+      "ruleDef": {
+        "ruleSchema": {},
+        "defaultRuleValues": {}
+      },
+      "configDef": {
+        "configModel": {},
+        "configView": [],
+        "configValues": {}
+      },
+      "documentDef": {
+        "schema": {},
+        "referenceLocation": {
+          "paymentCaptureBusinessReferences": ["id"]
+        }
+      }
+    },
+    {
       "name": "PUT CUSTOMER",
       "description": "PUT CUSTOMER",
       "channelVerb": "PUT",
