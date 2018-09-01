@@ -2019,7 +2019,8 @@
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09:59:59.999Z%20and%20updatedUtc%20lt%202017-05-12T12:00:00.001Z&page=1&pageSize=5",
+              "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
@@ -2127,6 +2128,69 @@
                 "createdUtc": "2017-03-16T18:06:16.7950000Z",
                 "updatedUtc": "2017-03-13T19:36:26.2620000Z"
               }
+            },
+            {
+              "baseUri": "https://orderdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/OrderFull?%24filter=PrintableId%20eq%20%27INKG5-2451%27",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": [
+                {
+                  "Items": [
+                    {
+                      "ItemExtensions": [],
+                      "Id": "62b6fb5b-0124-4b34-a8ad-6ba37c652da0",
+                      "OrderId": "76f9ae59-b599-4515-93ee-6c684d1d2194",
+                      "ItemTypeId": 1,
+                      "ItemType": "DropShip",
+                      "ItemStatusId": 3,
+                      "ItemStatus": "Processed",
+                      "ProductId": "da15a758-5d7e-4619-8d61-13bce6311854",
+                      "SupplierEntityId": 7187,
+                      "Quantity": 1,
+                      "Cost": 0,
+                      "ListPrice": 0,
+                      "SellingPrice": 39.99,
+                      "Index": 0,
+                      "Description": "LG V20 3200 mAh Standard Battery",
+                      "SKU": "560532",
+                      "Notes": null,
+                      "SerialNumbers": [],
+                      "SupplierReference": null,
+                      "TrackingInformation": [],
+                      "ShippingOptionId": "21",
+                      "DeliveryRemarks": null,
+                      "DeliveryDate": null
+                    }
+                  ],
+                  "Id": "76f9ae59-b599-4515-93ee-6c684d1d2194",
+                  "OrderTypeId": 1,
+                  "OrderType": "Sales",
+                  "State": "Processed",
+                  "PrintableId": "S00000804",
+                  "Name": "S00000804",
+                  "TenderId": "S00000804",
+                  "TenderOrigin": null,
+                  "SourceId": null,
+                  "SourceName": null,
+                  "OrderReference": "5335670803356105603008",
+                  "EntityId": 131563,
+                  "ShippingEntityId": 0,
+                  "CustomerId": "00000000-0000-0000-0000-000000000000",
+                  "BillingCustomerId": "441c7001-56e4-4550-aae7-778094328359",
+                  "ShippingCustomerId": "441c7001-56e4-4550-aae7-778094328359",
+                  "ShippingAddressId": "ff0432d5-977a-4a83-a582-b8454b511236",
+                  "BillingAddressId": "ff0432d5-977a-4a83-a582-b8454b511236",
+                  "EmployeeId": 0,
+                  "DiscountCode": null,
+                  "DiscountDescription": null,
+                  "DiscountAmount": 0,
+                  "CreatedDateUtc": "2018-08-31T16:58:03.56Z",
+                  "OrderExpiryHours": 72,
+                  "OrderExpiryDate": "2018-09-03T16:58:03.56Z"
+                }
+              ]
             }
           ],
           "channelProfile": {
@@ -2150,7 +2214,8 @@
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09:59:59.999Z%20and%20updatedUtc%20lt%202017-05-12T12:00:00.001Z&page=1&pageSize=5",
+              "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
@@ -2187,6 +2252,7 @@
                 "startDateGMT": "2017-05-12T10:00:00.000Z",
                 "endDateGMT": "2017-05-12T12:00:00.000Z"
               },
+              "page": 1,
               "pageSize": 1
             }
           },
@@ -2194,210 +2260,8 @@
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09:59:59.999Z%20and%20updatedUtc%20lt%202017-05-12T12:00:00.001Z&pageSize=1",
-              "method": "GET",
-              "replyHeaders": {},
-              "statusCode": 200,
-              "responsePayload": {
-                "definition": {
-                  "id": "OrderList",
-                  "name": "Order List Report",
-                  "ownEntityPermission": "ViewOrderManagement",
-                  "anyEntityPermission": "ViewAllOrderManagement",
-                  "collection": "Order",
-                  "description": "View list of Platform orders.",
-                  "columns": [
-                    {
-                      "name": "Location",
-                      "key": "locationId"
-                    }
-                  ]
-                },
-                "rows": [
-                  {
-                    "_id": "58cad41cdc0db43a61eec9e4",
-                    "invoiceNumber": "INKG5-2498",
-                    "companyId": 14146,
-                    "locationId": 14202,
-                    "locationName": "Dufferin Mall",
-                    "customerName": "John Smith",
-                    "shippingEntityId": "0",
-                    "shippingEntityName": "Customer",
-                    "statusId": "0",
-                    "statusName": "Pending",
-                    "createdUtc": "2017-03-16T18:06:16.7950000Z"
-                  }
-                ],
-                "totalRecords": 2
-              }
-            },
-            {
-              "uri": "/Companies(23813)/OrderDetails(58cad41cdc0db43a61eec9e4)",
-              "method": "GET",
-              "replyHeaders": {},
-              "statusCode": 200,
-              "responsePayload": {
-                "id": "58c6f4bddc0db43a61ee98b5",
-                "invoiceNumber": "INKG5-2451",
-                "companyId": 14146,
-                "companyName": "Globex",
-                "locationId": 14202,
-                "locationName": "Dufferin Mall",
-                "customerName": "John Smith",
-                "shipToStore": false,
-                "shippingEntityId": "0",
-                "shippingEntityName": "Customer",
-                "statusId": "0",
-                "statusName": "Pending",
-                "billToAddress": {
-                  "crmId": "d2631c9d-0303-14b8-b328-16ac5e409fb2",
-                  "crmAddressId": "a5828b6c-13be-b07b-bebd-1060c72828fd",
-                  "customerName": "John Smith",
-                  "businessName": "",
-                  "streetAddress1": "349 W. Narwhal Lane",
-                  "streetAddress2": "Suite 400",
-                  "city": "Cypress",
-                  "postalCode": 55555,
-                  "region": "Texas",
-                  "regionCode": "TX",
-                  "country": "United States",
-                  "countryCode": "US",
-                  "email": "",
-                  "phone": "(555) 555-5556"
-                },
-                "shipToAddress": {
-                  "crmId": "d2631c9d-0303-14b8-b328-16ac5e409fb2",
-                  "crmAddressId": "a5828b6c-13be-b07b-bebd-1060c72828fd",
-                  "customerName": "John Smith",
-                  "businessName": "",
-                  "streetAddress1": "349 W. Narwhal Lane",
-                  "streetAddress2": "Suite 400",
-                  "city": "Cypress",
-                  "postalCode": 55555,
-                  "region": "Texas",
-                  "regionCode": "TX",
-                  "country": "United States",
-                  "countryCode": "US",
-                  "email": "",
-                  "phone": "(555) 555-5556"
-                },
-                "dropshipOrderItems": [
-                  {
-                    "dropshipOrderId": "9dd08bfc-24a0-99ed-64c4-8b5602402f91",
-                    "supplierId": 81553,
-                    "supplierName": "NOZAMA Inc.",
-                    "catalogItemId": "788b732b-16bd-9c19-7954-4e0eec524f65",
-                    "productName": "Motorola Droid Ultra Aegis Case - Trident Green",
-                    "supplierSku": "EKg-18-IAY",
-                    "quantity": 1,
-                    "sellingPrice": 34.95,
-                    "statusId": "0",
-                    "statusName": "Pending Supplier",
-                    "trackingNumber": "",
-                    "shippingProvider": "",
-                    "supplierMessage": "",
-                    "updatedUtc": "2017-03-13T19:36:26.2620000Z"
-                  }
-                ],
-                "createdUtc": "2017-03-16T18:06:16.7950000Z",
-                "updatedUtc": "2017-03-13T19:36:26.2620000Z"
-              }
-            },
-            {
-              "uri": "/Companies(23813)/OrderDetails(58cad41cdc0db43a61eec9e3)",
-              "method": "GET",
-              "replyHeaders": {},
-              "statusCode": 200,
-              "responsePayload": {
-                "id": "58c6f4bddc0db43a61ee98b5",
-                "invoiceNumber": "INKG5-2451",
-                "companyId": 14146,
-                "companyName": "Globex",
-                "locationId": 14202,
-                "locationName": "Dufferin Mall",
-                "customerName": "John Smith",
-                "shipToStore": false,
-                "shippingEntityId": "0",
-                "shippingEntityName": "Customer",
-                "statusId": "0",
-                "statusName": "Pending",
-                "billToAddress": {
-                  "crmId": "d2631c9d-0303-14b8-b328-16ac5e409fb2",
-                  "crmAddressId": "a5828b6c-13be-b07b-bebd-1060c72828fd",
-                  "customerName": "John Smith",
-                  "businessName": "",
-                  "streetAddress1": "349 W. Narwhal Lane",
-                  "streetAddress2": "Suite 400",
-                  "city": "Cypress",
-                  "postalCode": 55555,
-                  "region": "Texas",
-                  "regionCode": "TX",
-                  "country": "United States",
-                  "countryCode": "US",
-                  "email": "",
-                  "phone": "(555) 555-5556"
-                },
-                "shipToAddress": {
-                  "crmId": "d2631c9d-0303-14b8-b328-16ac5e409fb2",
-                  "crmAddressId": "a5828b6c-13be-b07b-bebd-1060c72828fd",
-                  "customerName": "John Smith",
-                  "businessName": "",
-                  "streetAddress1": "349 W. Narwhal Lane",
-                  "streetAddress2": "Suite 400",
-                  "city": "Cypress",
-                  "postalCode": 55555,
-                  "region": "Texas",
-                  "regionCode": "TX",
-                  "country": "United States",
-                  "countryCode": "US",
-                  "email": "",
-                  "phone": "(555) 555-5556"
-                },
-                "dropshipOrderItems": [
-                  {
-                    "dropshipOrderId": "9dd08bfc-24a0-99ed-64c4-8b5602402f91",
-                    "supplierId": 81553,
-                    "supplierName": "NOZAMA Inc.",
-                    "catalogItemId": "788b732b-16bd-9c19-7954-4e0eec524f65",
-                    "productName": "Motorola Droid Ultra Aegis Case - Trident Green",
-                    "supplierSku": "EKg-18-IAY",
-                    "quantity": 1,
-                    "sellingPrice": 34.95,
-                    "statusId": "0",
-                    "statusName": "Pending Supplier",
-                    "trackingNumber": "",
-                    "shippingProvider": "",
-                    "supplierMessage": "",
-                    "updatedUtc": "2017-03-13T19:36:26.2620000Z"
-                  }
-                ],
-                "createdUtc": "2017-03-16T18:06:16.7950000Z",
-                "updatedUtc": "2017-03-13T19:36:26.2620000Z"
-              }
-            }
-          ],
-          "channelProfile": {
-            "fulfillmentBusinessReferences": ["id"],
-            "salesOrderBusinessReferences": ["invoiceNumber"]
-          }
-        },
-        {
-          "ncStatusCode": 400,
-          "payload": {
-            "doc": {
-              "modifiedDateRange": {
-                "startDateGMT": "2017-05-12T10:00:00.000Z",
-                "endDateGMT": "2017-05-12T12:00:00.000Z"
-              },
-              "page": 1,
-              "pageSize": 5
-            }
-          },
-          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net/v1",
-          "defaultHeaders": {},
-          "links": [
-            {
-              "uri": "/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09:59:59.999Z%20and%20updatedUtc%20lt%202017-05-12T12:00:00.001Z&page=1&pageSize=5",
+              "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=1&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
@@ -2431,14 +2295,171 @@
                     "createdUtc": "2017-03-16T18:06:16.7950000Z"
                   }
                 ],
-                "totalRecords": 1
+                "totalRecords": 2
               }
             },
             {
               "uri": "/Companies(23813)/OrderDetails(58cad41cdc0db43a61eec9e3)",
               "method": "GET",
               "replyHeaders": {},
-              "statusCode": 401,
+              "statusCode": 200,
+              "responsePayload": {
+                "id": "58c6f4bddc0db43a61ee98b5",
+                "invoiceNumber": "INKG5-2451",
+                "companyId": 14146,
+                "companyName": "Globex",
+                "locationId": 14202,
+                "locationName": "Dufferin Mall",
+                "customerName": "John Smith",
+                "shipToStore": false,
+                "shippingEntityId": "0",
+                "shippingEntityName": "Customer",
+                "statusId": "0",
+                "statusName": "Pending",
+                "billToAddress": {
+                  "crmId": "d2631c9d-0303-14b8-b328-16ac5e409fb2",
+                  "crmAddressId": "a5828b6c-13be-b07b-bebd-1060c72828fd",
+                  "customerName": "John Smith",
+                  "businessName": "",
+                  "streetAddress1": "349 W. Narwhal Lane",
+                  "streetAddress2": "Suite 400",
+                  "city": "Cypress",
+                  "postalCode": 55555,
+                  "region": "Texas",
+                  "regionCode": "TX",
+                  "country": "United States",
+                  "countryCode": "US",
+                  "email": "",
+                  "phone": "(555) 555-5556"
+                },
+                "shipToAddress": {
+                  "crmId": "d2631c9d-0303-14b8-b328-16ac5e409fb2",
+                  "crmAddressId": "a5828b6c-13be-b07b-bebd-1060c72828fd",
+                  "customerName": "John Smith",
+                  "businessName": "",
+                  "streetAddress1": "349 W. Narwhal Lane",
+                  "streetAddress2": "Suite 400",
+                  "city": "Cypress",
+                  "postalCode": 55555,
+                  "region": "Texas",
+                  "regionCode": "TX",
+                  "country": "United States",
+                  "countryCode": "US",
+                  "email": "",
+                  "phone": "(555) 555-5556"
+                },
+                "dropshipOrderItems": [
+                  {
+                    "dropshipOrderId": "9dd08bfc-24a0-99ed-64c4-8b5602402f91",
+                    "supplierId": 81553,
+                    "supplierName": "NOZAMA Inc.",
+                    "catalogItemId": "788b732b-16bd-9c19-7954-4e0eec524f65",
+                    "productName": "Motorola Droid Ultra Aegis Case - Trident Green",
+                    "supplierSku": "EKg-18-IAY",
+                    "quantity": 1,
+                    "sellingPrice": 34.95,
+                    "statusId": "0",
+                    "statusName": "Pending Supplier",
+                    "trackingNumber": "",
+                    "shippingProvider": "",
+                    "supplierMessage": "",
+                    "updatedUtc": "2017-03-13T19:36:26.2620000Z"
+                  }
+                ],
+                "createdUtc": "2017-03-16T18:06:16.7950000Z",
+                "updatedUtc": "2017-03-13T19:36:26.2620000Z"
+              }
+            },
+            {
+              "baseUri": "https://orderdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/OrderFull?%24filter=PrintableId%20eq%20%27INKG5-2451%27",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": [
+                {
+                  "Items": [
+                    {
+                      "ItemExtensions": [],
+                      "Id": "62b6fb5b-0124-4b34-a8ad-6ba37c652da0",
+                      "OrderId": "76f9ae59-b599-4515-93ee-6c684d1d2194",
+                      "ItemTypeId": 1,
+                      "ItemType": "DropShip",
+                      "ItemStatusId": 3,
+                      "ItemStatus": "Processed",
+                      "ProductId": "da15a758-5d7e-4619-8d61-13bce6311854",
+                      "SupplierEntityId": 7187,
+                      "Quantity": 1,
+                      "Cost": 0,
+                      "ListPrice": 0,
+                      "SellingPrice": 39.99,
+                      "Index": 0,
+                      "Description": "LG V20 3200 mAh Standard Battery",
+                      "SKU": "560532",
+                      "Notes": null,
+                      "SerialNumbers": [],
+                      "SupplierReference": null,
+                      "TrackingInformation": [],
+                      "ShippingOptionId": "21",
+                      "DeliveryRemarks": null,
+                      "DeliveryDate": null
+                    }
+                  ],
+                  "Id": "76f9ae59-b599-4515-93ee-6c684d1d2194",
+                  "OrderTypeId": 1,
+                  "OrderType": "Sales",
+                  "State": "Processed",
+                  "PrintableId": "S00000804",
+                  "Name": "S00000804",
+                  "TenderId": "S00000804",
+                  "TenderOrigin": null,
+                  "SourceId": null,
+                  "SourceName": null,
+                  "OrderReference": "5335670803356105603008",
+                  "EntityId": 131563,
+                  "ShippingEntityId": 0,
+                  "CustomerId": "00000000-0000-0000-0000-000000000000",
+                  "BillingCustomerId": "441c7001-56e4-4550-aae7-778094328359",
+                  "ShippingCustomerId": "441c7001-56e4-4550-aae7-778094328359",
+                  "ShippingAddressId": "ff0432d5-977a-4a83-a582-b8454b511236",
+                  "BillingAddressId": "ff0432d5-977a-4a83-a582-b8454b511236",
+                  "EmployeeId": 0,
+                  "DiscountCode": null,
+                  "DiscountDescription": null,
+                  "DiscountAmount": 0,
+                  "CreatedDateUtc": "2018-08-31T16:58:03.56Z",
+                  "OrderExpiryHours": 72,
+                  "OrderExpiryDate": "2018-09-03T16:58:03.56Z"
+                }
+              ]
+            }
+          ],
+          "channelProfile": {
+            "fulfillmentBusinessReferences": ["id"],
+            "salesOrderBusinessReferences": ["invoiceNumber"]
+          }
+        },
+        {
+          "ncStatusCode": 400,
+          "payload": {
+            "doc": {
+              "modifiedDateRange": {
+                "startDateGMT": "2017-05-12T12:00:00.000Z",
+                "endDateGMT": "2017-05-12T12:00:00.000Z"
+              },
+              "page": 1,
+              "pageSize": 5
+            }
+          },
+          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net/v1",
+          "defaultHeaders": {},
+          "links": [
+            {
+              "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 404,
               "responsePayload": {}
             }
           ],
@@ -2463,7 +2484,8 @@
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09:59:59.999Z%20and%20updatedUtc%20lt%202017-05-12T12:00:00.001Z&page=1&pageSize=5",
+              "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
@@ -2529,7 +2551,8 @@
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09:59:59.999Z%20and%20updatedUtc%20lt%202017-05-12T12:00:00.001Z&page=1&pageSize=5",
+              "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
@@ -2600,7 +2623,8 @@
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09:59:59.999Z%20and%20updatedUtc%20lt%202017-05-12T12:00:00.001Z&page=1&pageSize=5",
+              "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
@@ -2708,6 +2732,69 @@
                 "createdUtc": "2017-03-16T18:06:16.7950000Z",
                 "updatedUtc": "2017-03-13T19:36:26.2620000Z"
               }
+            },
+            {
+              "baseUri": "https://salesorderdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/PrintableId(INKG5-2451)",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": {
+                "Id": "S00000804",
+                "SalesOrders": [
+                  {
+                    "Id": "70018308-b43f-4225-8ae5-97778b949e68",
+                    "DateCreatedUtc": "2018-08-06T14:51:15",
+                    "DateInsertedUtc": "2018-08-31T16:58:05.157",
+                    "DateUpdatedUtc": "2018-08-31T16:58:05.157",
+                    "CompanyId": 131523,
+                    "LocationId": 131563,
+                    "CustomerId": "441c7001-56e4-4550-aae7-778094328359",
+                    "ExpiryDateUtc": null,
+                    "Items": [
+                      {
+                        "LineNumber": 1,
+                        "ProductCatalogId": "da15a758-5d7e-4619-8d61-13bce6311854",
+                        "Quantity": 1,
+                        "Price": 39.99,
+                        "PricingTermId": null,
+                        "CorrelationId": "560532",
+                        "ItemType": "DropShip",
+                        "SupplierEntityId": 7187,
+                        "SerialNumber": null,
+                        "TaxLineItems": [
+                          {
+                            "TaxName": "SalesTax",
+                            "TaxableAmount": 39.99,
+                            "Rate": 0,
+                            "Tax": 0,
+                            "IqTaxServiceId": null
+                          }
+                        ]
+                      }
+                    ],
+                    "Payments": [
+                      {
+                        "Id": "0239dd79-de42-41c1-8553-deb920b58240",
+                        "AuthCode": null,
+                        "TransactionNumber": null,
+                        "Token": null,
+                        "Amount": 44.98,
+                        "PaymentMethodId": "00000000-0000-0000-0000-000000000000",
+                        "CorrelationId": null
+                      }
+                    ],
+                    "TaxCalculationResultId": "00000000-0000-0000-0000-000000000000",
+                    "BillingAddressId": "ff0432d5-977a-4a83-a582-b8454b511236",
+                    "ShippingAddressId": "ff0432d5-977a-4a83-a582-b8454b511236",
+                    "PrintableId": "S00000804",
+                    "DropshipOrderId": "76f9ae59-b599-4515-93ee-6c684d1d2194",
+                    "UserId": null,
+                    "ShippingLineItems": [],
+                    "DiscountLineItems": []
+                  }
+                ]
+              }
             }
           ],
           "channelProfile": {
@@ -2730,7 +2817,8 @@
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09:59:59.999Z%20and%20updatedUtc%20lt%202017-05-12T12:00:00.001Z&page=1&pageSize=5",
+              "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
@@ -2766,6 +2854,7 @@
                 "startDateGMT": "2017-05-12T10:00:00.000Z",
                 "endDateGMT": "2017-05-12T12:00:00.000Z"
               },
+              "page": 1,
               "pageSize": 1
             }
           },
@@ -2773,209 +2862,8 @@
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09:59:59.999Z%20and%20updatedUtc%20lt%202017-05-12T12:00:00.001Z&pageSize=1",
-              "method": "GET",
-              "replyHeaders": {},
-              "statusCode": 200,
-              "responsePayload": {
-                "definition": {
-                  "id": "OrderList",
-                  "name": "Order List Report",
-                  "ownEntityPermission": "ViewOrderManagement",
-                  "anyEntityPermission": "ViewAllOrderManagement",
-                  "collection": "Order",
-                  "description": "View list of Platform orders.",
-                  "columns": [
-                    {
-                      "name": "Location",
-                      "key": "locationId"
-                    }
-                  ]
-                },
-                "rows": [
-                  {
-                    "_id": "58cad41cdc0db43a61eec9e4",
-                    "invoiceNumber": "INKG5-2498",
-                    "companyId": 14146,
-                    "locationId": 14202,
-                    "locationName": "Dufferin Mall",
-                    "customerName": "John Smith",
-                    "shippingEntityId": "0",
-                    "shippingEntityName": "Customer",
-                    "statusId": "0",
-                    "statusName": "Pending",
-                    "createdUtc": "2017-03-16T18:06:16.7950000Z"
-                  }
-                ],
-                "totalRecords": 2
-              }
-            },
-            {
-              "uri": "/Companies(23813)/OrderDetails(58cad41cdc0db43a61eec9e4)",
-              "method": "GET",
-              "replyHeaders": {},
-              "statusCode": 200,
-              "responsePayload": {
-                "id": "58c6f4bddc0db43a61ee98b5",
-                "invoiceNumber": "INKG5-2451",
-                "companyId": 14146,
-                "companyName": "Globex",
-                "locationId": 14202,
-                "locationName": "Dufferin Mall",
-                "customerName": "John Smith",
-                "shipToStore": false,
-                "shippingEntityId": "0",
-                "shippingEntityName": "Customer",
-                "statusId": "0",
-                "statusName": "Pending",
-                "billToAddress": {
-                  "crmId": "d2631c9d-0303-14b8-b328-16ac5e409fb2",
-                  "crmAddressId": "a5828b6c-13be-b07b-bebd-1060c72828fd",
-                  "customerName": "John Smith",
-                  "businessName": "",
-                  "streetAddress1": "349 W. Narwhal Lane",
-                  "streetAddress2": "Suite 400",
-                  "city": "Cypress",
-                  "postalCode": 55555,
-                  "region": "Texas",
-                  "regionCode": "TX",
-                  "country": "United States",
-                  "countryCode": "US",
-                  "email": "",
-                  "phone": "(555) 555-5556"
-                },
-                "shipToAddress": {
-                  "crmId": "d2631c9d-0303-14b8-b328-16ac5e409fb2",
-                  "crmAddressId": "a5828b6c-13be-b07b-bebd-1060c72828fd",
-                  "customerName": "John Smith",
-                  "businessName": "",
-                  "streetAddress1": "349 W. Narwhal Lane",
-                  "streetAddress2": "Suite 400",
-                  "city": "Cypress",
-                  "postalCode": 55555,
-                  "region": "Texas",
-                  "regionCode": "TX",
-                  "country": "United States",
-                  "countryCode": "US",
-                  "email": "",
-                  "phone": "(555) 555-5556"
-                },
-                "dropshipOrderItems": [
-                  {
-                    "dropshipOrderId": "9dd08bfc-24a0-99ed-64c4-8b5602402f91",
-                    "supplierId": 81553,
-                    "supplierName": "NOZAMA Inc.",
-                    "catalogItemId": "788b732b-16bd-9c19-7954-4e0eec524f65",
-                    "productName": "Motorola Droid Ultra Aegis Case - Trident Green",
-                    "supplierSku": "EKg-18-IAY",
-                    "quantity": 1,
-                    "sellingPrice": 34.95,
-                    "statusId": "0",
-                    "statusName": "Pending Supplier",
-                    "trackingNumber": "",
-                    "shippingProvider": "",
-                    "supplierMessage": "",
-                    "updatedUtc": "2017-03-13T19:36:26.2620000Z"
-                  }
-                ],
-                "createdUtc": "2017-03-16T18:06:16.7950000Z",
-                "updatedUtc": "2017-03-13T19:36:26.2620000Z"
-              }
-            },
-            {
-              "uri": "/Companies(23813)/OrderDetails(58cad41cdc0db43a61eec9e3)",
-              "method": "GET",
-              "replyHeaders": {},
-              "statusCode": 200,
-              "responsePayload": {
-                "id": "58c6f4bddc0db43a61ee98b5",
-                "invoiceNumber": "INKG5-2451",
-                "companyId": 14146,
-                "companyName": "Globex",
-                "locationId": 14202,
-                "locationName": "Dufferin Mall",
-                "customerName": "John Smith",
-                "shipToStore": false,
-                "shippingEntityId": "0",
-                "shippingEntityName": "Customer",
-                "statusId": "0",
-                "statusName": "Pending",
-                "billToAddress": {
-                  "crmId": "d2631c9d-0303-14b8-b328-16ac5e409fb2",
-                  "crmAddressId": "a5828b6c-13be-b07b-bebd-1060c72828fd",
-                  "customerName": "John Smith",
-                  "businessName": "",
-                  "streetAddress1": "349 W. Narwhal Lane",
-                  "streetAddress2": "Suite 400",
-                  "city": "Cypress",
-                  "postalCode": 55555,
-                  "region": "Texas",
-                  "regionCode": "TX",
-                  "country": "United States",
-                  "countryCode": "US",
-                  "email": "",
-                  "phone": "(555) 555-5556"
-                },
-                "shipToAddress": {
-                  "crmId": "d2631c9d-0303-14b8-b328-16ac5e409fb2",
-                  "crmAddressId": "a5828b6c-13be-b07b-bebd-1060c72828fd",
-                  "customerName": "John Smith",
-                  "businessName": "",
-                  "streetAddress1": "349 W. Narwhal Lane",
-                  "streetAddress2": "Suite 400",
-                  "city": "Cypress",
-                  "postalCode": 55555,
-                  "region": "Texas",
-                  "regionCode": "TX",
-                  "country": "United States",
-                  "countryCode": "US",
-                  "email": "",
-                  "phone": "(555) 555-5556"
-                },
-                "dropshipOrderItems": [
-                  {
-                    "dropshipOrderId": "9dd08bfc-24a0-99ed-64c4-8b5602402f91",
-                    "supplierId": 81553,
-                    "supplierName": "NOZAMA Inc.",
-                    "catalogItemId": "788b732b-16bd-9c19-7954-4e0eec524f65",
-                    "productName": "Motorola Droid Ultra Aegis Case - Trident Green",
-                    "supplierSku": "EKg-18-IAY",
-                    "quantity": 1,
-                    "sellingPrice": 34.95,
-                    "statusId": "0",
-                    "statusName": "Pending Supplier",
-                    "trackingNumber": "",
-                    "shippingProvider": "",
-                    "supplierMessage": "",
-                    "updatedUtc": "2017-03-13T19:36:26.2620000Z"
-                  }
-                ],
-                "createdUtc": "2017-03-16T18:06:16.7950000Z",
-                "updatedUtc": "2017-03-13T19:36:26.2620000Z"
-              }
-            }
-          ],
-          "channelProfile": {
-            "paymentCaptureBusinessReferences": ["id"]
-          }
-        },
-        {
-          "ncStatusCode": 400,
-          "payload": {
-            "doc": {
-              "modifiedDateRange": {
-                "startDateGMT": "2017-05-12T10:00:00.000Z",
-                "endDateGMT": "2017-05-12T12:00:00.000Z"
-              },
-              "page": 1,
-              "pageSize": 5
-            }
-          },
-          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net/v1",
-          "defaultHeaders": {},
-          "links": [
-            {
-              "uri": "/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09:59:59.999Z%20and%20updatedUtc%20lt%202017-05-12T12:00:00.001Z&page=1&pageSize=5",
+              "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=1&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
@@ -3009,14 +2897,170 @@
                     "createdUtc": "2017-03-16T18:06:16.7950000Z"
                   }
                 ],
-                "totalRecords": 1
+                "totalRecords": 2
               }
             },
             {
               "uri": "/Companies(23813)/OrderDetails(58cad41cdc0db43a61eec9e3)",
               "method": "GET",
               "replyHeaders": {},
-              "statusCode": 401,
+              "statusCode": 200,
+              "responsePayload": {
+                "id": "58c6f4bddc0db43a61ee98b5",
+                "invoiceNumber": "INKG5-2451",
+                "companyId": 14146,
+                "companyName": "Globex",
+                "locationId": 14202,
+                "locationName": "Dufferin Mall",
+                "customerName": "John Smith",
+                "shipToStore": false,
+                "shippingEntityId": "0",
+                "shippingEntityName": "Customer",
+                "statusId": "0",
+                "statusName": "Pending",
+                "billToAddress": {
+                  "crmId": "d2631c9d-0303-14b8-b328-16ac5e409fb2",
+                  "crmAddressId": "a5828b6c-13be-b07b-bebd-1060c72828fd",
+                  "customerName": "John Smith",
+                  "businessName": "",
+                  "streetAddress1": "349 W. Narwhal Lane",
+                  "streetAddress2": "Suite 400",
+                  "city": "Cypress",
+                  "postalCode": 55555,
+                  "region": "Texas",
+                  "regionCode": "TX",
+                  "country": "United States",
+                  "countryCode": "US",
+                  "email": "",
+                  "phone": "(555) 555-5556"
+                },
+                "shipToAddress": {
+                  "crmId": "d2631c9d-0303-14b8-b328-16ac5e409fb2",
+                  "crmAddressId": "a5828b6c-13be-b07b-bebd-1060c72828fd",
+                  "customerName": "John Smith",
+                  "businessName": "",
+                  "streetAddress1": "349 W. Narwhal Lane",
+                  "streetAddress2": "Suite 400",
+                  "city": "Cypress",
+                  "postalCode": 55555,
+                  "region": "Texas",
+                  "regionCode": "TX",
+                  "country": "United States",
+                  "countryCode": "US",
+                  "email": "",
+                  "phone": "(555) 555-5556"
+                },
+                "dropshipOrderItems": [
+                  {
+                    "dropshipOrderId": "9dd08bfc-24a0-99ed-64c4-8b5602402f91",
+                    "supplierId": 81553,
+                    "supplierName": "NOZAMA Inc.",
+                    "catalogItemId": "788b732b-16bd-9c19-7954-4e0eec524f65",
+                    "productName": "Motorola Droid Ultra Aegis Case - Trident Green",
+                    "supplierSku": "EKg-18-IAY",
+                    "quantity": 1,
+                    "sellingPrice": 34.95,
+                    "statusId": "0",
+                    "statusName": "Pending Supplier",
+                    "trackingNumber": "",
+                    "shippingProvider": "",
+                    "supplierMessage": "",
+                    "updatedUtc": "2017-03-13T19:36:26.2620000Z"
+                  }
+                ],
+                "createdUtc": "2017-03-16T18:06:16.7950000Z",
+                "updatedUtc": "2017-03-13T19:36:26.2620000Z"
+              }
+            },
+            {
+              "baseUri": "https://salesorderdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/PrintableId(INKG5-2451)",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": {
+                "Id": "S00000804",
+                "SalesOrders": [
+                  {
+                    "Id": "70018308-b43f-4225-8ae5-97778b949e68",
+                    "DateCreatedUtc": "2018-08-06T14:51:15",
+                    "DateInsertedUtc": "2018-08-31T16:58:05.157",
+                    "DateUpdatedUtc": "2018-08-31T16:58:05.157",
+                    "CompanyId": 131523,
+                    "LocationId": 131563,
+                    "CustomerId": "441c7001-56e4-4550-aae7-778094328359",
+                    "ExpiryDateUtc": null,
+                    "Items": [
+                      {
+                        "LineNumber": 1,
+                        "ProductCatalogId": "da15a758-5d7e-4619-8d61-13bce6311854",
+                        "Quantity": 1,
+                        "Price": 39.99,
+                        "PricingTermId": null,
+                        "CorrelationId": "560532",
+                        "ItemType": "DropShip",
+                        "SupplierEntityId": 7187,
+                        "SerialNumber": null,
+                        "TaxLineItems": [
+                          {
+                            "TaxName": "SalesTax",
+                            "TaxableAmount": 39.99,
+                            "Rate": 0,
+                            "Tax": 0,
+                            "IqTaxServiceId": null
+                          }
+                        ]
+                      }
+                    ],
+                    "Payments": [
+                      {
+                        "Id": "0239dd79-de42-41c1-8553-deb920b58240",
+                        "AuthCode": null,
+                        "TransactionNumber": null,
+                        "Token": null,
+                        "Amount": 44.98,
+                        "PaymentMethodId": "00000000-0000-0000-0000-000000000000",
+                        "CorrelationId": null
+                      }
+                    ],
+                    "TaxCalculationResultId": "00000000-0000-0000-0000-000000000000",
+                    "BillingAddressId": "ff0432d5-977a-4a83-a582-b8454b511236",
+                    "ShippingAddressId": "ff0432d5-977a-4a83-a582-b8454b511236",
+                    "PrintableId": "S00000804",
+                    "DropshipOrderId": "76f9ae59-b599-4515-93ee-6c684d1d2194",
+                    "UserId": null,
+                    "ShippingLineItems": [],
+                    "DiscountLineItems": []
+                  }
+                ]
+              }
+            }
+          ],
+          "channelProfile": {
+            "paymentCaptureBusinessReferences": ["id"]
+          }
+        },
+        {
+          "ncStatusCode": 400,
+          "payload": {
+            "doc": {
+              "modifiedDateRange": {
+                "startDateGMT": "2017-05-12T12:00:00.000Z",
+                "endDateGMT": "2017-05-12T12:00:00.000Z"
+              },
+              "page": 1,
+              "pageSize": 5
+            }
+          },
+          "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net/v1",
+          "defaultHeaders": {},
+          "links": [
+            {
+              "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 404,
               "responsePayload": {}
             }
           ],
@@ -3040,7 +3084,8 @@
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09:59:59.999Z%20and%20updatedUtc%20lt%202017-05-12T12:00:00.001Z&page=1&pageSize=5",
+              "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
@@ -3105,7 +3150,8 @@
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09:59:59.999Z%20and%20updatedUtc%20lt%202017-05-12T12:00:00.001Z&page=1&pageSize=5",
+              "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
