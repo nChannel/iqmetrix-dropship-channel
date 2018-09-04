@@ -2020,7 +2020,7 @@
           "links": [
             {
               "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
-              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20statusName%20eq%20Completed%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
@@ -2215,7 +2215,7 @@
           "links": [
             {
               "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
-              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20statusName%20eq%20Completed%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
@@ -2261,7 +2261,7 @@
           "links": [
             {
               "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
-              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=1&sortBy=createdUtc&sortOrder=asc",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20statusName%20eq%20Completed%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=1&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
@@ -2456,7 +2456,7 @@
           "links": [
             {
               "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
-              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20statusName%20eq%20Completed%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 404,
@@ -2485,7 +2485,7 @@
           "links": [
             {
               "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
-              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20statusName%20eq%20Completed%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
@@ -2552,7 +2552,7 @@
           "links": [
             {
               "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
-              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20statusName%20eq%20Completed%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
@@ -2624,7 +2624,7 @@
           "links": [
             {
               "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
-              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20statusName%20eq%20Completed%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
@@ -2818,7 +2818,7 @@
           "links": [
             {
               "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
-              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20statusName%20eq%20Completed%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
@@ -2863,7 +2863,7 @@
           "links": [
             {
               "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
-              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=1&sortBy=createdUtc&sortOrder=asc",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20statusName%20eq%20Completed%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=1&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
@@ -3057,7 +3057,7 @@
           "links": [
             {
               "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
-              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20statusName%20eq%20Completed%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 404,
@@ -3085,7 +3085,7 @@
           "links": [
             {
               "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
-              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20statusName%20eq%20Completed%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
@@ -3151,7 +3151,7 @@
           "links": [
             {
               "baseUri": "https://ordermanagementreportingdemo.iqmetrix.net",
-              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
+              "uri": "/v1/Reports/OrderList/report?filter=companyId%20eq%2023813%20and%20statusName%20eq%20Completed%20and%20updatedUtc%20gt%202017-05-12T09%3A59%3A59.999Z%20and%20updatedUtc%20lt%202017-05-12T12%3A00%3A00.001Z&page=1&pageSize=5&sortBy=createdUtc&sortOrder=asc",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,

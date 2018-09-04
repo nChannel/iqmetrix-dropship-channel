@@ -34,7 +34,7 @@ module.exports.GetFulfillmentFromQuery = (ncUtil, channelProfile, flowContext, p
   }
 
   async function searchForOrders(queryDoc) {
-    const filters = [`companyId eq ${companyId}`];
+    const filters = [`companyId eq ${companyId}`, "statusName eq Completed"];
     let orders = [];
 
     switch (stub.queryType) {
@@ -75,7 +75,9 @@ module.exports.GetFulfillmentFromQuery = (ncUtil, channelProfile, flowContext, p
     const orders = [];
     for (const remoteId of remoteIds.slice(startIndex, endIndex)) {
       const order = await getOrderDetail(remoteId);
-      order.orderFull = await getOrderFull(order.invoiceNumber);
+      if (order != null) {
+        order.orderFull = await getOrderFull(order.invoiceNumber);
+      }
       orders.push(order);
     }
     return orders;
@@ -87,7 +89,9 @@ module.exports.GetFulfillmentFromQuery = (ncUtil, channelProfile, flowContext, p
     const orders = [];
     for (const row of orderReport.rows) {
       const order = await getOrderDetail(row._id);
-      order.orderFull = await getOrderFull(order.invoiceNumber);
+      if (order != null) {
+        order.orderFull = await getOrderFull(order.invoiceNumber);
+      }
       orders.push(order);
     }
     return orders;
@@ -144,19 +148,31 @@ module.exports.GetFulfillmentFromQuery = (ncUtil, channelProfile, flowContext, p
     );
     logInfo(`Calling: ${req.method} ${req.uri.href}`);
 
-    const resp = await req;
-    stub.out.response.endpointStatusCode = resp.statusCode;
-    stub.out.response.endpointStatusMessage = resp.statusMessage;
-
-    if (resp.timingPhases) {
-      logInfo(`Order detail request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
+    let resp;
+    try {
+      resp = await req;
+    } catch (error) {
+      logWarn(`Failed to get order detail for order '${orderId}': ${error.message}`);
+      resp = error.response;
     }
 
-    if (!resp.body || !resp.body.id || !resp.body.invoiceNumber) {
-      throw new TypeError("Order detail response is not in expected format, expected id and invoiceNumber properties.");
+    if (resp != null) {
+      stub.out.response.endpointStatusCode = resp.statusCode;
+      stub.out.response.endpointStatusMessage = resp.statusMessage;
+
+      if (resp.timingPhases) {
+        logInfo(`Order detail request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
+      }
+
+      if (!resp.body || !resp.body.id || !resp.body.invoiceNumber) {
+        logWarn("Order detail response is not in expected format, expected id and invoiceNumber properties.");
+        return null;
+      }
+
+      return resp.body;
     }
 
-    return resp.body;
+    return null;
   }
 
   async function getOrderFull(orderId) {
@@ -174,29 +190,41 @@ module.exports.GetFulfillmentFromQuery = (ncUtil, channelProfile, flowContext, p
     );
     logInfo(`Calling: ${req.method} ${req.uri.href}`);
 
-    const resp = await req;
-    stub.out.response.endpointStatusCode = resp.statusCode;
-    stub.out.response.endpointStatusMessage = resp.statusMessage;
-
-    if (resp.timingPhases) {
-      logInfo(`Order full details request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
+    let resp;
+    try {
+      resp = await req;
+    } catch (error) {
+      logWarn(`Failed to get order full details for order '${orderId}': ${error.message}`);
+      resp = error.response;
     }
 
-    if (!nc.isArray(resp.body) || resp.body.length > 1) {
-      throw new TypeError(
-        "Order full details response is not in expected format, expected an array with 1 or 0 objects."
-      );
+    if (resp != null) {
+      stub.out.response.endpointStatusCode = resp.statusCode;
+      stub.out.response.endpointStatusMessage = resp.statusMessage;
+
+      if (resp.timingPhases) {
+        logInfo(`Order full details request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
+      }
+
+      if (!nc.isArray(resp.body) || resp.body.length > 1) {
+        logWarn("Order full details response is not in expected format, expected an array with 1 or 0 objects.");
+        return null;
+      }
+
+      if (resp.body.length === 0) {
+        logWarn("Order full details response did not contain any results.");
+        return null;
+      }
+
+      if (resp.body.length > 1) {
+        logWarn("Order full details response contains multiple results.");
+        return null;
+      }
+
+      return resp.body[0];
     }
 
-    if (resp.body.length === 0) {
-      throw new TypeError("Order full details response did not contain any results.");
-    }
-
-    if (resp.body.length > 1) {
-      throw new TypeError("Order full details response contains multiple results.");
-    }
-
-    return resp.body[0];
+    return null;
   }
 
   async function buildResponseObject(orderFulfillments) {
