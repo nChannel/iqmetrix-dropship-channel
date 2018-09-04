@@ -1,5 +1,5 @@
 {
-  "name": "iQmetrix DropShip Get Fulfillment Schema",
+  "name": "iQmetrix DropShip Get PaymentCapture Schema",
   "schemaDef": {
     "$schema": "http://json-schema.org/draft-06/schema#",
     "type": "object",
@@ -214,162 +214,145 @@
       "orderFull": {
         "type": "object",
         "properties": {
-          "Items": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "ItemExtensions": {
-                  "type": "array"
-                },
-                "Id": {
-                  "type": "string"
-                },
-                "OrderId": {
-                  "type": "string"
-                },
-                "ItemTypeId": {
-                  "type": "number"
-                },
-                "ItemType": {
-                  "type": "string"
-                },
-                "ItemStatusId": {
-                  "type": "number"
-                },
-                "ItemStatus": {
-                  "type": "string"
-                },
-                "ProductId": {
-                  "type": "string"
-                },
-                "SupplierEntityId": {
-                  "type": "number"
-                },
-                "Quantity": {
-                  "type": "number"
-                },
-                "Cost": {
-                  "type": "number"
-                },
-                "ListPrice": {
-                  "type": "number"
-                },
-                "SellingPrice": {
-                  "type": "number"
-                },
-                "Index": {
-                  "type": "number"
-                },
-                "Description": {
-                  "type": "string"
-                },
-                "SKU": {
-                  "type": "string"
-                },
-                "Notes": {
-                  "type": "null"
-                },
-                "SerialNumbers": {
-                  "type": "array"
-                },
-                "SupplierReference": {
-                  "type": "null"
-                },
-                "TrackingInformation": {
-                  "type": "array"
-                },
-                "ShippingOptionId": {
-                  "type": "string"
-                },
-                "DeliveryRemarks": {
-                  "type": "null"
-                },
-                "DeliveryDate": {
-                  "type": "null"
-                }
-              }
-            }
-          },
           "Id": {
             "type": "string"
           },
-          "OrderTypeId": {
+          "DateCreatedUtc": {
+            "type": "string"
+          },
+          "DateInsertedUtc": {
+            "type": "string"
+          },
+          "DateUpdatedUtc": {
+            "type": "string"
+          },
+          "CompanyId": {
             "type": "number"
           },
-          "OrderType": {
-            "type": "string"
-          },
-          "State": {
-            "type": "string"
-          },
-          "PrintableId": {
-            "type": "string"
-          },
-          "Name": {
-            "type": "string"
-          },
-          "TenderId": {
-            "type": "string"
-          },
-          "TenderOrigin": {
-            "type": "null"
-          },
-          "SourceId": {
-            "type": "null"
-          },
-          "SourceName": {
-            "type": "null"
-          },
-          "OrderReference": {
-            "type": "string"
-          },
-          "EntityId": {
-            "type": "number"
-          },
-          "ShippingEntityId": {
+          "LocationId": {
             "type": "number"
           },
           "CustomerId": {
             "type": "string"
           },
-          "BillingCustomerId": {
-            "type": "string"
+          "ExpiryDateUtc": {
+            "type": "null"
           },
-          "ShippingCustomerId": {
-            "type": "string"
+          "Items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "LineNumber": {
+                  "type": "number"
+                },
+                "ProductCatalogId": {
+                  "type": "string"
+                },
+                "Quantity": {
+                  "type": "number"
+                },
+                "Price": {
+                  "type": "number"
+                },
+                "PricingTermId": {
+                  "type": "null"
+                },
+                "CorrelationId": {
+                  "type": "string"
+                },
+                "ItemType": {
+                  "type": "string"
+                },
+                "SupplierEntityId": {
+                  "type": "number"
+                },
+                "SerialNumber": {
+                  "type": "null"
+                },
+                "TaxLineItems": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "TaxName": {
+                        "type": "string"
+                      },
+                      "TaxableAmount": {
+                        "type": "number"
+                      },
+                      "Rate": {
+                        "type": "number"
+                      },
+                      "Tax": {
+                        "type": "number"
+                      },
+                      "IqTaxServiceId": {
+                        "type": "null"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
-          "ShippingAddressId": {
+          "Payments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Id": {
+                  "type": "string"
+                },
+                "AuthCode": {
+                  "type": "null"
+                },
+                "TransactionNumber": {
+                  "type": "null"
+                },
+                "Token": {
+                  "type": "null"
+                },
+                "Amount": {
+                  "type": "number"
+                },
+                "PaymentMethodId": {
+                  "type": "string"
+                },
+                "CorrelationId": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "TaxCalculationResultId": {
             "type": "string"
           },
           "BillingAddressId": {
             "type": "string"
           },
-          "EmployeeId": {
-            "type": "number"
-          },
-          "DiscountCode": {
-            "type": "null"
-          },
-          "DiscountDescription": {
-            "type": "null"
-          },
-          "DiscountAmount": {
-            "type": "number"
-          },
-          "CreatedDateUtc": {
+          "ShippingAddressId": {
             "type": "string"
           },
-          "OrderExpiryHours": {
-            "type": "number"
-          },
-          "OrderExpiryDate": {
+          "PrintableId": {
             "type": "string"
+          },
+          "DropshipOrderId": {
+            "type": "string"
+          },
+          "UserId": {
+            "type": "null"
+          },
+          "ShippingLineItems": {
+            "type": "array"
+          },
+          "DiscountLineItems": {
+            "type": "array"
           }
         }
       }
     }
   },
-  "tags": ["iQmetrix", "Fulfillment", "Get", "OrderDetails", "Dropship"],
+  "tags": ["iQmetrix", "PaymentCapture", "Get", "OrderDetails", "Dropship"],
   "audit": {}
 }
