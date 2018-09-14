@@ -34,7 +34,7 @@ module.exports.GetFulfillmentFromQuery = (ncUtil, channelProfile, flowContext, p
   }
 
   async function searchForOrders(queryDoc) {
-    const filters = [`companyId eq ${companyId}`, "statusName eq Completed"];
+    const filters = [`companyId eq ${companyId}`, "statusName eq Completed", `locationId eq ${stub.channelProfile.channelAuthValues.location_id}`];
     let orders = [];
 
     switch (stub.queryType) {
