@@ -2,7 +2,7 @@ module.exports.GetPaymentCaptureFromQuery = (ncUtil, channelProfile, flowContext
   const stubName = "GetPaymentCaptureFromQuery";
   const referenceLocations = ["paymentCaptureBusinessReferences"];
   const nc = require("./util/ncUtils");
-  let companyId, page, pageSize, totalResults;
+  let companyId, locationId, page, pageSize, totalResults;
   const stub = new nc.Stub(stubName, referenceLocations, ncUtil, channelProfile, flowContext, payload, callback);
 
   initializeStubFunction()
@@ -27,6 +27,7 @@ module.exports.GetPaymentCaptureFromQuery = (ncUtil, channelProfile, flowContext
     logInfo("Stub function is valid.");
 
     companyId = stub.channelProfile.channelAuthValues.company_id;
+    locationId = stub.channelProfile.channelAuthValues.location_id;
     page = stub.payload.doc.page;
     pageSize = stub.payload.doc.pageSize;
 
@@ -34,7 +35,7 @@ module.exports.GetPaymentCaptureFromQuery = (ncUtil, channelProfile, flowContext
   }
 
   async function searchForOrders(queryDoc) {
-    const filters = [`companyId eq ${companyId}`, "statusName eq Completed"];
+    const filters = [`companyId eq ${companyId}`, "statusName eq Completed", `locationId eq ${locationId}`];
     let orders = [];
 
     switch (stub.queryType) {
