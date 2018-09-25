@@ -1,5 +1,4 @@
 const requestPromise = require("request-promise");
-const requestDebug = require("request-debug");
 const jsonata = require("jsonata");
 const moment = require("moment");
 
@@ -41,7 +40,8 @@ class Stub {
                 resolveWithFullResponse: true
             };
 
-            requestDebug(this.requestPromise, (type, data) => {
+            this.requestDebug = require("request-debug");
+            this.requestDebug(this.requestPromise, (type, data) => {
                 if (data && (!data.headers || data.headers.host !== "localhost:4")) {
                     this.logDebug(
                         `${type}: ${JSON.stringify(data, (key, value) => {
