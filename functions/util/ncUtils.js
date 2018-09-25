@@ -1,5 +1,4 @@
 const requestPromise = require("request-promise");
-const requestDebug = require("request-debug");
 const jsonata = require("jsonata");
 const moment = require("moment");
 
@@ -19,6 +18,19 @@ class Stub {
         };
         this.queryType = null;
         this.messages = [];
+
+        try {
+            this.hash = require("crypto")
+                .createHash("md5")
+                .update(JSON.stringify(arguments))
+                .digest("hex")
+                .slice(-8);
+            this.hash = this.hash + `-${(Math.random() + 46656).toString(36).slice(-4)}`;
+        } catch (error) {
+            this.hash = `${Date.now()
+                .toString(36)
+                .slice(-8)}-${(Math.random() + 46656).toString(36).slice(-4)}`;
+        }
 
         this.logInfo(`Beginning ${this.name}...`);
 
@@ -41,7 +53,8 @@ class Stub {
                 resolveWithFullResponse: true
             };
 
-            requestDebug(this.requestPromise, (type, data) => {
+            this.requestDebug = require("request-debug");
+            this.requestDebug(this.requestPromise, (type, data) => {
                 if (data && (!data.headers || data.headers.host !== "localhost:4")) {
                     this.logDebug(
                         `${type}: ${JSON.stringify(data, (key, value) => {
@@ -66,7 +79,7 @@ class Stub {
     }
 
     log(msg, level = "info") {
-        let prefix = `${new Date().toISOString()} [${level}]`;
+        let prefix = `[${this.hash}] ${new Date().toISOString()} [${level}]`;
         if (isNonEmptyString(this.name)) {
             prefix = `${prefix} ${this.name}`;
         }
@@ -90,7 +103,7 @@ class Stub {
     }
 
     validateCallback() {
-        this.logDebug(`Validating callback: ${this.callback}`);
+        this.logDebug("Validating callback...");
 
         // Fail immediately if the callback function is missing or invalid.
         if (!isFunction(this.callback)) {

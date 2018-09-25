@@ -252,7 +252,7 @@ module.exports.GetFulfillmentFromQuery = (ncUtil, channelProfile, flowContext, p
       stub.out.ncStatusCode = page * pageSize <= totalResults ? 206 : 200;
     } else {
       logInfo("No order fulfillments found.");
-      stub.out.ncStatusCode = 204;
+      stub.out.ncStatusCode = page * pageSize <= totalResults ? 206 : 204;
     }
 
     return stub.out;
