@@ -90,7 +90,7 @@ class Stub {
     }
 
     validateCallback() {
-        this.logDebug(`Validating callback: ${this.callback}`);
+        this.logDebug("Validating callback...");
 
         // Fail immediately if the callback function is missing or invalid.
         if (!isFunction(this.callback)) {
