@@ -19,6 +19,19 @@ class Stub {
         this.queryType = null;
         this.messages = [];
 
+        try {
+            this.hash = require("crypto")
+                .createHash("md5")
+                .update(JSON.stringify(arguments))
+                .digest("hex")
+                .slice(-8);
+            this.hash = this.hash + `-${(Math.random() + 46656).toString(36).slice(-4)}`;
+        } catch (error) {
+            this.hash = `${Date.now()
+                .toString(36)
+                .slice(-8)}-${(Math.random() + 46656).toString(36).slice(-4)}`;
+        }
+
         this.logInfo(`Beginning ${this.name}...`);
 
         this.validateCallback();
@@ -66,7 +79,7 @@ class Stub {
     }
 
     log(msg, level = "info") {
-        let prefix = `${new Date().toISOString()} [${level}]`;
+        let prefix = `[${this.hash}] ${new Date().toISOString()} [${level}]`;
         if (isNonEmptyString(this.name)) {
             prefix = `${prefix} ${this.name}`;
         }
