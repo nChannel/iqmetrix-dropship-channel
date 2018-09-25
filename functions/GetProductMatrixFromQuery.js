@@ -501,7 +501,7 @@ module.exports.GetProductMatrixFromQuery = (ncUtil, channelProfile, flowContext,
       stub.out.ncStatusCode = page * pageSize <= totalResults ? 206 : 200;
     } else {
       logInfo("No products found.");
-      stub.out.ncStatusCode = 204;
+      stub.out.ncStatusCode = page * pageSize <= totalResults ? 206 : 204;
     }
 
     return stub.out;

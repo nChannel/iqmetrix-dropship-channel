@@ -244,7 +244,7 @@ module.exports.GetPaymentCaptureFromQuery = (ncUtil, channelProfile, flowContext
       stub.out.ncStatusCode = page * pageSize <= totalResults ? 206 : 200;
     } else {
       logInfo("No orders for payment capture found.");
-      stub.out.ncStatusCode = 204;
+      stub.out.ncStatusCode = page * pageSize <= totalResults ? 206 : 204;
     }
 
     return stub.out;
