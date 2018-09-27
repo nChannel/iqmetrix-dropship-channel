@@ -1,4 +1,3 @@
-const requestPromise = require("request-promise");
 const jsonata = require("jsonata");
 const moment = require("moment");
 
@@ -41,7 +40,7 @@ class Stub {
         this.validatePayload();
 
         if (this.isValid) {
-            this.requestPromise = requestPromise;
+            this.requestPromise = require("request-promise");
             this.requestDefaults = {
                 auth: {
                     bearer: this.channelProfile.channelAuthValues.access_token
