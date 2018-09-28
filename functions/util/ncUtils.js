@@ -41,7 +41,9 @@ class Stub {
         this.validatePayload();
 
         if (this.isValid) {
+            const initialChildren = module.children.slice(); // Creates a shallow copy of the array
             this.requestPromise = stealthyRequire(require.cache, () => require("request-promise"));
+            module.children = initialChildren; // Restore original array (prevents memory leak due to module.children holding a reference to each copy of request-promise, preventing it from being garbage collected)
             this.requestDefaults = {
                 auth: {
                     bearer: this.channelProfile.channelAuthValues.access_token
