@@ -105,10 +105,13 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
   }
 
   async function getDetails(supplierAvailabilities, subscriptionList) {
-    logInfo(`SupplierAvailabilities count: ${supplierAvailabilities.length}`);
     const availableSkus = [];
     let vendorSkuDetails = [];
+    let i = 0;
+    const total = supplierAvailabilities.length;
+    logInfo(`SupplierAvailabilities count: ${total}`);
     for (const a of supplierAvailabilities) {
+      logInfo(`Getting details for item ${++i} of ${total}...`);
       let result = await getVendorSkuDetails(a, subscriptionList.listId);
       vendorSkuDetails.push(result);
     }
@@ -153,8 +156,6 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
       throw new TypeError("Response is not in expected format, expected an array of availability objects.");
     }
 
-    logInfo(`x-ratelimit-remaining: ${resp.headers["x-ratelimit-remaining"]}`);
-
     return resp.body;
   }
 
@@ -187,8 +188,6 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
     if (!resp.body || !nc.isArray(resp.body.SupplierAvailabilities)) {
       throw new TypeError("Response is not in expected format, expected SupplierAvailabilities array.");
     }
-
-    logInfo(`x-ratelimit-remaining: ${resp.headers["x-ratelimit-remaining"]}`);
 
     return resp.body.SupplierAvailabilities;
   }
@@ -235,8 +234,6 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
     if (!nc.isNonEmptyArray(resp.body.Items)) {
       logInfo(`Vendor '${vendorId}' and SKU '${vendorSku}' returned 0 Items.`);
     }
-
-    logInfo(`x-ratelimit-remaining: ${resp.headers["x-ratelimit-remaining"]}`);
 
     return resp.body;
   }
