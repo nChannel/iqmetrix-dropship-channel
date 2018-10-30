@@ -14,7 +14,7 @@ class Stub {
         this.out = {
             ncStatusCode: null,
             response: {},
-            payload: this.name.startsWith("Get") ? [] : {}
+            payload: {}
         };
         this.queryType = null;
         this.messages = [];
