@@ -68,7 +68,7 @@ module.exports.GetCustomerFromQuery = (ncUtil, channelProfile, flowContext, payl
   }
 
   async function remoteIdSearch(queryDoc) {
-    const remoteIds = [...new Set(queryDoc.remoteIDs)];
+    const remoteIds = [...new Set(queryDoc.remoteIDs)].filter(x => x.trim());
     totalResults = remoteIds.length;
 
     const startIndex = (page - 1) * pageSize;
