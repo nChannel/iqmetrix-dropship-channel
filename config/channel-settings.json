@@ -339,6 +339,77 @@
       }
     },
     {
+      "name": "GET CUSTOMER",
+      "description": "GET CUSTOMER",
+      "channelVerb": "GET",
+      "channelNoun": "CUSTOMER",
+      "ruleDef": {
+        "ruleSchema": {},
+        "defaultRuleValues": {}
+      },
+      "configDef": {
+        "configModel": {},
+        "configView": [],
+        "configValues": {}
+      },
+      "documentDef": {
+        "schema": {},
+        "referenceLocation": {
+          "customerBusinessReferences": [
+            "UniqueIdentifier"
+          ],
+          "customerAddressBusinessReferences": [
+            "CustomerId",
+            "StreetAddress1",
+            "StreetAddress2",
+            "Locality",
+            "StateCode",
+            "PostalCode",
+            "CountryCode"
+          ],
+          "customerContactBusinessReferences": [
+            "CustomerId",
+            "ContactMethodCategoryId",
+            "ContactMethodTypeId",
+            "Value"
+          ]
+        },
+        "remoteID": "Id",
+        "businessReferences": [
+          "UniqueIdentifier"
+        ],
+        "children": [
+          {
+            "name": "CUSTOMERADDRESS",
+            "location": "Addresses",
+            "remoteID": "Id",
+            "businessReferences": [
+              "CustomerId",
+              "StreetAddress1",
+              "StreetAddress2",
+              "Locality",
+              "StateCode",
+              "PostalCode",
+              "CountryCode"
+            ]
+          },
+          {
+            "name": "CUSTOMERCONTACT",
+            "location": "ContactMethods",
+            "remoteID": "Id",
+            "businessReferences": [
+              "CustomerId",
+              "ContactMethodCategoryId",
+              "ContactMethodTypeId",
+              "Value"
+            ]
+          }
+        ],
+        "peers": [],
+        "refreshNouns": []
+      }
+    },
+    {
       "name": "PUT CUSTOMER",
       "description": "PUT CUSTOMER",
       "channelVerb": "PUT",
@@ -457,6 +528,7 @@
         "referenceLocation": {
           "customerBusinessReferences": ["UniqueIdentifier"],
           "customerAddressBusinessReferences": [
+            "CustomerId",
             "StreetAddress1",
             "StreetAddress2",
             "Locality",
@@ -464,8 +536,79 @@
             "PostalCode",
             "CountryCode"
           ],
-          "customerContactBusinessReferences": ["ContactMethodCategoryId", "ContactMethodTypeId", "Value"]
+          "customerContactBusinessReferences": ["CustomerId", "ContactMethodCategoryId", "ContactMethodTypeId", "Value"]
         }
+      }
+    },
+    {
+      "name": "REFRESH CUSTOMER",
+      "description": "REFRESH CUSTOMER",
+      "channelVerb": "REFRESH",
+      "channelNoun": "CUSTOMER",
+      "ruleDef": {
+        "ruleSchema": {},
+        "defaultRuleValues": {}
+      },
+      "configDef": {
+        "configModel": {},
+        "configView": [],
+        "configValues": {}
+      },
+      "documentDef": {
+        "schema": {},
+        "referenceLocation": {
+          "customerBusinessReferences": [
+            "UniqueIdentifier"
+          ],
+          "customerAddressBusinessReferences": [
+            "CustomerId",
+            "StreetAddress1",
+            "StreetAddress2",
+            "Locality",
+            "StateCode",
+            "PostalCode",
+            "CountryCode"
+          ],
+          "customerContactBusinessReferences": [
+            "CustomerId",
+            "ContactMethodCategoryId",
+            "ContactMethodTypeId",
+            "Value"
+          ]
+        },
+        "remoteID": "Id",
+        "businessReferences": [
+          "UniqueIdentifier"
+        ],
+        "children": [
+          {
+            "name": "CUSTOMERADDRESS",
+            "location": "Addresses",
+            "remoteID": "Id",
+            "businessReferences": [
+              "CustomerId",
+              "StreetAddress1",
+              "StreetAddress2",
+              "Locality",
+              "StateCode",
+              "PostalCode",
+              "CountryCode"
+            ]
+          },
+          {
+            "name": "CUSTOMERCONTACT",
+            "location": "ContactMethods",
+            "remoteID": "Id",
+            "businessReferences": [
+              "CustomerId",
+              "ContactMethodCategoryId",
+              "ContactMethodTypeId",
+              "Value"
+            ]
+          }
+        ],
+        "peers": [],
+        "refreshNouns": []
       }
     },
     {
@@ -523,6 +666,7 @@
         "schema": {},
         "referenceLocation": {
           "customerAddressBusinessReferences": [
+            "CustomerId",
             "StreetAddress1",
             "StreetAddress2",
             "Locality",
@@ -587,7 +731,7 @@
       "documentDef": {
         "schema": {},
         "referenceLocation": {
-          "customerContactBusinessReferences": ["ContactMethodCategoryId", "ContactMethodTypeId", "Value"]
+          "customerContactBusinessReferences": ["CustomerId", "ContactMethodCategoryId", "ContactMethodTypeId", "Value"]
         }
       }
     }
