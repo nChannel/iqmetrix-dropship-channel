@@ -359,7 +359,6 @@
             "UniqueIdentifier"
           ],
           "customerAddressBusinessReferences": [
-            "CustomerId",
             "StreetAddress1",
             "StreetAddress2",
             "Locality",
@@ -368,7 +367,6 @@
             "CountryCode"
           ],
           "customerContactBusinessReferences": [
-            "CustomerId",
             "ContactMethodCategoryId",
             "ContactMethodTypeId",
             "Value"
@@ -384,7 +382,6 @@
             "location": "Addresses",
             "remoteID": "Id",
             "businessReferences": [
-              "CustomerId",
               "StreetAddress1",
               "StreetAddress2",
               "Locality",
@@ -398,7 +395,6 @@
             "location": "ContactMethods",
             "remoteID": "Id",
             "businessReferences": [
-              "CustomerId",
               "ContactMethodCategoryId",
               "ContactMethodTypeId",
               "Value"
@@ -528,7 +524,6 @@
         "referenceLocation": {
           "customerBusinessReferences": ["UniqueIdentifier"],
           "customerAddressBusinessReferences": [
-            "CustomerId",
             "StreetAddress1",
             "StreetAddress2",
             "Locality",
@@ -536,7 +531,7 @@
             "PostalCode",
             "CountryCode"
           ],
-          "customerContactBusinessReferences": ["CustomerId", "ContactMethodCategoryId", "ContactMethodTypeId", "Value"]
+          "customerContactBusinessReferences": ["ContactMethodCategoryId", "ContactMethodTypeId", "Value"]
         }
       }
     },
@@ -561,7 +556,6 @@
             "UniqueIdentifier"
           ],
           "customerAddressBusinessReferences": [
-            "CustomerId",
             "StreetAddress1",
             "StreetAddress2",
             "Locality",
@@ -570,7 +564,6 @@
             "CountryCode"
           ],
           "customerContactBusinessReferences": [
-            "CustomerId",
             "ContactMethodCategoryId",
             "ContactMethodTypeId",
             "Value"
@@ -586,7 +579,6 @@
             "location": "Addresses",
             "remoteID": "Id",
             "businessReferences": [
-              "CustomerId",
               "StreetAddress1",
               "StreetAddress2",
               "Locality",
@@ -600,7 +592,6 @@
             "location": "ContactMethods",
             "remoteID": "Id",
             "businessReferences": [
-              "CustomerId",
               "ContactMethodCategoryId",
               "ContactMethodTypeId",
               "Value"
@@ -666,7 +657,6 @@
         "schema": {},
         "referenceLocation": {
           "customerAddressBusinessReferences": [
-            "CustomerId",
             "StreetAddress1",
             "StreetAddress2",
             "Locality",
@@ -731,7 +721,7 @@
       "documentDef": {
         "schema": {},
         "referenceLocation": {
-          "customerContactBusinessReferences": ["CustomerId", "ContactMethodCategoryId", "ContactMethodTypeId", "Value"]
+          "customerContactBusinessReferences": ["ContactMethodCategoryId", "ContactMethodTypeId", "Value"]
         }
       }
     }
