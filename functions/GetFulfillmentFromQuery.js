@@ -69,7 +69,7 @@ module.exports.GetFulfillmentFromQuery = (ncUtil, channelProfile, flowContext, p
   }
 
   async function remoteIdSearch(remoteIds) {
-    remoteIds = [...new Set(remoteIds)];
+    remoteIds = [...new Set(remoteIds)].filter(x => x.trim());
     totalResults = remoteIds.length;
     const startIndex = (page - 1) * pageSize;
     const endIndex = page * pageSize;

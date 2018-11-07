@@ -1849,153 +1849,278 @@
         {
           "ncStatusCode": 200,
           "payload": {
-            "doc": {}
+            "doc": {
+              "modifiedDateRange": {
+                "startDateGMT": "2017-05-12T10:00:00.000Z",
+                "endDateGMT": "2017-05-12T12:00:00.000Z"
+              },
+              "page": 1,
+              "pageSize": 5
+            }
           },
-          "baseUri": "https://localhost",
+          "baseUri": "https://crmdemo.iqmetrix.net/v1",
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/",
+              "baseUri": "https://crmdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/CustomerFull?%24filter=LastModifiedDateUtc%20ge%20datetime%272017-05-12T10%3A00%3A00.000Z%27&%24skip=0&%24top=5",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
-              "responsePayload": {
-                "customers": [
-                  {
-                    "id": 1073339459,
-                    "email": "derek.boytim@nchannel.com"
-                  }
-                ]
-              }
+              "responsePayload": [
+                {
+                  "Id": "1111"
+                },
+                {
+                  "Id": "2222"
+                }
+              ]
             }
           ],
           "channelProfile": {
-            "customerBusinessReferences": ["email"]
+            "customerBusinessReferences": [
+              "UniqueIdentifier"
+            ],
+            "customerAddressBusinessReferences": [
+              "CustomerId",
+              "StreetAddress1",
+              "StreetAddress2",
+              "Locality",
+              "StateCode",
+              "PostalCode",
+              "CountryCode"
+            ],
+            "customerContactBusinessReferences": [
+              "CustomerId",
+              "ContactMethodCategoryId",
+              "ContactMethodTypeId",
+              "Value"
+            ]
           }
         },
         {
           "ncStatusCode": 204,
           "payload": {
             "doc": {
-              "customer": {
-                "email": "derek.boytim@nchannel.com"
-              }
+              "modifiedDateRange": {
+                "startDateGMT": "2017-05-12T10:00:00.000Z",
+                "endDateGMT": "2017-05-12T12:00:00.000Z"
+              },
+              "page": 1,
+              "pageSize": 5
             }
           },
-          "baseUri": "https://localhost",
+          "baseUri": "https://crmdemo.iqmetrix.net/v1",
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/",
+              "baseUri": "https://crmdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/CustomerFull?%24filter=LastModifiedDateUtc%20ge%20datetime%272017-05-12T10%3A00%3A00.000Z%27&%24skip=0&%24top=5",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
-              "responsePayload": {
-                "customers": []
-              }
+              "responsePayload": []
             }
           ],
           "channelProfile": {
-            "customerBusinessReferences": ["email"]
+            "customerBusinessReferences": [
+              "UniqueIdentifier"
+            ],
+            "customerAddressBusinessReferences": [
+              "CustomerId",
+              "StreetAddress1",
+              "StreetAddress2",
+              "Locality",
+              "StateCode",
+              "PostalCode",
+              "CountryCode"
+            ],
+            "customerContactBusinessReferences": [
+              "CustomerId",
+              "ContactMethodCategoryId",
+              "ContactMethodTypeId",
+              "Value"
+            ]
           }
         },
         {
           "ncStatusCode": 206,
           "payload": {
             "doc": {
+              "remoteIDs": ["1111","2222"],
+              "page": 1,
               "pageSize": 2
             }
           },
-          "baseUri": "https://localhost",
+          "baseUri": "https://crmdemo.iqmetrix.net/v1",
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/",
+              "baseUri": "https://crmdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/CustomerFull(1111)",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 200,
               "responsePayload": {
-                "customers": [
-                  {
-                    "id": 1073339459,
-                    "email": "derek.boytim@nchannel.com"
-                  },
-                  {
-                    "id": 1073339459,
-                    "email": "derek.boytim@nchannel.com"
-                  }
-                ]
+                "Id": "1111"
+              }
+            },
+            {
+              "baseUri": "https://crmdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/CustomerFull(2222)",
+              "method": "GET",
+              "replyHeaders": {},
+              "statusCode": 200,
+              "responsePayload": {
+                "Id": "2222"
               }
             }
           ],
           "channelProfile": {
-            "customerBusinessReferences": ["email"]
+            "customerBusinessReferences": [
+              "UniqueIdentifier"
+            ],
+            "customerAddressBusinessReferences": [
+              "CustomerId",
+              "StreetAddress1",
+              "StreetAddress2",
+              "Locality",
+              "StateCode",
+              "PostalCode",
+              "CountryCode"
+            ],
+            "customerContactBusinessReferences": [
+              "CustomerId",
+              "ContactMethodCategoryId",
+              "ContactMethodTypeId",
+              "Value"
+            ]
           }
         },
         {
           "ncStatusCode": 400,
           "payload": {
-            "doc": {}
+            "doc": {
+              "remoteIDs": ["1111"],
+              "page": 1,
+              "pageSize": 5
+            }
           },
-          "baseUri": "https://localhost",
+          "baseUri": "https://crmdemo.iqmetrix.net/v1",
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/",
+              "baseUri": "https://crmdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/CustomerFull(1111)",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 401,
-              "responsePayload": {
-                "customers": []
-              }
+              "responsePayload": {}
             }
           ],
           "channelProfile": {
-            "customerBusinessReferences": ["email"]
+            "customerBusinessReferences": [
+              "UniqueIdentifier"
+            ],
+            "customerAddressBusinessReferences": [
+              "CustomerId",
+              "StreetAddress1",
+              "StreetAddress2",
+              "Locality",
+              "StateCode",
+              "PostalCode",
+              "CountryCode"
+            ],
+            "customerContactBusinessReferences": [
+              "CustomerId",
+              "ContactMethodCategoryId",
+              "ContactMethodTypeId",
+              "Value"
+            ]
           }
         },
         {
           "ncStatusCode": 429,
           "payload": {
-            "doc": {}
+            "doc": {
+              "remoteIDs": ["1111"],
+              "page": 1,
+              "pageSize": 5
+            }
           },
-          "baseUri": "https://localhost",
+          "baseUri": "https://crmdemo.iqmetrix.net/v1",
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/",
+              "baseUri": "https://crmdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/CustomerFull(1111)",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 429,
-              "responsePayload": {
-                "customers": []
-              }
+              "responsePayload": {}
             }
           ],
           "channelProfile": {
-            "customerBusinessReferences": ["email"]
+            "customerBusinessReferences": [
+              "UniqueIdentifier"
+            ],
+            "customerAddressBusinessReferences": [
+              "CustomerId",
+              "StreetAddress1",
+              "StreetAddress2",
+              "Locality",
+              "StateCode",
+              "PostalCode",
+              "CountryCode"
+            ],
+            "customerContactBusinessReferences": [
+              "CustomerId",
+              "ContactMethodCategoryId",
+              "ContactMethodTypeId",
+              "Value"
+            ]
           }
         },
         {
           "ncStatusCode": 500,
           "payload": {
-            "doc": {}
+            "doc": {
+              "remoteIDs": ["1111"],
+              "page": 1,
+              "pageSize": 5
+            }
           },
-          "baseUri": "https://localhost",
+          "baseUri": "https://crmdemo.iqmetrix.net/v1",
           "defaultHeaders": {},
           "links": [
             {
-              "uri": "/",
+              "baseUri": "https://crmdemo.iqmetrix.net",
+              "uri": "/v1/Companies(23813)/CustomerFull(1111)",
               "method": "GET",
               "replyHeaders": {},
               "statusCode": 500,
-              "responsePayload": {
-                "customers": []
-              }
+              "responsePayload": {}
             }
           ],
           "channelProfile": {
-            "customerBusinessReferences": ["email"]
+            "customerBusinessReferences": [
+              "UniqueIdentifier"
+            ],
+            "customerAddressBusinessReferences": [
+              "CustomerId",
+              "StreetAddress1",
+              "StreetAddress2",
+              "Locality",
+              "StateCode",
+              "PostalCode",
+              "CountryCode"
+            ],
+            "customerContactBusinessReferences": [
+              "CustomerId",
+              "ContactMethodCategoryId",
+              "ContactMethodTypeId",
+              "Value"
+            ]
           }
         }
       ]

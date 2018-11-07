@@ -89,6 +89,7 @@ module.exports.GetProductSimpleFromQuery = (ncUtil, channelProfile, flowContext,
 
     async function remoteIdSearch(queryDoc) {
         // search for remote ids.
+        queryDoc.remoteIDs = [...new Set(queryDoc.remoteIDs)].filter(x => x.trim());
         totalResults = queryDoc.remoteIDs.length;
         const startIndex = (page - 1) * pageSize;
         const endIndex = page * pageSize;
