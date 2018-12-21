@@ -1,253 +1,213 @@
-function InsertSalesOrder(ncUtil, channelProfile, flowContext, payload, callback) {
-    const nc = require("./util/ncUtils");
-    const referenceLocations = ["salesOrderBusinessReferences"];
-    const stub = new nc.Stub("InsertSalesOrder", referenceLocations, ...arguments);
+"use strict";
 
-    const response = {
-        dropship: {},
-        process: {},
-        salesOrder: {}
-    };
+module.exports = async function(flowContext, payload) {
+  const output = {
+    statusCode: 400,
+    payload: {},
+    errors: []
+  };
 
-    validateFunction()
-        .then(getCustomerIds)
-        .then(getItemIds)
-        .then(postDropShipOrder)
-        .then(processOrder)
-        .then(postSalesOrder)
-        .then(buildResponseObject)
-        .catch(handleError)
-        .then(() => callback(stub.out))
-        .catch(error => {
-            logError(`The callback function threw an exception: ${error}`);
-            setTimeout(() => {
-                throw error;
-            });
-        });
+  try {
+    await getCustomerIds.bind(this)();
+    await getItemIds.bind(this)();
+    output.payload.DropshipOrder = await postDropShipOrder.bind(this)();
+    output.payload.ProcessResult = await processOrder.bind(this)();
+    output.payload.SalesOrder = await postSalesOrder.bind(this)();
+    output.statusCode = 201;
+    return output;
+  } catch (err) {
+    output.statusCode = this.handleError(err);
+    output.endpointStatusCode = err.statusCode;
+    output.errors.push(err);
+    throw output;
+  }
 
-    function logInfo(msg) {
-        stub.log(msg, "info");
+  async function getCustomerIds() {
+    if (this.isNonEmptyString(payload.billingCustomerRemoteID)) {
+      this.info(`Adding payload.billingCustomerRemoteID [${payload.billingCustomerRemoteID}] to order.`);
+      payload.doc.DropshipOrder.BillingCustomerId = payload.billingCustomerRemoteID || payload.customerRemoteID;
+    }
+    if (this.isNonEmptyString(payload.billingAddressRemoteID)) {
+      this.info(`Adding payload.billingAddressRemoteID [${payload.billingAddressRemoteID}] to order.`);
+      payload.doc.DropshipOrder.BillingAddressId = payload.billingAddressRemoteID;
+      payload.doc.SalesOrder.BillingAddressId = payload.billingAddressRemoteID;
+    }
+    if (this.isNonEmptyString(payload.shippingCustomerRemoteID)) {
+      this.info(`Adding payload.shippingCustomerRemoteID [${payload.shippingCustomerRemoteID}] to order.`);
+      payload.doc.DropshipOrder.ShippingCustomerId = payload.shippingCustomerRemoteID || payload.customerRemoteID;
+    }
+    if (this.isNonEmptyString(payload.shippingAddressRemoteID)) {
+      this.info(`Adding payload.shippingAddressRemoteID [${payload.shippingAddressRemoteID}] to order.`);
+      payload.doc.DropshipOrder.ShippingAddressId = payload.shippingAddressRemoteID;
+      payload.doc.SalesOrder.ShippingAddressId = payload.shippingAddressRemoteID;
+    }
+    if (this.isNonEmptyString(payload.customerRemoteID)) {
+      this.info(`Adding payload.customerRemoteID [${payload.customerRemoteID}] to order.`);
+      payload.doc.SalesOrder.CustomerId = payload.customerRemoteID;
+    }
+  }
+
+  async function getItemIds() {
+    const catalog = [];
+
+    payload.doc.DropshipOrder.Items.forEach(item => {
+      if (catalog.findIndex(cat => cat.vendorSku === item.SKU && cat.supplierId === item.SupplierEntityId) === -1) {
+        catalog.push({ vendorSku: item.SKU, supplierId: item.SupplierEntityId });
+      }
+    });
+    payload.doc.SalesOrder.Items.forEach(item => {
+      if (
+        catalog.findIndex(cat => cat.vendorSku === item.CorrelationId && cat.supplierId === item.SupplierEntityId) ===
+        -1
+      ) {
+        catalog.push({ vendorSku: item.CorrelationId, supplierId: item.SupplierEntityId });
+      }
+    });
+
+    this.info("Getting product catalog ids...");
+    const catalogIds = await Promise.all(catalog.map(getItemId.bind(this)));
+
+    payload.doc.DropshipOrder.Items.forEach(item => {
+      item.ProductId = catalogIds.find(
+        cat => cat.vendorSku === item.SKU && cat.supplierId === item.SupplierEntityId
+      ).catalogId;
+    });
+    payload.doc.SalesOrder.Items.forEach(item => {
+      item.ProductCatalogId = catalogIds.find(
+        cat => cat.vendorSku === item.CorrelationId && cat.supplierId === item.SupplierEntityId
+      ).catalogId;
+    });
+  }
+
+  async function getItemId({ vendorSku, supplierId }) {
+    this.info(`Getting Item Id for vendorSku = '${vendorSku}' and supplierId = '${supplierId}'...`);
+    const req = this.request({
+      method: "GET",
+      baseUrl: this.getBaseUrl("catalogs"),
+      url: `/v1/Companies(${this.company_id})/Catalog/Items/ByVendorSku`,
+      qs: {
+        vendorsku: vendorSku,
+        vendorid: supplierId
+      }
+    });
+
+    const resp = await req;
+    output.endpointStatusCode = resp.statusCode;
+
+    if (resp.timingPhases) {
+      this.info(`Item Id request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
     }
 
-    function logWarn(msg) {
-        stub.log(msg, "warn");
-    }
-
-    function logError(msg) {
-        stub.log(msg, "error");
-    }
-
-    async function validateFunction() {
-        if (stub.messages.length === 0) {
-            if (!nc.isNonEmptyString(stub.channelProfile.channelSettingsValues.canPostInvoice)) {
-                stub.messages.push(
-                    `The channelProfile.channelSettingsValues.canPostInvoice string is ${
-                        stub.channelProfile.channelSettingsValues.canPostInvoice == null ? "missing" : "invalid"
-                    }.`
-                );
-            }
-        }
-
-        if (stub.messages.length > 0) {
-            stub.messages.forEach(msg => logError(msg));
-            stub.out.ncStatusCode = 400;
-            throw new Error(`Invalid request [${stub.messages.join(" ")}]`);
-        }
-
-        logInfo("Function is valid.");
-    }
-
-    async function getCustomerIds() {
-        if (nc.isNonEmptyString(stub.payload.billingCustomerRemoteID)) {
-            logInfo(`Adding payload.billingCustomerRemoteID [${stub.payload.billingCustomerRemoteID}] to order.`);
-            stub.payload.doc.DropshipOrder.BillingCustomerId =
-                stub.payload.billingCustomerRemoteID || stub.payload.customerRemoteID;
-        }
-        if (nc.isNonEmptyString(stub.payload.billingAddressRemoteID)) {
-            logInfo(`Adding payload.billingAddressRemoteID [${stub.payload.billingAddressRemoteID}] to order.`);
-            stub.payload.doc.DropshipOrder.BillingAddressId = stub.payload.billingAddressRemoteID;
-            stub.payload.doc.SalesOrder.BillingAddressId = stub.payload.billingAddressRemoteID;
-        }
-        if (nc.isNonEmptyString(stub.payload.shippingCustomerRemoteID)) {
-            logInfo(`Adding payload.shippingCustomerRemoteID [${stub.payload.shippingCustomerRemoteID}] to order.`);
-            stub.payload.doc.DropshipOrder.ShippingCustomerId =
-                stub.payload.shippingCustomerRemoteID || stub.payload.customerRemoteID;
-        }
-        if (nc.isNonEmptyString(stub.payload.shippingAddressRemoteID)) {
-            logInfo(`Adding payload.shippingAddressRemoteID [${stub.payload.shippingAddressRemoteID}] to order.`);
-            stub.payload.doc.DropshipOrder.ShippingAddressId = stub.payload.shippingAddressRemoteID;
-            stub.payload.doc.SalesOrder.ShippingAddressId = stub.payload.shippingAddressRemoteID;
-        }
-        if (nc.isNonEmptyString(stub.payload.customerRemoteID)) {
-            logInfo(`Adding payload.customerRemoteID [${stub.payload.customerRemoteID}] to order.`);
-            stub.payload.doc.SalesOrder.CustomerId = stub.payload.customerRemoteID;
-        }
-    }
-
-    async function getItemIds() {
-        const catalog = [];
-
-        stub.payload.doc.DropshipOrder.Items.forEach(item => {
-            if (
-                catalog.findIndex(cat => cat.vendorSku === item.SKU && cat.supplierId === item.SupplierEntityId) === -1
-            ) {
-                catalog.push({ vendorSku: item.SKU, supplierId: item.SupplierEntityId });
-            }
-        });
-        stub.payload.doc.SalesOrder.Items.forEach(item => {
-            if (
-                catalog.findIndex(
-                    cat => cat.vendorSku === item.CorrelationId && cat.supplierId === item.SupplierEntityId
-                ) === -1
-            ) {
-                catalog.push({ vendorSku: item.CorrelationId, supplierId: item.SupplierEntityId });
-            }
-        });
-
-        logInfo("Getting product catalog ids...");
-        //catalog.forEach(async cat => {
-        //    cat.catalogId = await getItemId(cat.vendorSku, cat.supplierId);
-        //});
-
-        const catalogIds = await Promise.all(catalog.map(getItemId));
-
-        stub.payload.doc.DropshipOrder.Items.forEach(item => {
-            item.ProductId = catalogIds.find(
-                cat => cat.vendorSku === item.SKU && cat.supplierId === item.SupplierEntityId
-            ).catalogId;
-        });
-        stub.payload.doc.SalesOrder.Items.forEach(item => {
-            item.ProductCatalogId = catalogIds.find(
-                cat => cat.vendorSku === item.CorrelationId && cat.supplierId === item.SupplierEntityId
-            ).catalogId;
-        });
-    }
-
-    async function getItemId({ vendorSku, supplierId }) {
-        const itemResponse = await stub.requestPromise.get(Object.assign({}, stub.requestDefaults, {
-            url: `https://catalogs${stub.channelProfile.channelSettingsValues.environment}.iqmetrix.net/v1/Companies(${
-                stub.channelProfile.channelAuthValues.company_id
-            })/Catalog/Items/ByVendorSku`,
-            qs: {
-                vendorsku: vendorSku,
-                vendorid: supplierId
-            }
-        }));
-
-        if (nc.isArray(itemResponse.body.Items) && itemResponse.body.Items.length > 0) {
-            if (itemResponse.body.Items.length === 1) {
-                logInfo(
-                    `Found catalog id '${
-                        itemResponse.body.Items[0].CatalogItemId
-                    }' for vendorSku = '${vendorSku}' supplierId = '${supplierId}'`
-                );
-                return {
-                    catalogId: itemResponse.body.Items[0].CatalogItemId,
-                    vendorSku: vendorSku,
-                    supplierId: supplierId
-                };
-            } else {
-                throw new Error(
-                    `Found multiple catalog ids for vendorSku = '${vendorSku}' supplierId = '${supplierId}'.  Response: ${
-                        itemResponse.body
-                    }`
-                );
-            }
-        } else {
-            throw new Error(
-                `Unable to find catalog id for vendorSku = '${vendorSku}' and supplierId = '${supplierId}'.  Response: ${
-                    itemResponse.body
-                }`
-            );
-        }
-    }
-
-    async function postDropShipOrder() {
-        try {
-            logInfo("Posting dropship order...");
-            response.dropship = await stub.requestPromise.post(Object.assign({}, stub.requestDefaults, {
-                url: `https://order${stub.channelProfile.channelSettingsValues.environment}.iqmetrix.net/v1/Companies(${
-                    stub.channelProfile.channelAuthValues.company_id
-                })/OrderFull`,
-                body: stub.payload.doc.DropshipOrder
-            }));
-            logInfo(`Successfully posted dropship order (id = ${response.dropship.body.Id}).`);
-        } catch (error) {
-            logError("Error posting dropship order.");
-            throw error;
-        }
-    }
-
-    async function processOrder() {
-        try {
-            logInfo("Processing dropship order...");
-            response.process = await stub.requestPromise.post(Object.assign({}, stub.requestDefaults, {
-                url: `https://order${stub.channelProfile.channelSettingsValues.environment}.iqmetrix.net/v1/Companies(${
-                    stub.channelProfile.channelAuthValues.company_id
-                })/Orders(${response.dropship.body.Id})/Process`,
-                body: {
-                    OrderId: response.dropship.body.Id
-                }
-            }));
-            logInfo(`Successfully processed dropship order (id = ${response.process.body.Id}).`);
-        } catch (error) {
-            logError("Error processing dropship order.");
-            stub.out.ncStatusCode = 500;
-            throw error;
-        }
-    }
-
-    async function postSalesOrder() {
-        try {
-            logInfo("Posting sales order...");
-            stub.payload.doc.SalesOrder.DropshipOrderId = response.dropship.body.Id;
-            response.salesOrder = await stub.requestPromise.post(Object.assign({}, stub.requestDefaults, {
-                url: `https://salesorder${
-                    stub.channelProfile.channelSettingsValues.environment
-                }.iqmetrix.net/v1/Companies(${stub.channelProfile.channelAuthValues.company_id})/${
-                    stub.channelProfile.channelSettingsValues.canPostInvoice
-                }`,
-                body: stub.payload.doc.SalesOrder
-            }));
-            logInfo(`Successfully posted sales order (id = ${response.salesOrder.body.Id}).`);
-        } catch (error) {
-            logError("Error posting sales order.");
-            stub.out.ncStatusCode = 500;
-            throw error;
-        }
-    }
-
-    async function buildResponseObject() {
-        stub.out.response.endpointStatusCode = response.dropship.statusCode;
-        stub.out.ncStatusCode = response.dropship.statusCode;
-        stub.out.payload.salesOrderRemoteID = response.dropship.body.Id;
-        stub.out.payload.salesOrderBusinessReference = nc.extractBusinessReferences(
-            stub.channelProfile.salesOrderBusinessReferences,
-            { DropshipOrder: response.dropship.body }
+    if (this.isArray(resp.body.Items) && resp.body.Items.length > 0) {
+      if (resp.body.Items.length === 1) {
+        this.info(
+          `Found catalog id '${
+            resp.body.Items[0].CatalogItemId
+          }' for vendorSku = '${vendorSku}' and supplierId = '${supplierId}'`
         );
+        return {
+          catalogId: resp.body.Items[0].CatalogItemId,
+          vendorSku: vendorSku,
+          supplierId: supplierId
+        };
+      } else {
+        throw new Error(
+          `Found multiple catalog ids for vendorSku = '${vendorSku}' supplierId = '${supplierId}'.  Response: ${
+            resp.body
+          }`
+        );
+      }
+    } else {
+      throw new Error(
+        `Unable to find catalog id for vendorSku = '${vendorSku}' and supplierId = '${supplierId}'.  Response: ${
+          resp.body
+        }`
+      );
     }
+  }
 
-    async function handleError(error) {
-        logError(error);
-        if (error.name === "StatusCodeError") {
-            stub.out.response.endpointStatusCode = error.statusCode;
-            stub.out.response.endpointStatusMessage = error.message;
-            if (!stub.out.ncStatusCode){
-                if (error.statusCode >= 500) {
-                    stub.out.ncStatusCode = 500;
-                }
-                else if (error.statusCode === 429) {
-                    logWarn("Request was throttled.");
-                    stub.out.ncStatusCode = 429;
-                }
-                else {
-                    stub.out.ncStatusCode = 400;
-                }
-            }
+  async function postDropShipOrder() {
+    try {
+      this.info("Posting dropship order...");
+
+      const req = this.request({
+        method: "POST",
+        baseUrl: this.getBaseUrl("order"),
+        url: `/v1/Companies(${this.company_id})/OrderFull`,
+        body: payload.doc.DropshipOrder
+      });
+
+      const resp = await req;
+      output.endpointStatusCode = resp.statusCode;
+
+      if (resp.timingPhases) {
+        this.info(`Posting dropship order request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
+      }
+
+      this.info(`Successfully posted dropship order (id = ${resp.body.Id}).`);
+      return resp.body;
+    } catch (error) {
+      this.error("Error posting dropship order.");
+      throw error;
+    }
+  }
+
+  async function processOrder() {
+    try {
+      this.info("Processing dropship order...");
+
+      const req = this.request({
+        method: "POST",
+        baseUrl: this.getBaseUrl("order"),
+        url: `/v1/Companies(${this.company_id})/Orders(${output.payload.DropshipOrder.Id})/Process`,
+        body: {
+          OrderId: output.payload.DropshipOrder.Id
         }
-        stub.out.payload.error = error;
-        stub.out.ncStatusCode = stub.out.ncStatusCode || 500;
-    }
-}
+      });
 
-module.exports.InsertSalesOrder = InsertSalesOrder;
+      const resp = await req;
+      output.endpointStatusCode = resp.statusCode;
+
+      if (resp.timingPhases) {
+        this.info(
+          `Processing dropship order request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`
+        );
+      }
+
+      this.info(`Successfully processed dropship order (id = ${resp.body.Id}).`);
+      return resp.body;
+    } catch (error) {
+      this.error("Error processing dropship order.");
+      error.statusCode = 400;
+      throw error;
+    }
+  }
+
+  async function postSalesOrder() {
+    try {
+      this.info("Posting sales order...");
+      payload.doc.SalesOrder.DropshipOrderId = output.payload.DropshipOrder.Id;
+
+      const req = this.request({
+        method: "POST",
+        baseUrl: this.getBaseUrl("salesorder"),
+        url: `/v1/Companies(${this.company_id})/${this.canPostInvoice}`,
+        body: payload.doc.SalesOrder
+      });
+
+      const resp = await req;
+      output.endpointStatusCode = resp.statusCode;
+
+      if (resp.timingPhases) {
+        this.info(`Posting sales order request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
+      }
+
+      this.info(`Successfully posted sales order (id = ${resp.body.Id}).`);
+      return resp.body;
+    } catch (error) {
+      this.error("Error posting sales order.");
+      error.statusCode = 400;
+      throw error;
+    }
+  }
+};

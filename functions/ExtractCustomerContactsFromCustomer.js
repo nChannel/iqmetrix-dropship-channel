@@ -1,63 +1,30 @@
-function ExtractCustomerContactsFromCustomer(ncUtil, channelProfile, flowContext, payload, callback) {
-    const nc = require("./util/ncUtils");
-    const referenceLocations = ["customerBusinessReferences"];
-    const stub = new nc.Stub("ExtractCustomerContactsFromCustomer", referenceLocations, ...arguments);
+"use strict";
 
-    validateFunction()
-        .then(extractCustomerContacts)
-        .catch(handleError)
-        .then(() => callback(stub.out))
-        .catch(error => {
-            logError(`The callback function threw an exception: ${error}`);
-            setTimeout(() => {
-                throw error;
-            });
-        });
+module.exports = async function(flowContext, payload) {
+  const output = {
+    statusCode: 400,
+    payload: [],
+    errors: []
+  };
 
-    function logInfo(msg) {
-        stub.log(msg, "info");
+  try {
+    this.info("Extracting customer contact methods from customer...");
+    if (this.isNonEmptyArray(payload.doc.ContactMethods)) {
+      // Enrich customer contact documents with customer remote id.
+      payload.doc.ContactMethods = payload.doc.ContactMethods.map(contact => {
+        contact.CustomerId = contact.CustomerId || payload.doc.Id || payload.customerRemoteID;
+        return contact;
+      });
+      output.payload = payload.doc.ContactMethods;
+      output.statusCode = 200;
+    } else {
+      this.warn("No customer contact methods found on the customer.");
+      output.statusCode = 204;
     }
-
-    function logWarn(msg) {
-        stub.log(msg, "warn");
-    }
-
-    function logError(msg) {
-        stub.log(msg, "error");
-    }
-
-    async function validateFunction() {
-        if (stub.messages.length > 0) {
-            stub.messages.forEach(msg => logError(msg));
-            stub.out.ncStatusCode = 400;
-            throw new Error(`Invalid request [${stub.messages.join(" ")}]`);
-        }
-        logInfo("Function is valid.");
-    }
-
-    async function extractCustomerContacts() {
-        logInfo("Extracting customer contact methods...");
-
-        if (nc.isNonEmptyArray(stub.payload.doc.ContactMethods)) {
-            stub.out.payload = stub.payload.doc.ContactMethods.map(contactMethod => {
-                return {
-                    doc: contactMethod,
-                    customerRemoteID: stub.payload.customerRemoteID,
-                    customerBusinessReference: stub.payload.customerBusinessReference
-                };
-            });
-            stub.out.ncStatusCode = 200;
-        } else {
-            logWarn("No customer contact methods found.");
-            stub.out.ncStatusCode = 204;
-        }
-    }
-
-    async function handleError(error) {
-        logError(error);
-        stub.out.payload.error = error;
-        stub.out.ncStatusCode = stub.out.ncStatusCode || 500;
-    }
-}
-
-module.exports.ExtractCustomerContactsFromCustomer = ExtractCustomerContactsFromCustomer;
+    return output;
+  } catch (err) {
+    output.statusCode = this.handleError(err);
+    output.errors.push(err);
+    throw output;
+  }
+};

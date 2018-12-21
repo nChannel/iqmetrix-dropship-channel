@@ -1,6 +1,8 @@
 {
+  "sdkVersion": "1",
   "name": "iQmetrix - Drop Ship",
   "description": "The iQmetrix Drop Ship channel provides connectivity to installed instances of iQmetrix Drop Ship via OAuth2/REST connection.",
+  "channelType": "API",
   "channelIcon": "data:image/png;base64,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",
   "definitionFolderName": " ",
   "retailClasses": ["POS"],
@@ -64,10 +66,15 @@
         }
       },
       "documentDef": {
+        "remoteID": "CatalogItemId",
+        "businessReferences": ["Slug"],
         "schema": {},
         "referenceLocation": {
           "productBusinessReferences": ["Slug"]
-        }
+        },
+        "children": [],
+        "peers": [],
+        "refreshNouns": []
       }
     },
     {
@@ -91,10 +98,15 @@
         }
       },
       "documentDef": {
+        "remoteID": "CatalogItemId",
+        "businessReferences": ["VendorSku.Value"],
         "schema": {},
         "referenceLocation": {
           "productPricingBusinessReferences": ["VendorSku.Value"]
-        }
+        },
+        "children": [],
+        "peers": [],
+        "refreshNouns": []
       }
     },
     {
@@ -112,10 +124,15 @@
         "configValues": {}
       },
       "documentDef": {
+        "remoteID": "Id",
+        "businessReferences": ["SupplierEntityId", "SupplierSku"],
         "schema": {},
         "referenceLocation": {
           "productQuantityBusinessReferences": ["SupplierEntityId", "SupplierSku"]
-        }
+        },
+        "children": [],
+        "peers": [],
+        "refreshNouns": []
       }
     },
     {
@@ -279,11 +296,14 @@
         "ruleSchema": {}
       },
       "documentDef": {
+        "remoteID": "DropshipOrder.Id",
+        "businessReferences": ["DropshipOrder.TenderId"],
         "schema": {},
         "referenceLocation": {
           "salesOrderBusinessReferences": ["DropshipOrder.TenderId"],
           "customerBusinessReferences": ["UniqueIdentifier"],
           "customerAddressBusinessReferences": [
+            "CustomerId",
             "StreetAddress1",
             "StreetAddress2",
             "Locality",
@@ -291,8 +311,11 @@
             "PostalCode",
             "CountryCode"
           ],
-          "customerContactBusinessReferences": ["ContactMethodCategoryId", "ContactMethodTypeId", "Value"]
-        }
+          "customerContactBusinessReferences": ["CustomerId", "ContactMethodCategoryId", "ContactMethodTypeId", "Value"]
+        },
+        "children": [],
+        "peers": [],
+        "refreshNouns": []
       }
     },
     {
@@ -310,11 +333,16 @@
         "configValues": {}
       },
       "documentDef": {
+        "remoteID": "id",
+        "businessReferences": ["id"],
         "schema": {},
         "referenceLocation": {
           "fulfillmentBusinessReferences": ["id"],
           "salesOrderBusinessReferences": ["invoiceNumber"]
-        }
+        },
+        "children": [],
+        "peers": [],
+        "refreshNouns": []
       }
     },
     {
@@ -332,10 +360,15 @@
         "configValues": {}
       },
       "documentDef": {
+        "remoteID": "id",
+        "businessReferences": ["id"],
         "schema": {},
         "referenceLocation": {
           "paymentCaptureBusinessReferences": ["id"]
-        }
+        },
+        "children": [],
+        "peers": [],
+        "refreshNouns": []
       }
     },
     {
@@ -355,10 +388,9 @@
       "documentDef": {
         "schema": {},
         "referenceLocation": {
-          "customerBusinessReferences": [
-            "UniqueIdentifier"
-          ],
+          "customerBusinessReferences": ["UniqueIdentifier"],
           "customerAddressBusinessReferences": [
+            "CustomerId",
             "StreetAddress1",
             "StreetAddress2",
             "Locality",
@@ -366,22 +398,17 @@
             "PostalCode",
             "CountryCode"
           ],
-          "customerContactBusinessReferences": [
-            "ContactMethodCategoryId",
-            "ContactMethodTypeId",
-            "Value"
-          ]
+          "customerContactBusinessReferences": ["CustomerId", "ContactMethodCategoryId", "ContactMethodTypeId", "Value"]
         },
         "remoteID": "Id",
-        "businessReferences": [
-          "UniqueIdentifier"
-        ],
+        "businessReferences": ["UniqueIdentifier"],
         "children": [
           {
             "name": "CUSTOMERADDRESS",
             "location": "Addresses",
             "remoteID": "Id",
             "businessReferences": [
+              "CustomerId",
               "StreetAddress1",
               "StreetAddress2",
               "Locality",
@@ -394,11 +421,7 @@
             "name": "CUSTOMERCONTACT",
             "location": "ContactMethods",
             "remoteID": "Id",
-            "businessReferences": [
-              "ContactMethodCategoryId",
-              "ContactMethodTypeId",
-              "Value"
-            ]
+            "businessReferences": ["CustomerId", "ContactMethodCategoryId", "ContactMethodTypeId", "Value"]
           }
         ],
         "peers": [],
@@ -520,10 +543,13 @@
         }
       },
       "documentDef": {
+        "remoteID": "Id",
+        "businessReferences": ["UniqueIdentifier"],
         "schema": {},
         "referenceLocation": {
           "customerBusinessReferences": ["UniqueIdentifier"],
           "customerAddressBusinessReferences": [
+            "CustomerId",
             "StreetAddress1",
             "StreetAddress2",
             "Locality",
@@ -531,8 +557,11 @@
             "PostalCode",
             "CountryCode"
           ],
-          "customerContactBusinessReferences": ["ContactMethodCategoryId", "ContactMethodTypeId", "Value"]
-        }
+          "customerContactBusinessReferences": ["CustomerId", "ContactMethodCategoryId", "ContactMethodTypeId", "Value"]
+        },
+        "children": [],
+        "peers": [],
+        "refreshNouns": ["CUSTOMER"]
       }
     },
     {
@@ -550,12 +579,13 @@
         "configValues": {}
       },
       "documentDef": {
+        "remoteID": "Id",
+        "businessReferences": ["UniqueIdentifier"],
         "schema": {},
         "referenceLocation": {
-          "customerBusinessReferences": [
-            "UniqueIdentifier"
-          ],
+          "customerBusinessReferences": ["UniqueIdentifier"],
           "customerAddressBusinessReferences": [
+            "CustomerId",
             "StreetAddress1",
             "StreetAddress2",
             "Locality",
@@ -563,22 +593,15 @@
             "PostalCode",
             "CountryCode"
           ],
-          "customerContactBusinessReferences": [
-            "ContactMethodCategoryId",
-            "ContactMethodTypeId",
-            "Value"
-          ]
+          "customerContactBusinessReferences": ["CustomerId", "ContactMethodCategoryId", "ContactMethodTypeId", "Value"]
         },
-        "remoteID": "Id",
-        "businessReferences": [
-          "UniqueIdentifier"
-        ],
         "children": [
           {
             "name": "CUSTOMERADDRESS",
             "location": "Addresses",
             "remoteID": "Id",
             "businessReferences": [
+              "CustomerId",
               "StreetAddress1",
               "StreetAddress2",
               "Locality",
@@ -591,11 +614,7 @@
             "name": "CUSTOMERCONTACT",
             "location": "ContactMethods",
             "remoteID": "Id",
-            "businessReferences": [
-              "ContactMethodCategoryId",
-              "ContactMethodTypeId",
-              "Value"
-            ]
+            "businessReferences": ["CustomerId", "ContactMethodCategoryId", "ContactMethodTypeId", "Value"]
           }
         ],
         "peers": [],
@@ -654,9 +673,20 @@
         }
       },
       "documentDef": {
+        "remoteID": "Id",
+        "businessReferences": [
+          "CustomerId",
+          "StreetAddress1",
+          "StreetAddress2",
+          "Locality",
+          "StateCode",
+          "PostalCode",
+          "CountryCode"
+        ],
         "schema": {},
         "referenceLocation": {
           "customerAddressBusinessReferences": [
+            "CustomerId",
             "StreetAddress1",
             "StreetAddress2",
             "Locality",
@@ -664,7 +694,10 @@
             "PostalCode",
             "CountryCode"
           ]
-        }
+        },
+        "children": [],
+        "peers": [],
+        "refreshNouns": []
       }
     },
     {
@@ -719,10 +752,15 @@
         }
       },
       "documentDef": {
+        "remoteID": "Id",
+        "businessReferences": ["CustomerId", "ContactMethodCategoryId", "ContactMethodTypeId", "Value"],
         "schema": {},
         "referenceLocation": {
-          "customerContactBusinessReferences": ["ContactMethodCategoryId", "ContactMethodTypeId", "Value"]
-        }
+          "customerContactBusinessReferences": ["CustomerId", "ContactMethodCategoryId", "ContactMethodTypeId", "Value"]
+        },
+        "children": [],
+        "peers": [],
+        "refreshNouns": []
       }
     }
   ],
@@ -768,15 +806,60 @@
               },
               "required": ["listId", "supplierId"]
             }
+          },
+          "throttling": {
+            "title": "Throttling",
+            "type": "object",
+            "properties": {
+              "windowDuration": {
+                "title": "Throttling Time Frame (ms)",
+                "type": "integer"
+              },
+              "allocationLimit": {
+                "title": "Number of Requests per Time Frame",
+                "type": "integer"
+              },
+              "throttledIndicators": {
+                "title": "Throttled Response Indicators",
+                "type": "array",
+                "items": {
+                  "title": "Criteria",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "title": "Status Code (optional)",
+                      "type": "integer"
+                    },
+                    "body": {
+                      "title": "Text Contained in the Response Body (optional)",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "required": ["windowDuration", "allocationLimit"]
           }
         },
         "required": ["protocol", "implFolderName", "environment", "canPostInvoice", "subscriptionLists"]
       },
-      "configView": ["protocol", "environment", "canPostInvoice", "subscriptionLists"],
+      "configView": ["protocol", "environment", "canPostInvoice", "subscriptionLists", "throttling"],
       "configValues": {
         "protocol": "https",
         "implFolderName": "iqmetrix-dropship-channel",
-        "environment": "demo"
+        "environment": " ",
+        "throttling": {
+          "windowDuration": 60000,
+          "allocationLimit": 500,
+          "throttledIndicators": [
+            {
+              "statusCode": 429
+            },
+            {
+              "statusCode": 412
+            }
+          ]
+        }
       }
     }
   },
@@ -863,7 +946,7 @@
     "oauthAuthorizeUrl": "",
     "oauthTokenRequest": {
       "verb": "POST",
-      "url": "https://accountsrc.iqmetrix.net/v1/oauth2/token",
+      "url": "https://accounts.iqmetrix.net/v1/oauth2/token",
       "headers": {
         "Content-Type": "application/x-www-form-urlencoded"
       },
@@ -886,7 +969,7 @@
     },
     "oauthRefreshTokenRequest": {
       "verb": "POST",
-      "url": "https://accountsrc.iqmetrix.net/v1/oauth2/token",
+      "url": "https://accounts.iqmetrix.net/v1/oauth2/token",
       "headers": {
         "Content-Type": "application/x-www-form-urlencoded"
       },

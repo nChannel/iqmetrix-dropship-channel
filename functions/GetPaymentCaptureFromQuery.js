@@ -1,172 +1,146 @@
-module.exports.GetPaymentCaptureFromQuery = (ncUtil, channelProfile, flowContext, payload, callback) => {
-  const stubName = "GetPaymentCaptureFromQuery";
-  const referenceLocations = ["paymentCaptureBusinessReferences"];
-  const nc = require("./util/ncUtils");
-  let companyId, locationId, page, pageSize, totalResults;
-  const stub = new nc.Stub(stubName, referenceLocations, ncUtil, channelProfile, flowContext, payload, callback);
+"use strict";
 
-  initializeStubFunction()
-    .then(searchForOrders)
-    .then(buildResponseObject)
-    .catch(handleError)
-    .then(() => callback(stub.out))
-    .catch(error => {
-      logError(`The callback function threw an exception: ${error}`);
-      setTimeout(() => {
-        throw error;
-      });
-    });
+module.exports = async function(flowContext, queryDoc) {
+  const output = {
+    statusCode: 400,
+    errors: [],
+    payload: []
+  };
 
-  async function initializeStubFunction() {
-    if (!stub.isValid) {
-      stub.messages.forEach(msg => logError(msg));
-      stub.out.ncStatusCode = 400;
-      throw new Error(`Invalid request [${stub.messages.join(" ")}]`);
-    }
-
-    logInfo("Stub function is valid.");
-
-    companyId = stub.channelProfile.channelAuthValues.company_id;
-    locationId = stub.channelProfile.channelAuthValues.location_id;
-    page = stub.payload.doc.page;
-    pageSize = stub.payload.doc.pageSize;
-
-    return JSON.parse(JSON.stringify(stub.payload.doc));
-  }
-
-  async function searchForOrders(queryDoc) {
-    const filters = [`companyId eq ${companyId}`, "statusName eq Completed", `locationId eq ${locationId}`];
+  try {
+    const queryType = this.validateQueryDoc(queryDoc);
+    const filters = [`companyId eq ${this.company_id}`, "statusName eq Completed", `locationId eq ${this.location_id}`];
     let orders = [];
+    let totalResults = 0;
 
-    switch (stub.queryType) {
+    switch (queryType) {
       case "remoteIDs": {
-        orders = await remoteIdSearch(queryDoc.remoteIDs);
+        const remoteIds = [...new Set(remoteIds)].filter(x => x.trim());
+        totalResults = remoteIds.length;
+        const startIndex = (queryDoc.page - 1) * queryDoc.pageSize;
+        const endIndex = queryDoc.page * queryDoc.pageSize;
+        const remoteIdsBatch = remoteIds.slice(startIndex, endIndex);
+
+        
+        orders = await Promise.all(remoteIdsBatch.map(getOrderInfo.bind(this)));
+
         break;
       }
 
       case "createdDateRange": {
         filters.push(`createdUtc gt ${new Date(Date.parse(queryDoc.createdDateRange.startDateGMT) - 1).toISOString()}`);
         filters.push(`createdUtc lt ${new Date(Date.parse(queryDoc.createdDateRange.endDateGMT) + 1).toISOString()}`);
-        orders = await dateRangeSearch(filters);
+        const orderReport = await getOrderReport.bind(this)(filters, queryDoc);
+        totalResults = orderReport.totalRecords;
+
+       
+        orders = await Promise.all(orderReport.rows.map(row => getOrderInfo.bind(this)(row._id)));
+
         break;
       }
-
       case "modifiedDateRange": {
         filters.push(
           `updatedUtc gt ${new Date(Date.parse(queryDoc.modifiedDateRange.startDateGMT) - 1).toISOString()}`
         );
         filters.push(`updatedUtc lt ${new Date(Date.parse(queryDoc.modifiedDateRange.endDateGMT) + 1).toISOString()}`);
-        orders = await dateRangeSearch(filters);
+        const orderReport = await getOrderReport.bind(this)(filters, queryDoc);
+        totalResults = orderReport.totalRecords;
+
+       
+        orders = await Promise.all(orderReport.rows.map(row => getOrderInfo.bind(this)(row._id)));
+
         break;
       }
 
       default: {
-        stub.out.ncStatusCode = 400;
-        throw new Error(`Invalid request, unknown query type: '${stub.queryType}'`);
+        throw new Error(`Invalid request, unknown query type: '${queryType}'`);
       }
     }
-    return orders;
+
+    const hasMore = queryDoc.page * queryDoc.pageSize <= totalResults;
+
+    this.info(orders.length > 0 ? `Submitting ${orders.length} payment captures...` : "No payment captures found.");
+    output.statusCode = hasMore ? 206 : orders.length > 0 ? 200 : 204;
+    output.payload = orders;
+
+    return output;
+  } catch (err) {
+    output.statusCode = this.handleError(err);
+    output.endpointStatusCode = err.statusCode;
+    output.errors.push(err);
+    throw output;
   }
 
-  async function remoteIdSearch(remoteIds) {
-    remoteIds = [...new Set(remoteIds)].filter(x => x.trim());
-    totalResults = remoteIds.length;
-    const startIndex = (page - 1) * pageSize;
-    const endIndex = page * pageSize;
-    const orders = [];
-    for (const remoteId of remoteIds.slice(startIndex, endIndex)) {
-      const order = await getOrderDetail(remoteId);
-      if (order != null) {
-        order.orderFull = await getOrderFull(order.invoiceNumber);
-      }
-      orders.push(order);
-    }
-    return orders;
-  }
-
-  async function dateRangeSearch(filters) {
-    const orderReport = await getOrderReport(filters);
-    totalResults = orderReport.totalRecords;
-    const orders = [];
-    for (const row of orderReport.rows) {
-      const order = await getOrderDetail(row._id);
-      if (order != null) {
-        order.orderFull = await getOrderFull(order.invoiceNumber);
-      }
-      orders.push(order);
-    }
-    return orders;
-  }
-
-  async function getOrderReport(filters) {
+  async function getOrderReport(filters, queryDoc) {
     const filter = filters.join(" and ");
-    logInfo(`Getting order report with filter: '${filter}'`);
+    this.info(`Getting order report with filter: '${filter}'`);
 
-    const req = stub.requestPromise.get(
-      Object.assign({}, stub.requestDefaults, {
-        method: "GET",
-        baseUrl: stub.getBaseUrl("ordermanagementreporting"),
-        url: "/v1/Reports/OrderList/report",
-        qs: {
-          filter: filter,
-          page: page,
-          pageSize: pageSize,
-          sortBy: "createdUtc",
-          sortOrder: "asc"
-        }
-      })
-    );
-    logInfo(`Calling: ${req.method} ${req.uri.href}`);
+    const req = this.request({
+      method: "GET",
+      baseUrl: this.getBaseUrl("ordermanagementreporting"),
+      url: "/v1/Reports/OrderList/report",
+      qs: {
+        filter: filter,
+        page: queryDoc.page,
+        pageSize: queryDoc.pageSize,
+        sortBy: "createdUtc",
+        sortOrder: "asc"
+      }
+    });
+    
 
     const resp = await req;
-    stub.out.response.endpointStatusCode = resp.statusCode;
-    stub.out.response.endpointStatusMessage = resp.statusMessage;
+    output.endpointStatusCode = resp.statusCode;
 
     if (resp.timingPhases) {
-      logInfo(`Order report request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
+      this.info(`Order report request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
     }
 
-    if (!resp.body || !nc.isArray(resp.body.rows) || !nc.isNumber(resp.body.totalRecords)) {
+    if (!resp.body || !this.isArray(resp.body.rows) || !this.isNumber(resp.body.totalRecords)) {
       throw new TypeError(
         "Order report response is not in expected format, expected rows[] and totalRecords properties."
       );
     }
 
-    logInfo(`Order report response contains ${resp.body.rows.length} of ${resp.body.totalRecords} records.`);
+    this.info(`Order report response contains ${resp.body.rows.length} of ${resp.body.totalRecords} records.`);
 
     return resp.body;
   }
 
-  async function getOrderDetail(orderId) {
-    logInfo(`Getting order detail for order '${orderId}'`);
+  async function getOrderInfo(id) {
+    const order = await getOrderDetail.bind(this)(id);
+    if (order != null) {
+      order.orderFull = await getOrderFull.bind(this)(order.invoiceNumber);
+    }
+    return order;
+  }
 
-    const req = stub.requestPromise.get(
-      Object.assign({}, stub.requestDefaults, {
-        method: "GET",
-        baseUrl: stub.getBaseUrl("ordermanagementreporting"),
-        url: `/v1/Companies(${companyId})/OrderDetails(${orderId})`
-      })
-    );
-    logInfo(`Calling: ${req.method} ${req.uri.href}`);
+  async function getOrderDetail(orderId) {
+    this.info(`Getting order detail for order '${orderId}'`);
+
+    const req = this.request({
+      method: "GET",
+      baseUrl: this.getBaseUrl("ordermanagementreporting"),
+      url: `/v1/Companies(${this.company_id})/OrderDetails(${orderId})`
+    });
+    
 
     let resp;
     try {
       resp = await req;
+      output.endpointStatusCode = resp.statusCode;
     } catch (error) {
-      logWarn(`Failed to get order detail for order '${orderId}': ${error.message}`);
+      this.warn(`Failed to get order detail for order '${orderId}': ${error.message}`);
       resp = error.response;
     }
 
     if (resp != null) {
-      stub.out.response.endpointStatusCode = resp.statusCode;
-      stub.out.response.endpointStatusMessage = resp.statusMessage;
-
       if (resp.timingPhases) {
-        logInfo(`Order detail request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
+        this.info(`Order detail request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
       }
 
       if (!resp.body || !resp.body.id || !resp.body.invoiceNumber) {
-        logWarn("Order detail response is not in expected format, expected id and invoiceNumber properties.");
+        this.warn("Order detail response is not in expected format, expected id and invoiceNumber properties.");
         return null;
       }
 
@@ -177,45 +151,43 @@ module.exports.GetPaymentCaptureFromQuery = (ncUtil, channelProfile, flowContext
   }
 
   async function getOrderFull(orderId) {
-    logInfo(`Getting order full details for order '${orderId}'`);
+    this.info(`Getting order full details for order '${orderId}'`);
 
-    const req = stub.requestPromise.get(
-      Object.assign({}, stub.requestDefaults, {
-        method: "GET",
-        baseUrl: stub.getBaseUrl("salesorder"),
-        url: `/v1/Companies(${companyId})/PrintableId(${orderId})`
-      })
-    );
-    logInfo(`Calling: ${req.method} ${req.uri.href}`);
+    const req = this.request({
+      method: "GET",
+      baseUrl: this.getBaseUrl("salesorder"),
+      url: `/v1/Companies(${this.company_id})/PrintableId(${orderId})`
+    });
+    
 
     let resp;
     try {
       resp = await req;
+      output.endpointStatusCode = resp.statusCode;
     } catch (error) {
-      logWarn(`Failed to get order full details for order '${orderId}': ${error.message}`);
+      this.warn(`Failed to get order full details for order '${orderId}': ${error.message}`);
       resp = error.response;
     }
 
     if (resp != null) {
-      stub.out.response.endpointStatusCode = resp.statusCode;
-      stub.out.response.endpointStatusMessage = resp.statusMessage;
-
       if (resp.timingPhases) {
-        logInfo(`Order full details request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
+        this.info(`Order full details request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
       }
 
-      if (!resp.body || !resp.body.Id || !nc.isArray(resp.body.SalesOrders)) {
-        logWarn("Order full details response is not in expected format, expected an Id and SalesOrders[] properties.");
+      if (!resp.body || !resp.body.Id || !this.isArray(resp.body.SalesOrders)) {
+        this.warn(
+          "Order full details response is not in expected format, expected an Id and SalesOrders[] properties."
+        );
         return null;
       }
 
       if (resp.body.SalesOrders.length === 0) {
-        logWarn("Order full details response did not contain any SalesOrders.");
+        this.warn("Order full details response did not contain any SalesOrders.");
         return null;
       }
 
       if (resp.body.SalesOrders.length > 1) {
-        logWarn("Order full details response contained multiple SalesOrders.");
+        this.warn("Order full details response contained multiple SalesOrders.");
         return null;
       }
 
@@ -223,62 +195,5 @@ module.exports.GetPaymentCaptureFromQuery = (ncUtil, channelProfile, flowContext
     }
 
     return null;
-  }
-
-  async function buildResponseObject(orders) {
-    if (orders.length > 0) {
-      logInfo(`Submitting ${orders.length} orders for payment capture...`);
-
-      stub.out.payload = [];
-      orders.forEach(order => {
-        stub.out.payload.push({
-          doc: order,
-          paymentCaptureRemoteID: order.id,
-          paymentCaptureBusinessReference: nc.extractBusinessReferences(
-            stub.channelProfile.paymentCaptureBusinessReferences,
-            order
-          )
-        });
-      });
-
-      stub.out.ncStatusCode = page * pageSize <= totalResults ? 206 : 200;
-    } else {
-      logInfo("No orders for payment capture found.");
-      stub.out.ncStatusCode = page * pageSize <= totalResults ? 206 : 204;
-    }
-
-    return stub.out;
-  }
-
-  async function handleError(error) {
-    logError(error);
-    if (error.name === "StatusCodeError") {
-      stub.out.response.endpointStatusCode = error.statusCode;
-      stub.out.response.endpointStatusMessage = error.message;
-
-      if (error.statusCode >= 500) {
-        stub.out.ncStatusCode = 500;
-      } else if ([429, 401].includes(error.statusCode)) {
-        stub.out.ncStatusCode = error.statusCode;
-      } else {
-        stub.out.ncStatusCode = 400;
-      }
-    }
-    stub.out.payload.error = error;
-    stub.out.ncStatusCode = stub.out.ncStatusCode || 500;
-
-    return stub.out;
-  }
-
-  function logInfo(msg) {
-    stub.log(msg, "info");
-  }
-
-  function logWarn(msg) {
-    stub.log(msg, "warn");
-  }
-
-  function logError(msg) {
-    stub.log(msg, "error");
   }
 };

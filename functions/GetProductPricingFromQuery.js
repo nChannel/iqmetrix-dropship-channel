@@ -1,226 +1,170 @@
-function GetProductPricingFromQuery(ncUtil, channelProfile, flowContext, payload, callback) {
-    const nc = require("./util/ncUtils");
-    const referenceLocations = ["productPricingBusinessReferences"];
-    const stub = new nc.Stub("GetProductPricingFromQuery", referenceLocations, ...arguments);
+"use strict";
 
-    validateFunction()
-        .then(getProductLists)
-        .then(flattenProductLists)
-        .then(getProductDetails)
-        .then(filterVendors)
-        .then(getPrices)
-        .then(buildResponseObject)
-        .catch(handleError)
-        .then(() => {
-          console.log(stub.out);
-          callback(stub.out)})
-        .catch(error => {
-            logError(`The callback function threw an exception: ${error}`);
-            setTimeout(() => {
-                throw error;
-            });
-        });
+module.exports = async function(flowContext, queryDoc) {
+  const output = {
+    statusCode: 400,
+    errors: [],
+    payload: []
+  };
 
-    function logInfo(msg) {
-        stub.log(msg, "info");
+  try {
+    const queryType = this.validateQueryDoc(queryDoc);
+    let products = [];
+
+    this.info("Get product lists...");
+    let productLists = await Promise.all(this.subscriptionLists.map(getProductList.bind(this)));
+    products = [].concat(...productLists);
+
+    switch (queryType) {
+      case "remoteIDs": {
+        products = products.filter(l => queryDoc.remoteIDs.includes(l.CatalogItemId));
+        break;
+      }
+
+      case "createdDateRange": {
+        this.warn("createdDateRange query is not supported, will get prices for all products on subscription lists.");
+        break;
+      }
+
+      case "modifiedDateRange": {
+        this.warn("modifiedDateRange query is not supported, will get prices for all products on subscription lists.");
+        break;
+      }
+
+      default: {
+        throw new Error(`Invalid request, unknown query type: '${queryType}'`);
+      }
     }
 
-    function logWarn(msg) {
-        stub.log(msg, "warn");
+    this.info(`Getting details for ${products.length} products.`);
+    products = await getProductDetails.bind(this)(products);
+    products = await filterVendors.bind(this)(products);
+    products = await getPrices.bind(this)(products);
+
+    this.info(products.length > 0 ? `Submitting ${products.length} product prices...` : "No product prices found.");
+    output.statusCode = products.length > 0 ? 200 : 204;
+    output.payload = products;
+
+    return output;
+  } catch (err) {
+    output.statusCode = this.handleError(err);
+    output.endpointStatusCode = err.statusCode;
+    output.errors.push(err);
+    throw output;
+  }
+
+  async function getProductList(subscriptionList) {
+    this.info(`Get product list [${subscriptionList.listId}]...`);
+
+    const req = this.request({
+      method: "GET",
+      baseUrl: this.getBaseUrl("catalogs"),
+      url: `/v1/Companies(${this.company_id})/Catalog/Items(SourceId=${subscriptionList.listId})`
+    });
+
+    const resp = await req;
+    output.endpointStatusCode = resp.statusCode;
+
+    if (resp.timingPhases) {
+      this.info(`Product list request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
     }
 
-    function logError(msg) {
-        stub.log(msg, "error");
+    resp.body.Items.forEach(item => {
+      item.subscriptionList = subscriptionList;
+    });
+
+    return resp.body.Items;
+  }
+
+  async function getProductDetails(productList) {
+    this.info("Get product details...");
+    this.info(`Total product count: ${productList.length}`);
+    const allIds = productList.map(p => p.CatalogItemId);
+    const batchedIds = [];
+    const max = 500;
+    let current = 0;
+    do {
+      const batchIds = allIds.slice(current, current + max);
+      batchedIds.push(batchIds);
+      current = current + max;
+    } while (current < allIds.length);
+    let batchedDetails = [];
+
+    batchedDetails = await Promise.all(batchedIds.filter(b => b.length > 0).map(getProductDetailsBulk.bind(this)));
+
+    const CatalogItems = Object.assign({}, ...batchedDetails);
+    productList.forEach(product => {
+      product.ProductDetails = CatalogItems[product.CatalogItemId];
+    });
+    return productList;
+  }
+
+  async function getProductDetailsBulk(catalogIds) {
+    this.info(`Get ${catalogIds.length} product details...`);
+
+    const req = this.request({
+      method: "POST",
+      baseUrl: this.getBaseUrl("catalogs"),
+      url: `/v1/Companies(${this.company_id})/Catalog/Items/ProductDetails/Bulk`,
+      body: {
+        CatalogItemIds: catalogIds
+      }
+    });
+
+    const resp = await req;
+    output.endpointStatusCode = resp.statusCode;
+
+    if (resp.timingPhases) {
+      this.info(`Product details request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
     }
 
-    async function validateFunction() {
-        if (stub.messages.length === 0) {
-            if (!nc.isNonEmptyArray(stub.channelProfile.channelSettingsValues.subscriptionLists)) {
-                stub.messages.push(
-                    `The channelProfile.channelSettingsValues.subscriptionLists array is ${
-                        stub.channelProfile.channelSettingsValues.subscriptionLists == null ? "missing" : "invalid"
-                    }.`
-                );
-            }
+    return resp.body.CatalogItems;
+  }
 
-            if (!nc.isNonEmptyString(stub.channelProfile.channelAuthValues.location_id)) {
-                stub.messages.push(
-                    `The channelProfile.channelAuthValues.location_id string is ${
-                        stub.channelProfile.channelAuthValues.location_id == null ? "missing" : "invalid"
-                    }.`
-                );
-            }
+  async function filterVendors(productList) {
+    this.info("Filter vendors...");
+    productList.forEach(product => {
+      const supplierId = product.subscriptionList.supplierId;
+      const VendorSkus = product.ProductDetails.VendorSkus.filter(vendor => {
+        return vendor.Entity && vendor.Entity.Id === supplierId;
+      });
+      product.VendorSku = VendorSkus[0];
+    });
+    return productList;
+  }
 
-            if (stub.payload.doc.remoteIDs != null && !nc.isNonEmptyArray(stub.payload.doc.remoteIDs)) {
-                stub.messages.push("payload.doc.remoteIDs was provided, but is either empty or not an array.");
-            }
-        }
+  async function getPrices(productList) {
+    const total = productList.length;
+    this.info(`Getting prices for ${total} products...`);
 
-        if (stub.messages.length > 0) {
-            stub.messages.forEach(msg => logError(msg));
-            stub.out.ncStatusCode = 400;
-            throw new Error(`Invalid request [${stub.messages.join(" ")}]`);
-        }
-        logInfo("Function is valid.");
+    let products = await Promise.all(productList.map(getPricing.bind(this)));
+
+    return products;
+  }
+
+  async function getPricing(product, index, productList) {
+    this.info(`Getting price for product ${index + 1} of ${productList.length} (${product.CatalogItemId})...`);
+
+    const req = this.request({
+      method: "GET",
+      baseUrl: this.getBaseUrl("pricing"),
+      url: `/v1/Companies(${this.company_id})/Entities(${this.location_id})/CatalogItems(${
+        product.CatalogItemId
+      })/Pricing`
+    });
+
+    const resp = await req;
+    output.endpointStatusCode = resp.statusCode;
+
+    if (resp.timingPhases) {
+      this.info(
+        `Product pricing request ${index + 1} of ${productList.length} completed in ${Math.round(
+          resp.timingPhases.total
+        )} milliseconds.`
+      );
     }
 
-    async function getProductLists() {
-        logInfo("Get product lists...");
-        console.time("Elapsed Time");
-        const productLists = [];
-        for (const list of stub.channelProfile.channelSettingsValues.subscriptionLists) {
-            const productList = await getProductList(list);
-            productLists.push(productList);
-        }
-        return productLists;
-    }
-
-    async function getProductList(subscriptionList) {
-        logInfo(`Get product list [${subscriptionList.listId}]...`);
-        const response = await stub.requestPromise.get(Object.assign({}, stub.requestDefaults, {
-            url: `${stub.channelProfile.channelSettingsValues.protocol}://catalogs${
-                stub.channelProfile.channelSettingsValues.environment
-            }.iqmetrix.net/v1/Companies(${stub.channelProfile.channelAuthValues.company_id})/Catalog/Items(SourceId=${
-                subscriptionList.listId
-            })`
-        }));
-        response.body.Items.forEach(item => {
-            item.subscriptionList = subscriptionList;
-        });
-        return response.body.Items;
-    }
-
-    async function flattenProductLists(productLists) {
-        logInfo("Flatten product lists...");
-        let flattenedProductLists = [].concat(...productLists);
-
-        if (nc.isNonEmptyArray(stub.payload.doc.remoteIDs)) {
-            flattenedProductLists = flattenedProductLists.filter(l =>
-              stub.payload.doc.remoteIDs.includes(l.CatalogItemId)
-            );
-        }
-
-        return flattenedProductLists;
-    }
-
-    async function getProductDetails(productList) {
-        logInfo("Get product details...");
-        logInfo(`Total product count: ${productList.length}`);
-        const allIds = productList.map(p => p.CatalogItemId);
-        const batchedIds = [];
-        const max = 500;
-        let current = 0;
-        do {
-            const batchIds = allIds.slice(current, current + max);
-            batchedIds.push(batchIds);
-            current = current + max;
-        } while (current < allIds.length);
-        let batchedDetails = [];
-        for (const b of batchedIds) {
-            if (b.length > 0) {
-                let result = await getProductDetailsBulk(b);
-                batchedDetails.push(result);
-            }
-        }
-        const CatalogItems = Object.assign({}, ...batchedDetails);
-        productList.forEach(product => {
-            product.ProductDetails = CatalogItems[product.CatalogItemId];
-        });
-        return productList;
-    }
-
-    async function getProductDetailsBulk(catalogIds) {
-        logInfo(`Get ${catalogIds.length} product details...`);
-        const response = await stub.requestPromise.post(Object.assign({}, stub.requestDefaults, {
-            url: `${stub.channelProfile.channelSettingsValues.protocol}://catalogs${
-                stub.channelProfile.channelSettingsValues.environment
-            }.iqmetrix.net/v1/Companies(${
-                stub.channelProfile.channelAuthValues.company_id
-            })/Catalog/Items/ProductDetails/Bulk`,
-            body: {
-                CatalogItemIds: catalogIds
-            }
-        }));
-        return response.body.CatalogItems;
-    }
-
-    async function filterVendors(productList) {
-        logInfo("Filter vendors...");
-        productList.forEach(product => {
-            const supplierId = product.subscriptionList.supplierId;
-            const VendorSkus = product.ProductDetails.VendorSkus.filter(vendor => {
-                return vendor.Entity && vendor.Entity.Id === supplierId;
-            });
-            product.VendorSku = VendorSkus[0];
-        });
-        return productList;
-    }
-
-    async function getPrices(productList) {
-        logInfo("Get prices...");
-
-        let products = [];
-        for (const p of productList) {
-            const result = await getPricing(p);
-            products.push(result);
-        }
-
-        return products;
-    }
-
-    async function getPricing(product) {
-        logInfo(`Get pricing for product ${product.CatalogItemId}...`);
-        const response = await stub.requestPromise.get(Object.assign({}, stub.requestDefaults, {
-            url: `${stub.channelProfile.channelSettingsValues.protocol}://pricing${
-                stub.channelProfile.channelSettingsValues.environment
-            }.iqmetrix.net/v1/Companies(${stub.channelProfile.channelAuthValues.company_id})/Entities(${
-                stub.channelProfile.channelAuthValues.location_id
-            })/CatalogItems(${product.CatalogItemId})/Pricing`
-        }));
-        product.Pricing = response.body[0];
-        return product;
-    }
-
-    async function buildResponseObject(products) {
-        console.timeEnd("Elapsed Time");
-        logInfo(`Total processed product count: ${products.length}`);
-        if (products.length > 0) {
-            logInfo(`Submitting ${products.length} modified product prices...`);
-            stub.out.ncStatusCode = 200;
-            stub.out.payload = [];
-            products.forEach(product => {
-                stub.out.payload.push({
-                    doc: product,
-                    productPricingRemoteID: product.CatalogItemId,
-                    productPricingBusinessReference: nc.extractBusinessReferences(
-                        stub.channelProfile.productPricingBusinessReferences,
-                        product
-                    )
-                });
-            });
-        } else {
-            logInfo("No product prices have been modified.");
-            stub.out.ncStatusCode = 204;
-        }
-    }
-
-    async function handleError(error) {
-        logError(error);
-        if (error.name === "StatusCodeError") {
-            stub.out.response.endpointStatusCode = error.statusCode;
-            stub.out.response.endpointStatusMessage = error.message;
-            if (error.statusCode >= 500) {
-                stub.out.ncStatusCode = 500;
-            } else if (error.statusCode === 429) {
-                logWarn("Request was throttled.");
-                stub.out.ncStatusCode = 429;
-            } else {
-                stub.out.ncStatusCode = 400;
-            }
-        }
-        stub.out.payload.error = error;
-        stub.out.ncStatusCode = stub.out.ncStatusCode || 500;
-    }
-}
-
-module.exports.GetProductPricingFromQuery = GetProductPricingFromQuery;
+    product.Pricing = resp.body[0];
+    return product;
+  }
+};

@@ -1,7 +1,8 @@
 {
-  "name": "iQmetrix DropShip Get ProductQuantity Schema",
+  "name": "iqmetrix_dropship_channel getProductQuantity",
   "schemaDef": {
     "$schema": "http://json-schema.org/draft-06/schema#",
+    "title": "getProductQuantity",
     "type": "object",
     "properties": {
       "Id": {
@@ -77,6 +78,5 @@
       }
     }
   },
-  "tags": ["Get", "ProductQuantity"],
-  "audit": {}
+  "tags": ["iqmetrix_dropship_channel", "GET", "PRODUCTQUANTITY"]
 }

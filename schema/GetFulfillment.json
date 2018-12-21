@@ -1,7 +1,8 @@
 {
-  "name": "iQmetrix DropShip Get Fulfillment Schema",
+  "name": "iqmetrix_dropship_channel getFulfillment",
   "schemaDef": {
     "$schema": "http://json-schema.org/draft-06/schema#",
+    "title": "getFulfillment",
     "type": "object",
     "properties": {
       "id": {
@@ -370,6 +371,5 @@
       }
     }
   },
-  "tags": ["iQmetrix", "Fulfillment", "Get", "OrderDetails", "Dropship"],
-  "audit": {}
+  "tags": ["iqmetrix_dropship_channel", "GET", "FULFILLMENT"]
 }

@@ -1,5 +1,16 @@
-.idea
-.vscode
+# ide
+.idea/
+.vs/
+.vscode/
 
-node_modules
-.prettierrc
+# dependencies
+node_modules/
+
+# test/coverage
+.nyc_output/
+coverage/
+
+# SDK init script generated helper files
+config/channel-capabilities.json
+config/channel-capabilities.yaml
+config/docs-template.json

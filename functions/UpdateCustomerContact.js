@@ -1,84 +1,40 @@
-function UpdateCustomerContact(ncUtil, channelProfile, flowContext, payload, callback) {
-    const nc = require("./util/ncUtils");
-    const referenceLocations = ["customerContactBusinessReferences"];
-    const stub = new nc.Stub("UpdateCustomerContact", referenceLocations, ...arguments);
+"use strict";
 
-    validateFunction()
-        .then(updateCustomerContact)
-        .then(buildResponse)
-        .catch(handleError)
-        .then(() => callback(stub.out))
-        .catch(error => {
-            logError(`The callback function threw an exception: ${error}`);
-            setTimeout(() => {
-                throw error;
-            });
-        });
+module.exports = async function(flowContext, payload) {
+  const output = {
+    statusCode: 400,
+    payload: {},
+    errors: []
+  };
 
-    function logInfo(msg) {
-        stub.log(msg, "info");
+  try {
+    this.info("Updating existing customer contact method...");
+
+    const customerId = payload.doc.CustomerId || payload.customerRemoteID;
+    const contactId = payload.doc.Id || payload.customerContactRemoteID;
+
+    const req = this.request({
+      method: "PUT",
+      baseUrl: this.getBaseUrl("crm"),
+      url: `/v1/Companies(${this.company_id})/Customers(${customerId})/ContactMethods(${contactId})`,
+      body: payload.doc
+    });
+
+    const resp = await req;
+    output.endpointStatusCode = resp.statusCode;
+
+    if (resp.timingPhases) {
+      this.info(`PUT customer contact request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
     }
 
-    function logWarn(msg) {
-        stub.log(msg, "warn");
-    }
+    output.payload = resp.body;
+    output.statusCode = 200;
 
-    function logError(msg) {
-        stub.log(msg, "error");
-    }
-
-    async function validateFunction() {
-        if (stub.messages.length > 0) {
-            stub.messages.forEach(msg => logError(msg));
-            stub.out.ncStatusCode = 400;
-            throw new Error(`Invalid request [${stub.messages.join(" ")}]`);
-        }
-        logInfo("Function is valid.");
-    }
-
-    async function updateCustomerContact() {
-        logInfo("Updating existing customer contact method...");
-
-        stub.payload.doc.Id = stub.payload.customerContactRemoteID;
-
-        return await stub.requestPromise.put(Object.assign({}, stub.requestDefaults, {
-            url: `${stub.channelProfile.channelSettingsValues.protocol}://crm${
-                stub.channelProfile.channelSettingsValues.environment
-            }.iqmetrix.net/v1/Companies(${stub.channelProfile.channelAuthValues.company_id})/Customers(${
-                stub.payload.customerRemoteID
-            })/ContactMethods(${stub.payload.customerContactRemoteID})`,
-            body: stub.payload.doc
-        }));
-    }
-
-    async function buildResponse(response) {
-        const customerContactMethod = response.body;
-        stub.out.response.endpointStatusCode = response.statusCode;
-        stub.out.ncStatusCode = response.statusCode;
-        stub.out.payload.customerContactRemoteID = customerContactMethod.Id;
-        stub.out.payload.customerContactBusinessReference = nc.extractBusinessReferences(
-            stub.channelProfile.customerContactBusinessReferences,
-            customerContactMethod
-        );
-    }
-
-    async function handleError(error) {
-        logError(error);
-        if (error.name === "StatusCodeError") {
-            stub.out.response.endpointStatusCode = error.statusCode;
-            stub.out.response.endpointStatusMessage = error.message;
-            if (error.statusCode >= 500) {
-                stub.out.ncStatusCode = 500;
-            } else if (error.statusCode === 429) {
-                logWarn("Request was throttled.");
-                stub.out.ncStatusCode = 429;
-            } else {
-                stub.out.ncStatusCode = 400;
-            }
-        }
-        stub.out.payload.error = error;
-        stub.out.ncStatusCode = stub.out.ncStatusCode || 500;
-    }
-}
-
-module.exports.UpdateCustomerContact = UpdateCustomerContact;
+    return output;
+  } catch (err) {
+    output.statusCode = this.handleError(err);
+    output.endpointStatusCode = err.statusCode;
+    output.errors.push(err);
+    throw output;
+  }
+};

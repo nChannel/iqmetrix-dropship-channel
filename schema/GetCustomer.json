@@ -1,0 +1,233 @@
+{
+  "name": "iqmetrix_dropship_channel getCustomer",
+  "schemaDef": {
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "title": "getCustomer",
+    "type": "object",
+    "$ref": "#/definitions/CustomerFull",
+    "definitions": {
+      "CustomerFull": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "PrimaryName": {
+            "type": "string"
+          },
+          "MiddleName": {
+            "type": "string"
+          },
+          "FamilyName": {
+            "type": "string"
+          },
+          "Addresses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Address"
+            }
+          },
+          "AlternateName": {
+            "type": "string"
+          },
+          "ContactMethods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContactMethod"
+            }
+          },
+          "CustomerExtensions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/CustomerExtension"
+            }
+          },
+          "CustomerType": {
+            "type": "string"
+          },
+          "CustomerTypeId": {
+            "type": "integer"
+          },
+          "DateOfBirth": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "PricingGroupId": {
+            "type": "integer"
+          },
+          "Disabled": {
+            "type": "boolean"
+          },
+          "DoNotContact": {
+            "type": "boolean"
+          },
+          "Notes": {
+            "type": "string"
+          },
+          "Title": {
+            "type": "string"
+          },
+          "Version": {
+            "type": "integer"
+          },
+          "MergedIntoCustomerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "LastModifiedDateUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "UniqueIdentifier": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "title": "CustomerFull"
+      },
+      "Address": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "CustomerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "AddressType": {
+            "type": "string"
+          },
+          "AddressTypeId": {
+            "type": "integer"
+          },
+          "AttentionTo": {
+            "type": "string"
+          },
+          "Country": {
+            "type": "string"
+          },
+          "CountryCode": {
+            "type": "string"
+          },
+          "Default": {
+            "type": "boolean"
+          },
+          "DoNotContact": {
+            "type": "boolean"
+          },
+          "Email": {
+            "type": "string"
+          },
+          "Locality": {
+            "type": "string"
+          },
+          "Notes": {
+            "type": "string"
+          },
+          "Phone": {
+            "type": "string"
+          },
+          "PostalCode": {
+            "type": "string"
+          },
+          "PostOfficeBoxNumber": {
+            "type": "string"
+          },
+          "State": {
+            "type": "string"
+          },
+          "StateCode": {
+            "type": "string"
+          },
+          "StreetAddress1": {
+            "type": "string"
+          },
+          "StreetAddress2": {
+            "type": "string"
+          },
+          "Version": {
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "title": "Address"
+      },
+      "ContactMethod": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "CustomerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ContactMethodCategory": {
+            "type": "string"
+          },
+          "ContactMethodCategoryId": {
+            "type": "integer"
+          },
+          "ContactMethodType": {
+            "type": "string"
+          },
+          "ContactMethodTypeId": {
+            "type": "integer"
+          },
+          "Default": {
+            "type": "boolean"
+          },
+          "DoNotContact": {
+            "type": "boolean"
+          },
+          "Notes": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "string"
+          },
+          "Version": {
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "title": "ContactMethod"
+      },
+      "CustomerExtension": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "CustomerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ExtensionType": {
+            "type": "string"
+          },
+          "ExtensionTypeId": {
+            "type": "integer"
+          },
+          "ExtensionTypeFeature": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "string"
+          },
+          "Version": {
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "title": "CustomerExtension"
+      }
+    }
+  },
+  "tags": ["iqmetrix_dropship_channel", "GET", "CUSTOMER"]
+}

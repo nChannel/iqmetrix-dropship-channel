@@ -1,84 +1,40 @@
-function UpdateCustomerAddress(ncUtil, channelProfile, flowContext, payload, callback) {
-    const nc = require("./util/ncUtils");
-    const referenceLocations = ["customerAddressBusinessReferences"];
-    const stub = new nc.Stub("UpdateCustomerAddress", referenceLocations, ...arguments);
+"use strict";
 
-    validateFunction()
-        .then(updateCustomerAddress)
-        .then(buildResponse)
-        .catch(handleError)
-        .then(() => callback(stub.out))
-        .catch(error => {
-            logError(`The callback function threw an exception: ${error}`);
-            setTimeout(() => {
-                throw error;
-            });
-        });
+module.exports = async function(flowContext, payload) {
+  const output = {
+    statusCode: 400,
+    payload: {},
+    errors: []
+  };
 
-    function logInfo(msg) {
-        stub.log(msg, "info");
+  try {
+    this.info("Updating existing customer address record...");
+
+    const customerId = payload.doc.CustomerId || payload.customerRemoteID;
+    const addressId = payload.doc.Id || payload.customerAddressRemoteID;
+
+    const req = this.request({
+      method: "PUT",
+      baseUrl: this.getBaseUrl("crm"),
+      url: `/v1/Companies(${this.company_id})/Customers(${customerId})/Addresses(${addressId})`,
+      body: payload.doc
+    });
+
+    const resp = await req;
+    output.endpointStatusCode = resp.statusCode;
+
+    if (resp.timingPhases) {
+      this.info(`PUT customer address request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
     }
 
-    function logWarn(msg) {
-        stub.log(msg, "warn");
-    }
+    output.payload = resp.body;
+    output.statusCode = 200;
 
-    function logError(msg) {
-        stub.log(msg, "error");
-    }
-
-    async function validateFunction() {
-        if (stub.messages.length > 0) {
-            stub.messages.forEach(msg => logError(msg));
-            stub.out.ncStatusCode = 400;
-            throw new Error(`Invalid request [${stub.messages.join(" ")}]`);
-        }
-        logInfo("Function is valid.");
-    }
-
-    async function updateCustomerAddress() {
-        logInfo("Updating existing customer address record...");
-
-        stub.payload.doc.Id = stub.payload.customerAddressRemoteID;
-
-        return await stub.requestPromise.put(Object.assign({}, stub.requestDefaults, {
-            url: `${stub.channelProfile.channelSettingsValues.protocol}://crm${
-                stub.channelProfile.channelSettingsValues.environment
-            }.iqmetrix.net/v1/Companies(${stub.channelProfile.channelAuthValues.company_id})/Customers(${
-                stub.payload.customerRemoteID
-            })/Addresses(${stub.payload.customerAddressRemoteID})`,
-            body: stub.payload.doc
-        }));
-    }
-
-    async function buildResponse(response) {
-        const customerAddress = response.body;
-        stub.out.response.endpointStatusCode = response.statusCode;
-        stub.out.ncStatusCode = response.statusCode;
-        stub.out.payload.customerAddressRemoteID = customerAddress.Id;
-        stub.out.payload.customerAddressBusinessReference = nc.extractBusinessReferences(
-            stub.channelProfile.customerAddressBusinessReferences,
-            customerAddress
-        );
-    }
-
-    async function handleError(error) {
-        logError(error);
-        if (error.name === "StatusCodeError") {
-            stub.out.response.endpointStatusCode = error.statusCode;
-            stub.out.response.endpointStatusMessage = error.message;
-            if (error.statusCode >= 500) {
-                stub.out.ncStatusCode = 500;
-            } else if (error.statusCode === 429) {
-                logWarn("Request was throttled.");
-                stub.out.ncStatusCode = 429;
-            } else {
-                stub.out.ncStatusCode = 400;
-            }
-        }
-        stub.out.payload.error = error;
-        stub.out.ncStatusCode = stub.out.ncStatusCode || 500;
-    }
-}
-
-module.exports.UpdateCustomerAddress = UpdateCustomerAddress;
+    return output;
+  } catch (err) {
+    output.statusCode = this.handleError(err);
+    output.endpointStatusCode = err.statusCode;
+    output.errors.push(err);
+    throw output;
+  }
+};

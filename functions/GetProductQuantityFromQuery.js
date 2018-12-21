@@ -1,121 +1,109 @@
-module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContext, payload, callback) => {
-  const stubName = "GetProductQuantityFromQuery";
-  const referenceLocations = ["productQuantityBusinessReferences"];
-  const nc = require("./util/ncUtils");
-  let companyId, subscriptionLists;
-  let page, pageSize, totalResults;
-  const stub = new nc.Stub(stubName, referenceLocations, ncUtil, channelProfile, flowContext, payload, callback);
+"use strict";
 
-  initializeStubFunction()
-    .then(searchForProducts)
-    .then(buildResponseObject)
-    .catch(handleError)
-    .then(() => callback(stub.out))
-    .catch(error => {
-      logError(`The callback function threw an exception: ${error}`);
-      setTimeout(() => {
-        throw error;
-      });
-    });
+module.exports = async function(flowContext, queryDoc) {
+  const output = {
+    statusCode: 400,
+    errors: [],
+    payload: []
+  };
+  let totalResults;
 
-  function logInfo(msg) {
-    stub.log(msg, "info");
-  }
+  try {
+    const queryType = this.validateQueryDoc(queryDoc);
+    let supplierSkus = [];
 
-  function logWarn(msg) {
-    stub.log(msg, "warn");
-  }
-
-  function logError(msg) {
-    stub.log(msg, "error");
-  }
-
-  async function initializeStubFunction() {
-    if (!stub.isValid) {
-      stub.messages.forEach(msg => logError(msg));
-      stub.out.ncStatusCode = 400;
-      throw new Error(`Invalid request [${stub.messages.join(" ")}]`);
-    }
-
-    logInfo("Stub function is valid.");
-
-    companyId = stub.channelProfile.channelAuthValues.company_id;
-    subscriptionLists = stub.channelProfile.channelSettingsValues.subscriptionLists;
-
-    page = stub.payload.doc.page;
-    pageSize = stub.payload.doc.pageSize;
-
-    return JSON.parse(JSON.stringify(stub.payload.doc));
-  }
-
-  async function searchForProducts(queryDoc) {
-    const supplierSkus = [];
-
-    switch (stub.queryType) {
+    switch (queryType) {
       case "remoteIDs": {
-        const remoteIdSearchResults = await remoteIdSearch(queryDoc);
+        const remoteIdSearchResults = await remoteIdSearch.bind(this)(queryDoc);
         supplierSkus.push(...remoteIdSearchResults);
         break;
       }
 
       case "createdDateRange": {
-        logWarn("Searching by createdDateRange is not supported, will search on modifiedDateRange instead.");
+        this.warn("Searching by createdDateRange is not supported, will search on modifiedDateRange instead.");
         queryDoc.modifiedDateRange = queryDoc.createdDateRange;
+        delete queryDoc.createdDateRange;
       }
       case "modifiedDateRange": {
-        const dateRangeSearchResults = await dateRangeSearch(queryDoc);
+        const dateRangeSearchResults = await dateRangeSearch.bind(this)(queryDoc);
         supplierSkus.push(...dateRangeSearchResults);
         break;
       }
 
-      default:
-        stub.out.ncStatusCode = 400;
-        throw new Error(`Invalid request, unknown query type: '${stub.queryType}'`);
+      default: {
+        throw new Error(`Invalid request, unknown query type: '${queryType}'`);
+      }
     }
 
-    return supplierSkus;
+    const hasMore = queryDoc.page * queryDoc.pageSize <= totalResults;
+    supplierSkus = supplierSkus.filter(x => x);
+
+    this.info(
+      supplierSkus.length > 0 ? `Submitting ${supplierSkus.length} updated product quantities...` : "No products found."
+    );
+    output.statusCode = hasMore ? 206 : supplierSkus.length > 0 ? 200 : 204;
+    output.payload = supplierSkus;
+
+    return output;
+  } catch (err) {
+    output.statusCode = this.handleError(err);
+    output.endpointStatusCode = err.statusCode;
+    output.errors.push(err);
+    throw output;
   }
 
   async function remoteIdSearch(queryDoc) {
     // search for remote ids.
     queryDoc.remoteIDs = [...new Set(queryDoc.remoteIDs)].filter(x => x.trim());
     totalResults = queryDoc.remoteIDs.length;
-    const startIndex = (page - 1) * pageSize;
-    const endIndex = page * pageSize;
+    const startIndex = (queryDoc.page - 1) * queryDoc.pageSize;
+    const endIndex = queryDoc.page * queryDoc.pageSize;
     const remoteIDs = queryDoc.remoteIDs.slice(startIndex, endIndex);
 
-    const availabilities = [];
-    for (const subscriptionList of subscriptionLists) {
-      const availabilityList = await getSupplierAvailabilities(subscriptionList.supplierId, remoteIDs);
-      const availabilityDetails = await getDetails(availabilityList, subscriptionList);
-      availabilities.push(...availabilityDetails);
-    }
+    let availabilities = [];
+
+    availabilities = await Promise.all(
+      this.subscriptionLists.map(async subscriptionList => {
+        const availabilityList = await getSupplierAvailabilities.bind(this)(subscriptionList.supplierId, remoteIDs);
+        const availabilityDetails = await getDetails.bind(this)(availabilityList, subscriptionList.listId);
+        return availabilityDetails;
+      }, this)
+    );
 
     return availabilities;
   }
 
   async function dateRangeSearch(queryDoc) {
-    const availableSkus = [];
-    for (const subscriptionList of subscriptionLists) {
-      const availabilityList = await getAvailabilityList(subscriptionList.supplierId, queryDoc.modifiedDateRange.startDateGMT, queryDoc.modifiedDateRange.endDateGMT);
-      const availabilityDetails = await getDetails(availabilityList, subscriptionList);
-      availableSkus.push(...availabilityDetails);
-    }
+    let availableSkus = [];
 
-    return availableSkus;
+    availableSkus = await Promise.all(
+      this.subscriptionLists.map(async subscriptionList => {
+        const availabilityList = await getAvailabilityList.bind(this)(
+          subscriptionList.supplierId,
+          queryDoc.modifiedDateRange.startDateGMT,
+          queryDoc.modifiedDateRange.endDateGMT
+        );
+        const availabilityDetails = await getDetails.bind(this)(availabilityList, subscriptionList.listId);
+        return availabilityDetails;
+      }, this)
+    );
+
+    return [].concat(...availableSkus);
   }
 
-  async function getDetails(supplierAvailabilities, subscriptionList) {
+  async function getDetails(supplierAvailabilities, subscriptionListId) {
     const availableSkus = [];
     let vendorSkuDetails = [];
-    let i = 0;
     const total = supplierAvailabilities.length;
-    logInfo(`SupplierAvailabilities count: ${total}`);
-    for (const a of supplierAvailabilities) {
-      logInfo(`Getting details for item ${++i} of ${total}...`);
-      let result = await getVendorSkuDetails(a, subscriptionList.listId);
-      vendorSkuDetails.push(result);
-    }
+    this.info(`SupplierAvailabilities count: ${total}`);
+
+    vendorSkuDetails = await Promise.all(
+      supplierAvailabilities.map(async (a, i) => {
+        let result = await getVendorSkuDetails.bind(this)(a, subscriptionListId, i + 1, total);
+        return result;
+      }, this)
+    );
+
     supplierAvailabilities.forEach(item =>
       Object.assign(
         item,
@@ -123,37 +111,33 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
       )
     );
     let skippedSkus = [];
-    availableSkus.push(...supplierAvailabilities.filter(l => nc.isNonEmptyArray(l.Items)));
-    skippedSkus.push(...supplierAvailabilities.filter(l => !nc.isNonEmptyArray(l.Items)));
-    logInfo(`SupplierSku count: ${availableSkus.length}`);
-    logInfo(`SupplierSkus with an empty Items array: ${skippedSkus.length}`);
-    return availableSkus;
+    availableSkus.push(...supplierAvailabilities.filter(l => this.isNonEmptyArray(l.Items)));
+    skippedSkus.push(...supplierAvailabilities.filter(l => !this.isNonEmptyArray(l.Items)));
+    this.info(`SupplierSku count: ${availableSkus.length}`);
+    this.info(`SupplierSkus with an empty Items array: ${skippedSkus.length}`);
+    return availableSkus.length > 0 ? availableSkus : null;
   }
 
   async function getAvailabilityList(supplierId, startDate, endDate) {
-    logInfo(`Getting availability for supplier ${supplierId}`);
+    this.info(`Getting availability for supplier ${supplierId}`);
 
-    const req = stub.requestPromise.get(
-      Object.assign({}, stub.requestDefaults, {
-        method: "GET",
-        baseUrl: stub.getBaseUrl("availability"),
-        url: `/v1/Suppliers(${supplierId})/Companies(${companyId})/SupplierSkus`,
-        qs: {
-          $filter: `LastModifiedDateUtc ge datetime'${startDate}' and LastModifiedDateUtc le datetime'${endDate}'`
-        }
-      })
-    );
-    logInfo(`Calling: ${req.method} ${req.uri.href}`);
+    const req = this.request({
+      method: "GET",
+      baseUrl: this.getBaseUrl("availability"),
+      url: `/v1/Suppliers(${supplierId})/Companies(${this.company_id})/SupplierSkus`,
+      qs: {
+        $filter: `LastModifiedDateUtc ge datetime'${startDate}' and LastModifiedDateUtc le datetime'${endDate}'`
+      }
+    });
 
     const resp = await req;
-    stub.out.response.endpointStatusCode = resp.statusCode;
-    stub.out.response.endpointStatusMessage = resp.statusMessage;
+    output.endpointStatusCode = resp.statusCode;
 
     if (resp.timingPhases) {
-      logInfo(`Availability by supplier request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
+      this.info(`Availability by supplier request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
     }
 
-    if (!nc.isArray(resp.body)) {
+    if (!this.isArray(resp.body)) {
       throw new TypeError("Response is not in expected format, expected an array of availability objects.");
     }
 
@@ -161,127 +145,84 @@ module.exports.GetProductQuantityFromQuery = (ncUtil, channelProfile, flowContex
   }
 
   async function getSupplierAvailabilities(supplierId, remoteIDs) {
-    logInfo(`Getting BulkSupplierAvailability for supplier ${supplierId}`);
+    this.info(`Getting BulkSupplierAvailability for supplier ${supplierId}`);
 
     let supplierAvailabilities = remoteIDs.map(i => {
       const supplierSku = { SupplierSku: i };
       return supplierSku;
     });
 
-    const req = stub.requestPromise.post(Object.assign({}, stub.requestDefaults, {
-        method: "POST",
-        baseUrl: stub.getBaseUrl("availability"),
-        url: `/v1/Suppliers(${supplierId})/Companies(${companyId})/BulkSupplierAvailability`,
-        body: {
-          SupplierAvailabilities: supplierAvailabilities
-        }
-      }));
-    logInfo(`Calling: ${req.method} ${req.uri.href}`);
+    const req = this.request({
+      method: "POST",
+      baseUrl: this.getBaseUrl("availability"),
+      url: `/v1/Suppliers(${supplierId})/Companies(${this.company_id})/BulkSupplierAvailability`,
+      body: {
+        SupplierAvailabilities: supplierAvailabilities
+      }
+    });
 
     const resp = await req;
-    stub.out.response.endpointStatusCode = resp.statusCode;
-    stub.out.response.endpointStatusMessage = resp.statusMessage;
+    output.endpointStatusCode = resp.statusCode;
 
     if (resp.timingPhases) {
-      logInfo(`BulkSupplierAvailability request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
+      this.info(`BulkSupplierAvailability request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
     }
 
-    if (!resp.body || !nc.isArray(resp.body.SupplierAvailabilities)) {
+    if (!resp.body || !this.isArray(resp.body.SupplierAvailabilities)) {
       throw new TypeError("Response is not in expected format, expected SupplierAvailabilities array.");
     }
 
     return resp.body.SupplierAvailabilities;
   }
 
-  async function getVendorSkuDetails(availabilityItem, subscriptionListId) {
+  async function getVendorSkuDetails(availabilityItem, subscriptionListId, index, total) {
     let vendorSkuDetail = { Items: [] };
-    if (nc.isNonEmptyString(availabilityItem.SupplierSku)) {
-      vendorSkuDetail = await getVendorSkuDetail(availabilityItem.SupplierSku, availabilityItem.SupplierEntityId);
+    if (this.isNonEmptyString(availabilityItem.SupplierSku)) {
+      vendorSkuDetail = await getVendorSkuDetail.bind(this)(
+        availabilityItem.SupplierSku,
+        availabilityItem.SupplierEntityId,
+        index,
+        total
+      );
     } else {
-      logInfo(`AvailabilityItem with Id ${availabilityItem.Id} has no SupplierSku. Skipping.`);
+      this.info(`AvailabilityItem with Id ${availabilityItem.Id} has no SupplierSku. Skipping.`);
     }
     vendorSkuDetail.Items = vendorSkuDetail.Items.filter(i => i.SourceIds.includes(subscriptionListId));
     return vendorSkuDetail;
   }
 
-  async function getVendorSkuDetail(vendorSku, vendorId) {
-    logInfo(`Getting catalog item details by vendor '${vendorId}' and sku '${vendorSku}'`);
+  async function getVendorSkuDetail(vendorSku, vendorId, index, total) {
+    this.info(`Getting catalog item details (${index}/${total}) by vendor '${vendorId}' and sku '${vendorSku}'`);
 
-    const req = stub.requestPromise.get(
-      Object.assign({}, stub.requestDefaults, {
-        method: "GET",
-        baseUrl: stub.getBaseUrl("catalogs"),
-        url: `/v1/Companies(${companyId})/Catalog/Items/ByVendorSku`,
-        qs: {
-          vendorId: vendorId,
-          vendorSku: vendorSku
-        }
-      })
-    );
-    logInfo(`Calling: ${req.method} ${req.uri.href}`);
+    const req = this.request({
+      method: "GET",
+      baseUrl: this.getBaseUrl("catalogs"),
+      url: `/v1/Companies(${this.company_id})/Catalog/Items/ByVendorSku`,
+      qs: {
+        vendorId: vendorId,
+        vendorSku: vendorSku
+      }
+    });
 
     const resp = await req;
-    stub.out.response.endpointStatusCode = resp.statusCode;
-    stub.out.response.endpointStatusMessage = resp.statusMessage;
+    output.endpointStatusCode = resp.statusCode;
 
     if (resp.timingPhases) {
-      logInfo(`Details by VendorSku request completed in ${Math.round(resp.timingPhases.total)} milliseconds.`);
+      this.info(
+        `Details by VendorSku request (${index}/${total}) completed in ${Math.round(
+          resp.timingPhases.total
+        )} milliseconds.`
+      );
     }
 
-    if (!resp.body || !nc.isArray(resp.body.Items)) {
+    if (!resp.body || !this.isArray(resp.body.Items)) {
       throw new TypeError("Details by VendorSku Response is not in expected format, expected Items[] property.");
     }
 
-    if (!nc.isNonEmptyArray(resp.body.Items)) {
-      logInfo(`Vendor '${vendorId}' and SKU '${vendorSku}' returned 0 Items.`);
+    if (!this.isNonEmptyArray(resp.body.Items)) {
+      this.info(`Vendor '${vendorId}' and SKU '${vendorSku}' returned 0 Items.`);
     }
 
     return resp.body;
   }
-
-  async function buildResponseObject(supplierSkus) {
-    if (supplierSkus.length > 0) {
-      logInfo(`Submitting ${supplierSkus.length} updated quantities...`);
-
-      stub.out.payload = [];
-      supplierSkus.forEach(item => {
-        stub.out.payload.push({
-          doc: item,
-          productQuantityRemoteID: item.Id,
-          productQuantityBusinessReference: nc.extractBusinessReferences(
-            stub.channelProfile.productQuantityBusinessReferences,
-            item
-          )
-        });
-      });
-
-      stub.out.ncStatusCode = page * pageSize <= totalResults ? 206 : 200;
-    } else {
-      logInfo("No products found.");
-      stub.out.ncStatusCode = page * pageSize <= totalResults ? 206 : 204;
-    }
-
-    return stub.out;
-  }
-
-  async function handleError(error) {
-    logError(error);
-    if (error.name === "StatusCodeError") {
-      stub.out.response.endpointStatusCode = error.statusCode;
-      stub.out.response.endpointStatusMessage = error.message;
-
-      if (error.statusCode >= 500) {
-        stub.out.ncStatusCode = 500;
-      } else if ([429, 401].includes(error.statusCode)) {
-        stub.out.ncStatusCode = error.statusCode;
-      } else {
-        stub.out.ncStatusCode = 400;
-      }
-    }
-    stub.out.payload.error = error;
-    stub.out.ncStatusCode = stub.out.ncStatusCode || 500;
-
-    return stub.out;
-  }
-
 };
