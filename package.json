@@ -1,6 +1,6 @@
 {
   "name": "@nchannel/iqmetrix-dropship-channel",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "main": "iqmetrix_dropship_channel.js",
   "scripts": {
     "sdktests": "npx nchannel-sdk test"
