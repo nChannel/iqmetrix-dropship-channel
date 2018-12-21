@@ -1,8 +1,7 @@
 {
-  "name": "iqmetrix_dropship_channel getProduct",
+  "name": "iQmetrix DropShip Get Product Schema",
   "schemaDef": {
-    "$schema": "http://json-schema.org/draft-06/schema#",
-    "title": "getProduct",
+    "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
     "properties": {
       "Assets": {
@@ -590,5 +589,6 @@
       }
     }
   },
-  "tags": ["iqmetrix_dropship_channel", "GET", "PRODUCT"]
+  "tags": ["Get", "Product"],
+  "audit": {}
 }

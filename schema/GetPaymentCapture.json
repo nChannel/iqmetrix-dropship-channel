@@ -1,8 +1,7 @@
 {
-  "name": "iqmetrix_dropship_channel getPaymentCapture",
+  "name": "iQmetrix DropShip Get PaymentCapture Schema",
   "schemaDef": {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "title": "getPaymentCapture",
     "type": "object",
     "properties": {
       "id": {
@@ -354,5 +353,6 @@
       }
     }
   },
-  "tags": ["iqmetrix_dropship_channel", "GET", "PAYMENTCAPTURE"]
+  "tags": ["iQmetrix", "PaymentCapture", "Get", "OrderDetails", "Dropship"],
+  "audit": {}
 }

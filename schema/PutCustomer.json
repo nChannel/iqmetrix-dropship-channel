@@ -1,9 +1,9 @@
 {
-  "name": "iqmetrix_dropship_channel putCustomer",
+  "name": "iQmetrix DropShip Put Customer Schema",
   "schemaDef": {
-    "$schema": "http://json-schema.org/draft-06/schema#",
-    "title": "putCustomer",
+    "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
+    "title": "CustomerFull (Object)",
     "description": "A CustomerFull record includes all the information captured for a given customer. POSTing a CustomerFull record provides an easy way of specifying all related information for a customer at once. Note that PUT is not supported on CustomerFull resources (for example, to update an address). To modify a customer record, PUT to the endpoint of the constituent resource (for example, the Address resource).",
     "properties": {
       "Id": {
@@ -16,7 +16,11 @@
         "type": "integer",
         "title": "CustomerTypeId (Integer) Required",
         "description": "The code for the customer type. For supported values, see CustomerTypeId.",
-        "enum": [1, 2, 3]
+        "enum": [
+          1,
+          2,
+          3
+        ]
       },
       "PrimaryName": {
         "type": "string",
@@ -96,7 +100,9 @@
         "minItems": 1
       }
     },
-    "required": ["CustomerTypeId"],
+    "required": [
+      "CustomerTypeId"
+    ],
     "definitions": {
       "Address": {
         "type": "object",
@@ -119,7 +125,13 @@
             "type": "integer",
             "title": "AddressTypeId (Integer) Required",
             "description": "The code for the address type. For supported values, see AddressTypeId.",
-            "enum": [1, 2, 3, 4, 5]
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
           },
           "CountryCode": {
             "type": "string",
@@ -188,7 +200,11 @@
             "description": "Line 2 of the street address."
           }
         },
-        "required": ["AddressTypeId", "CountryCode", "StateCode"]
+        "required": [
+          "AddressTypeId",
+          "CountryCode",
+          "StateCode"
+        ]
       },
       "ContactMethod": {
         "type": "object",
@@ -205,7 +221,10 @@
             "$ref": "#/definitions/ContactMethodCategoryOther"
           }
         ],
-        "required": ["ContactMethodCategoryId", "ContactMethodTypeId"]
+        "required": [
+          "ContactMethodCategoryId",
+          "ContactMethodTypeId"
+        ]
       },
       "ContactMethodBase": {
         "type": "object",
@@ -226,13 +245,34 @@
             "type": "integer",
             "title": "ContactMethodCategoryId (Integer) Required",
             "description": "The numeric code for the contact method category. For a list of supported types and categories, see ContactMethod Types and Categories.",
-            "enum": [1, 2, 3]
+            "enum": [
+              1,
+              2,
+              3
+            ]
           },
           "ContactMethodTypeId": {
             "type": "integer",
             "title": "ContactMethodTypeId (Integer) Required",
             "description": "The code representing the contact method type. For a list of supported types and categories, see ContactMethod Types and Categories.",
-            "enum": [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+            "enum": [
+              1,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17
+            ]
           },
           "Default": {
             "type": "boolean",
@@ -265,13 +305,23 @@
                 "type": "integer",
                 "title": "ContactMethodCategoryId (Integer) Required",
                 "description": "The numeric code for the contact method category. For a list of supported types and categories, see ContactMethod Types and Categories.",
-                "enum": [1]
+                "enum": [
+                  1
+                ]
               },
               "ContactMethodTypeId": {
                 "type": "integer",
                 "title": "ContactMethodTypeId (Integer) Required",
                 "description": "The code representing the contact method type. For a list of supported types and categories, see ContactMethod Types and Categories.",
-                "enum": [1, 3, 4, 5, 6, 7, 8]
+                "enum": [
+                  1,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8
+                ]
               }
             }
           },
@@ -289,13 +339,19 @@
                 "type": "integer",
                 "title": "ContactMethodCategoryId (Integer) Required",
                 "description": "The numeric code for the contact method category. For a list of supported types and categories, see ContactMethod Types and Categories.",
-                "enum": [2]
+                "enum": [
+                  2
+                ]
               },
               "ContactMethodTypeId": {
                 "type": "integer",
                 "title": "ContactMethodTypeId (Integer) Required",
                 "description": "The code representing the contact method type. For a list of supported types and categories, see ContactMethod Types and Categories.",
-                "enum": [9, 10, 11]
+                "enum": [
+                  9,
+                  10,
+                  11
+                ]
               },
               "Value": {
                 "type": "string",
@@ -319,13 +375,22 @@
                 "type": "integer",
                 "title": "ContactMethodCategoryId (Integer) Required",
                 "description": "The numeric code for the contact method category. For a list of supported types and categories, see ContactMethod Types and Categories.",
-                "enum": [3]
+                "enum": [
+                  3
+                ]
               },
               "ContactMethodTypeId": {
                 "type": "integer",
                 "title": "ContactMethodTypeId (Integer) Required",
                 "description": "The code representing the contact method type. For a list of supported types and categories, see ContactMethod Types and Categories.",
-                "enum": [12, 13, 14, 15, 16, 17]
+                "enum": [
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17
+                ]
               }
             }
           },
@@ -362,9 +427,15 @@
             "description": "The new value for the custom property."
           }
         },
-        "required": ["ExtensionTypeId"]
+        "required": [
+          "ExtensionTypeId"
+        ]
       }
     }
   },
-  "tags": ["iqmetrix_dropship_channel", "PUT", "CUSTOMER"]
+  "tags": [
+    "Put",
+    "Customer"
+  ],
+  "audit": {}
 }

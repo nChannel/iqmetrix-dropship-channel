@@ -1,8 +1,8 @@
 {
-  "name": "iqmetrix_dropship_channel putSalesOrder",
+  "name": "iQmetrix DropShip Put Sales Order Schema",
   "schemaDef": {
-    "$schema": "http://json-schema.org/draft-06/schema#",
-    "title": "putSalesOrder",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "iQmetrix Put Sales Order Schema",
     "type": "object",
     "properties": {
       "DropshipOrder": {
@@ -19,7 +19,12 @@
             "type": "integer",
             "title": "OrderTypeId (Integer) Required",
             "description": "See OrderType for a list of acceptable values.",
-            "enum": [1, 2, 3, 4]
+            "enum": [
+              1,
+              2,
+              3,
+              4
+            ]
           },
           "Name": {
             "type": "string",
@@ -84,7 +89,13 @@
             "type": "string",
             "title": "State (String) Optional",
             "description": "If not provided, this value will be generated. State can be changed using this field. See OrderState for a list of acceptable values and Overview for legal state transitions.",
-            "enum": ["Created", "Pending", "Processed", "Cancelled", "Completed"]
+            "enum": [
+              "Created",
+              "Pending",
+              "Processed",
+              "Cancelled",
+              "Completed"
+            ]
           },
           "TenderId": {
             "type": "string",
@@ -102,7 +113,11 @@
             }
           }
         },
-        "required": ["EntityId", "OrderTypeId", "Items"]
+        "required": [
+          "EntityId",
+          "OrderTypeId",
+          "Items"
+        ]
       },
       "SalesOrder": {
         "type": "object",
@@ -172,7 +187,10 @@
                   "type": "string",
                   "title": "ItemType (String) Required",
                   "description": "The item type. Supported values are InStock (the item is in stock) or Dropship (the item is available to be drop.",
-                  "enum": ["InStock", "Dropship"]
+                  "enum": [
+                    "InStock",
+                    "Dropship"
+                  ]
                 },
                 "CorrelationId": {
                   "type": "string",
@@ -223,7 +241,12 @@
                             "description": "Required if IqmetrixTaxServiceId is not specified, forbidden otherwise. The amount of tax charged."
                           }
                         },
-                        "required": ["TaxName", "TaxableAmount", "Rate", "Tax"],
+                        "required": [
+                          "TaxName",
+                          "TaxableAmount",
+                          "Rate",
+                          "Tax"
+                        ],
                         "additionalProperties": false
                       },
                       {
@@ -235,7 +258,9 @@
                             "pattern": "^[0-9-A-Fa-f]{32,36}$"
                           }
                         },
-                        "required": ["IqmetrixTaxServiceId"],
+                        "required": [
+                          "IqmetrixTaxServiceId"
+                        ],
                         "additionalProperties": false
                       }
                     ]
@@ -450,7 +475,11 @@
             "type": "integer",
             "title": "CustomerTypeId (Integer) Required",
             "description": "The code for the customer type. For supported values, see CustomerTypeId.",
-            "enum": [1, 2, 3]
+            "enum": [
+              1,
+              2,
+              3
+            ]
           },
           "PrimaryName": {
             "type": "string",
@@ -530,7 +559,9 @@
             "minItems": 1
           }
         },
-        "required": ["CustomerTypeId"]
+        "required": [
+          "CustomerTypeId"
+        ]
       },
       "BillingAddress": {
         "$ref": "#/definitions/Address"
@@ -539,7 +570,13 @@
         "$ref": "#/definitions/Address"
       }
     },
-    "required": ["DropshipOrder", "SalesOrder", "Customer", "BillingAddress", "ShippingAddress"],
+    "required": [
+      "DropshipOrder",
+      "SalesOrder",
+      "Customer",
+      "BillingAddress",
+      "ShippingAddress"
+    ],
     "definitions": {
       "Address": {
         "type": "object",
@@ -562,7 +599,13 @@
             "type": "integer",
             "title": "AddressTypeId (Integer) Required",
             "description": "The code for the address type. For supported values, see AddressTypeId.",
-            "enum": [1, 2, 3, 4, 5]
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
           },
           "CountryCode": {
             "type": "string",
@@ -631,7 +674,11 @@
             "description": "Line 2 of the street address."
           }
         },
-        "required": ["AddressTypeId", "CountryCode", "StateCode"]
+        "required": [
+          "AddressTypeId",
+          "CountryCode",
+          "StateCode"
+        ]
       },
       "ContactMethod": {
         "type": "object",
@@ -648,7 +695,10 @@
             "$ref": "#/definitions/ContactMethodCategoryOther"
           }
         ],
-        "required": ["ContactMethodCategoryId", "ContactMethodTypeId"]
+        "required": [
+          "ContactMethodCategoryId",
+          "ContactMethodTypeId"
+        ]
       },
       "ContactMethodBase": {
         "type": "object",
@@ -669,13 +719,34 @@
             "type": "integer",
             "title": "ContactMethodCategoryId (Integer) Required",
             "description": "The numeric code for the contact method category. For a list of supported types and categories, see ContactMethod Types and Categories.",
-            "enum": [1, 2, 3]
+            "enum": [
+              1,
+              2,
+              3
+            ]
           },
           "ContactMethodTypeId": {
             "type": "integer",
             "title": "ContactMethodTypeId (Integer) Required",
             "description": "The code representing the contact method type. For a list of supported types and categories, see ContactMethod Types and Categories.",
-            "enum": [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+            "enum": [
+              1,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17
+            ]
           },
           "Default": {
             "type": "boolean",
@@ -708,13 +779,23 @@
                 "type": "integer",
                 "title": "ContactMethodCategoryId (Integer) Required",
                 "description": "The numeric code for the contact method category. For a list of supported types and categories, see ContactMethod Types and Categories.",
-                "enum": [1]
+                "enum": [
+                  1
+                ]
               },
               "ContactMethodTypeId": {
                 "type": "integer",
                 "title": "ContactMethodTypeId (Integer) Required",
                 "description": "The code representing the contact method type. For a list of supported types and categories, see ContactMethod Types and Categories.",
-                "enum": [1, 3, 4, 5, 6, 7, 8]
+                "enum": [
+                  1,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8
+                ]
               }
             }
           },
@@ -732,13 +813,19 @@
                 "type": "integer",
                 "title": "ContactMethodCategoryId (Integer) Required",
                 "description": "The numeric code for the contact method category. For a list of supported types and categories, see ContactMethod Types and Categories.",
-                "enum": [2]
+                "enum": [
+                  2
+                ]
               },
               "ContactMethodTypeId": {
                 "type": "integer",
                 "title": "ContactMethodTypeId (Integer) Required",
                 "description": "The code representing the contact method type. For a list of supported types and categories, see ContactMethod Types and Categories.",
-                "enum": [9, 10, 11]
+                "enum": [
+                  9,
+                  10,
+                  11
+                ]
               },
               "Value": {
                 "type": "string",
@@ -762,13 +849,22 @@
                 "type": "integer",
                 "title": "ContactMethodCategoryId (Integer) Required",
                 "description": "The numeric code for the contact method category. For a list of supported types and categories, see ContactMethod Types and Categories.",
-                "enum": [3]
+                "enum": [
+                  3
+                ]
               },
               "ContactMethodTypeId": {
                 "type": "integer",
                 "title": "ContactMethodTypeId (Integer) Required",
                 "description": "The code representing the contact method type. For a list of supported types and categories, see ContactMethod Types and Categories.",
-                "enum": [12, 13, 14, 15, 16, 17]
+                "enum": [
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17
+                ]
               }
             }
           },
@@ -805,7 +901,9 @@
             "description": "The new value for the custom property."
           }
         },
-        "required": ["ExtensionTypeId"]
+        "required": [
+          "ExtensionTypeId"
+        ]
       },
       "DropshipOrderItem": {
         "type": "object",
@@ -824,7 +922,12 @@
             "$ref": "#/definitions/DropshipOrderItemTypeShipping"
           }
         ],
-        "required": ["ItemStatusId", "ItemTypeId", "SupplierEntityId", "SKU"]
+        "required": [
+          "ItemStatusId",
+          "ItemTypeId",
+          "SupplierEntityId",
+          "SKU"
+        ]
       },
       "DropshipOrderItemBase": {
         "type": "object",
@@ -832,12 +935,35 @@
           "ItemTypeId": {
             "type": "string",
             "title": "ItemTypeId (String) Required",
-            "enum": ["1", "2", "3", "4"]
+            "enum": [
+              "1",
+              "2",
+              "3",
+              "4"
+            ]
           },
           "ItemStatusId": {
             "type": "integer",
             "title": "ItemStatusId (Integer) Required",
-            "enum": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17
+            ]
           },
           "Cost": {
             "type": "number",
@@ -929,7 +1055,10 @@
                   "description": "Tracking number."
                 }
               },
-              "required": ["Quantity", "TrackingNumber"]
+              "required": [
+                "Quantity",
+                "TrackingNumber"
+              ]
             }
           }
         }
@@ -942,12 +1071,23 @@
               "ItemTypeId": {
                 "type": "string",
                 "title": "ItemTypeId (String) Required",
-                "enum": ["1"]
+                "enum": [
+                  "1"
+                ]
               },
               "ItemStatusId": {
                 "type": "integer",
                 "title": "ItemStatusId (Integer) Required",
-                "enum": [1, 2, 3, 4, 5, 6, 7, 8]
+                "enum": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8
+                ]
               }
             }
           },
@@ -964,12 +1104,20 @@
               "ItemTypeId": {
                 "type": "string",
                 "title": "ItemTypeId (String) Required",
-                "enum": ["2"]
+                "enum": [
+                  "2"
+                ]
               },
               "ItemStatusId": {
                 "type": "integer",
                 "title": "ItemStatusId (Integer) Required",
-                "enum": [9, 10, 11, 12, 16]
+                "enum": [
+                  9,
+                  10,
+                  11,
+                  12,
+                  16
+                ]
               }
             }
           },
@@ -986,12 +1134,18 @@
               "ItemTypeId": {
                 "type": "string",
                 "title": "ItemTypeId (String) Required",
-                "enum": ["3"]
+                "enum": [
+                  "3"
+                ]
               },
               "ItemStatusId": {
                 "type": "integer",
                 "title": "ItemStatusId (Integer) Required",
-                "enum": [13, 14, 17]
+                "enum": [
+                  13,
+                  14,
+                  17
+                ]
               }
             }
           },
@@ -1008,12 +1162,16 @@
               "ItemTypeId": {
                 "type": "string",
                 "title": "ItemTypeId (String) Required",
-                "enum": ["4"]
+                "enum": [
+                  "4"
+                ]
               },
               "ItemStatusId": {
                 "type": "integer",
                 "title": "ItemStatusId (Integer) Required",
-                "enum": [15]
+                "enum": [
+                  15
+                ]
               }
             }
           },
@@ -1024,5 +1182,10 @@
       }
     }
   },
-  "tags": ["iqmetrix_dropship_channel", "PUT", "SALESORDER"]
+  "tags": [
+    "Put",
+    "Order",
+    "SalesOrder"
+  ],
+  "audit": {}
 }

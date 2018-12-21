@@ -1,9 +1,9 @@
 {
-  "name": "iqmetrix_dropship_channel putCustomerAddress",
+  "name": "iQmetrix DropShip Put Customer Address Schema",
   "schemaDef": {
-    "$schema": "http://json-schema.org/draft-06/schema#",
-    "title": "putCustomerAddress",
+    "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
+    "title": "Address (Object)",
     "description": "The Address resource records information for a single customer address. You can define multiple addresses for a customer.",
     "properties": {
       "Id": {
@@ -22,7 +22,13 @@
         "type": "integer",
         "title": "AddressTypeId (Integer) Required",
         "description": "The code for the address type. For supported values, see AddressTypeId.",
-        "enum": [1, 2, 3, 4, 5]
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
       },
       "CountryCode": {
         "type": "string",
@@ -91,7 +97,16 @@
         "description": "Line 2 of the street address."
       }
     },
-    "required": ["CustomerId", "AddressTypeId", "CountryCode", "StateCode"]
+    "required": [
+      "CustomerId",
+      "AddressTypeId",
+      "CountryCode",
+      "StateCode"
+    ]
   },
-  "tags": ["iqmetrix_dropship_channel", "PUT", "CUSTOMERADDRESS"]
+  "tags": [
+    "Put",
+    "CustomerAddress"
+  ],
+  "audit": {}
 }

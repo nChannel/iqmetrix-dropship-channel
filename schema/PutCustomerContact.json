@@ -1,9 +1,9 @@
 {
-  "name": "iqmetrix_dropship_channel putCustomerContact",
+  "name": "iQmetrix DropShip Put Customer Contact Schema",
   "schemaDef": {
-    "$schema": "http://json-schema.org/draft-06/schema#",
-    "title": "putCustomerContact",
+    "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
+    "title": "ContactMethod (Object)",
     "description": "A ContactMethod resource records the information for contacting a customer. You can define multiple contact methods for a customer.",
     "oneOf": [
       {
@@ -16,7 +16,11 @@
         "$ref": "#/definitions/ContactMethodCategoryOther"
       }
     ],
-    "required": ["CustomerId", "ContactMethodCategoryId", "ContactMethodTypeId"],
+    "required": [
+      "CustomerId",
+      "ContactMethodCategoryId",
+      "ContactMethodTypeId"
+    ],
     "definitions": {
       "ContactMethodBase": {
         "type": "object",
@@ -37,13 +41,34 @@
             "type": "integer",
             "title": "ContactMethodCategoryId (Integer) Required",
             "description": "The numeric code for the contact method category. For a list of supported types and categories, see ContactMethod Types and Categories.",
-            "enum": [1, 2, 3]
+            "enum": [
+              1,
+              2,
+              3
+            ]
           },
           "ContactMethodTypeId": {
             "type": "integer",
             "title": "ContactMethodTypeId (Integer) Required",
             "description": "The code representing the contact method type. For a list of supported types and categories, see ContactMethod Types and Categories.",
-            "enum": [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+            "enum": [
+              1,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17
+            ]
           },
           "Default": {
             "type": "boolean",
@@ -76,13 +101,23 @@
                 "type": "integer",
                 "title": "ContactMethodCategoryId (Integer) Required",
                 "description": "The numeric code for the contact method category. For a list of supported types and categories, see ContactMethod Types and Categories.",
-                "enum": [1]
+                "enum": [
+                  1
+                ]
               },
               "ContactMethodTypeId": {
                 "type": "integer",
                 "title": "ContactMethodTypeId (Integer) Required",
                 "description": "The code representing the contact method type. For a list of supported types and categories, see ContactMethod Types and Categories.",
-                "enum": [1, 3, 4, 5, 6, 7, 8]
+                "enum": [
+                  1,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8
+                ]
               }
             }
           },
@@ -100,13 +135,19 @@
                 "type": "integer",
                 "title": "ContactMethodCategoryId (Integer) Required",
                 "description": "The numeric code for the contact method category. For a list of supported types and categories, see ContactMethod Types and Categories.",
-                "enum": [2]
+                "enum": [
+                  2
+                ]
               },
               "ContactMethodTypeId": {
                 "type": "integer",
                 "title": "ContactMethodTypeId (Integer) Required",
                 "description": "The code representing the contact method type. For a list of supported types and categories, see ContactMethod Types and Categories.",
-                "enum": [9, 10, 11]
+                "enum": [
+                  9,
+                  10,
+                  11
+                ]
               },
               "Value": {
                 "type": "string",
@@ -130,13 +171,22 @@
                 "type": "integer",
                 "title": "ContactMethodCategoryId (Integer) Required",
                 "description": "The numeric code for the contact method category. For a list of supported types and categories, see ContactMethod Types and Categories.",
-                "enum": [3]
+                "enum": [
+                  3
+                ]
               },
               "ContactMethodTypeId": {
                 "type": "integer",
                 "title": "ContactMethodTypeId (Integer) Required",
                 "description": "The code representing the contact method type. For a list of supported types and categories, see ContactMethod Types and Categories.",
-                "enum": [12, 13, 14, 15, 16, 17]
+                "enum": [
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17
+                ]
               }
             }
           },
@@ -147,5 +197,9 @@
       }
     }
   },
-  "tags": ["iqmetrix_dropship_channel", "PUT", "CUSTOMERCONTACT"]
+  "tags": [
+    "Put",
+    "CustomerContact"
+  ],
+  "audit": {}
 }

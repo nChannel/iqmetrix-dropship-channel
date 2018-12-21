@@ -1,8 +1,7 @@
 {
-  "name": "iqmetrix_dropship_channel getProductPricing",
+  "name": "iQmetrix DropShip Get ProductPricing Schema",
   "schemaDef": {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "title": "getProductPricing",
     "type": "object",
     "properties": {
       "RmsId": {
@@ -423,5 +422,6 @@
       }
     }
   },
-  "tags": ["iqmetrix_dropship_channel", "GET", "PRODUCTPRICING"]
+  "tags": ["Get", "ProductPricing"],
+  "audit": {}
 }
